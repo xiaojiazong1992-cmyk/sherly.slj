@@ -12,9 +12,24 @@ import seaborn as sns
 from scipy.stats import kstest, pearsonr
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
-# 全局图表设置
-matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
-matplotlib.rcParams['axes.unicode_minus'] = False
+# 全局图表设置（自动检测可用中文字体）
+def _setup_chinese_font():
+    candidates = ['SimHei', 'SimSun', 'Microsoft YaHei',
+                  'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei',
+                  'Noto Sans CJK SC', 'PingFang SC']
+    available = {f.name for f in matplotlib.font_manager.fontManager.ttflist}
+    chosen = next((f for f in candidates if f in available), None)
+    if chosen:
+        matplotlib.rcParams['font.sans-serif'] = [chosen, 'DejaVu Sans']
+    else:
+        import os
+        wqy = '/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc'
+        if os.path.exists(wqy):
+            prop = matplotlib.font_manager.FontProperties(fname=wqy)
+            matplotlib.rcParams['font.sans-serif'] = [prop.get_name(), 'DejaVu Sans']
+    matplotlib.rcParams['axes.unicode_minus'] = False
+
+_setup_chinese_font()
 DPI = 300
 
 

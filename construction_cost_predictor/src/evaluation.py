@@ -11,8 +11,23 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import learning_curve
 
-matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
-matplotlib.rcParams['axes.unicode_minus'] = False
+def _setup_chinese_font():
+    candidates = ['SimHei', 'SimSun', 'Microsoft YaHei',
+                  'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei',
+                  'Noto Sans CJK SC', 'PingFang SC']
+    available = {f.name for f in matplotlib.font_manager.fontManager.ttflist}
+    chosen = next((f for f in candidates if f in available), None)
+    if chosen:
+        matplotlib.rcParams['font.sans-serif'] = [chosen, 'DejaVu Sans']
+    else:
+        import os
+        wqy = '/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc'
+        if os.path.exists(wqy):
+            prop = matplotlib.font_manager.FontProperties(fname=wqy)
+            matplotlib.rcParams['font.sans-serif'] = [prop.get_name(), 'DejaVu Sans']
+    matplotlib.rcParams['axes.unicode_minus'] = False
+
+_setup_chinese_font()
 DPI = 300
 
 

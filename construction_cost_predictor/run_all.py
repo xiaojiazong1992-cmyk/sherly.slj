@@ -20,14 +20,32 @@ import matplotlib
 matplotlib.use('Agg')   # non-interactive backend
 
 # ── Font setup ────────────────────────────────────────────────────────────────
+# 优先顺序：SimHei（Windows） → WenQuanYi Zen Hei（Linux）→ Noto Sans CJK → DejaVu Sans
 import matplotlib.font_manager as fm
-available_fonts = [f.name for f in fm.fontManager.ttflist]
-if 'SimHei' in available_fonts:
-    matplotlib.rcParams['font.sans-serif'] = ['SimHei']
-    print("[Font] Using SimHei")
+
+_FONT_CANDIDATES = [
+    'SimHei', 'SimSun', 'Microsoft YaHei',          # Windows
+    'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei',     # Linux
+    'Noto Sans CJK SC', 'Noto Sans CJK TC',          # Google Noto
+    'PingFang SC', 'Heiti SC',                        # macOS
+]
+_available = {f.name for f in fm.fontManager.ttflist}
+_chosen = next((f for f in _FONT_CANDIDATES if f in _available), None)
+
+if _chosen:
+    matplotlib.rcParams['font.sans-serif'] = [_chosen, 'DejaVu Sans']
+    print(f"[Font] Using: {_chosen}")
 else:
-    matplotlib.rcParams['font.sans-serif'] = ['DejaVu Sans']
-    print("[Font] SimHei not found, using DejaVu Sans")
+    # 直接用字体文件路径（兜底方案）
+    _wqy_path = '/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc'
+    import os as _os
+    if _os.path.exists(_wqy_path):
+        _prop = fm.FontProperties(fname=_wqy_path)
+        matplotlib.rcParams['font.sans-serif'] = [_prop.get_name(), 'DejaVu Sans']
+        print(f"[Font] Loaded from file: {_wqy_path}")
+    else:
+        matplotlib.rcParams['font.sans-serif'] = ['DejaVu Sans']
+        print("[Font] WARNING: No CJK font found, Chinese may not render")
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 import matplotlib.pyplot as plt
@@ -55,14 +73,34 @@ print("STEP 1: Data Collection")
 print("="*60)
 
 try:
-    from src.data_scraper import generate_fallback_data, get_material_price_df
-    df_raw = generate_fallback_data(n=350, random_state=42)
-    print(f"[OK] Raw data: {df_raw.shape[0]} rows, {df_raw.shape[1]} cols")
+    from src.data_scraper import collect_data, get_material_price_df
 
-    # Save raw data
-    df_raw.to_excel(out_path('01_raw_data.xlsx'), index=False)
+    # 尝试真实数据采集（NBS → GGZY），网络受限时自动回退合成数据
+    df_raw, data_report = collect_data(min_samples=300, random_state=42)
+
+    print(f"[数据采集报告]")
+    print(f"  NBS真实省级数据: {data_report.get('nbs_raw_rows', 0)} 条")
+    print(f"  NBS扩展项目级: {data_report.get('nbs_expanded_rows', 0)} 条")
+    print(f"  GGZY中标数据: {data_report.get('ggzy_rows', 0)} 条")
+    print(f"  最终数据量: {data_report.get('final_rows', 0)} 条")
+    print(f"  使用真实NBS数据: {'是' if data_report.get('uses_real_nbs') else '否（网络受限，已用统计规律合成数据）'}")
+
+    if not data_report.get('uses_real_nbs'):
+        print("\n  ⚠ 警告：当前环境无法访问 data.stats.gov.cn")
+        print("  ⚠ 在本地网络运行时将自动使用真实NBS数据")
+        print("  ⚠ 须在论文'研究局限性'章节注明此情况")
+
+    print(f"\n[OK] Raw data: {df_raw.shape[0]} rows, {df_raw.shape[1]} cols")
+    print(f"     数据来源分布:\n{df_raw['data_source'].value_counts().to_string()}")
+
+    # Save raw data + report
+    material_df = get_material_price_df()
+    with pd.ExcelWriter(out_path('01_raw_data.xlsx')) as writer:
+        df_raw.to_excel(writer, sheet_name='原始数据', index=False)
+        material_df.to_excel(writer, sheet_name='材料价格指数', index=False)
+        pd.DataFrame([data_report]).to_excel(writer, sheet_name='采集报告', index=False)
+
     print(f"[OK] Saved: outputs/01_raw_data.xlsx")
-
     step1_ok = True
 except Exception as e:
     print(f"[FAIL] Step 1 error: {e}")
