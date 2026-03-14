@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文图表下载 — 住宅工程造价预测研究</title>
+<style>
+  body { font-family: 'Microsoft YaHei', Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 20px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { color: #1f3864; text-align: center; font-size: 20px; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 24px; }
+  .section { background: white; border-radius: 10px; padding: 20px; margin-bottom: 16px;
+             box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .section h2 { color: #1f3864; font-size: 15px; margin: 0 0 14px 0;
+                border-left: 4px solid #1f3864; padding-left: 10px; }
+  .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+  .file-card { border: 1px solid #e0e8f0; border-radius: 8px; padding: 12px 14px;
+               display: flex; align-items: center; gap: 12px; text-decoration: none;
+               color: #333; transition: all 0.2s; background: #fafcff; }
+  .file-card:hover { background: #e8f0fe; border-color: #4285f4; transform: translateY(-1px);
+                     box-shadow: 0 3px 8px rgba(66,133,244,0.15); }
+  .icon { font-size: 28px; flex-shrink: 0; }
+  .file-info { flex: 1; min-width: 0; }
+  .file-name { font-weight: 600; font-size: 13px; word-break: break-all; color: #1a56db; }
+  .file-desc { font-size: 11px; color: #666; margin-top: 3px; }
+  .file-size { font-size: 11px; color: #999; }
+  .highlight { background: linear-gradient(135deg, #e8f5e9, #f1f8e9) !important;
+               border-color: #4caf50 !important; }
+  .highlight .file-name { color: #2e7d32; }
+  .badge { display: inline-block; background: #4caf50; color: white;
+           font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
+  .warn { background: #fff8e1; border-left: 4px solid #ff9800;
+          padding: 10px 14px; border-radius: 6px; font-size: 12px; color: #7b5800; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 论文图表下载中心</h1>
+  <p class="subtitle">《基于集成学习算法的住宅工程建筑安装工程造价预测研究》</p>
+
+  <!-- 一键下载 -->
+  <div class="section">
+    <h2>🚀 一键下载全套文件</h2>
+    <div class="file-grid">
+      <a class="file-card highlight" href="%E8%AE%BA%E6%96%87%E5%9B%BE%E8%A1%A8%E5%85%A8%E5%A5%97_%E5%90%AB%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90.zip" download>
+        <span class="icon">📦</span>
+        <div class="file-info">
+          <div class="file-name">论文图表全套_含数据来源.zip <span class="badge">推荐</span></div>
+          <div class="file-desc">12张图 + 5个Excel + 数据来源说明</div>
+          <div class="file-size">2.0 MB</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Excel数据文件 -->
+  <div class="section">
+    <h2>📋 Excel 数据文件</h2>
+    <div class="file-grid">
+      <a class="file-card highlight" href="%E5%9B%BE%E8%A1%A8%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90%E8%AF%B4%E6%98%8E.xlsx" download>
+        <span class="icon">📊</span>
+        <div class="file-info">
+          <div class="file-name">图表数据来源说明.xlsx <span class="badge">核心</span></div>
+          <div class="file-desc">6个Sheet：来源总览/字段说明/材料价格/模型结果/SHAP/局限性</div>
+          <div class="file-size">19 KB</div>
+        </div>
+      </a>
+      <a class="file-card" href="01_raw_data.xlsx" download>
+        <span class="icon">🗂️</span>
+        <div class="file-info">
+          <div class="file-name">01_raw_data.xlsx</div>
+          <div class="file-desc">原始数据 300条 × 15列（含采集报告+材料价格）</div>
+          <div class="file-size">27 KB</div>
+        </div>
+      </a>
+      <a class="file-card" href="02_clean_data.xlsx" download>
+        <span class="icon">🧹</span>
+        <div class="file-info">
+          <div class="file-name">02_clean_data.xlsx</div>
+          <div class="file-desc">清洗后数据 295条 × 18列 + 描述性统计</div>
+          <div class="file-size">38 KB</div>
+        </div>
+      </a>
+      <a class="file-card" href="03_feature_stats.xlsx" download>
+        <span class="icon">📈</span>
+        <div class="file-info">
+          <div class="file-name">03_feature_stats.xlsx</div>
+          <div class="file-desc">VIF多重共线性 + Pearson相关系数矩阵</div>
+          <div class="file-size">7 KB</div>
+        </div>
+      </a>
+      <a class="file-card" href="04_model_results.xlsx" download>
+        <span class="icon">🏆</span>
+        <div class="file-info">
+          <div class="file-name">04_model_results.xlsx</div>
+          <div class="file-desc">5模型对比 MAPE/RMSE/R² + Bootstrap 95%CI</div>
+          <div class="file-size">5 KB</div>
+        </div>
+      </a>
+      <a class="file-card" href="05_shap_importance.xlsx" download>
+        <span class="icon">🔍</span>
+        <div class="file-info">
+          <div class="file-name">05_shap_importance.xlsx</div>
+          <div class="file-desc">SHAP特征重要性排序 Top15</div>
+          <div class="file-size">6 KB</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 12张图 -->
+  <div class="section">
+    <h2>🖼️ 论文图表（300dpi，可直接插入Word）</h2>
+    <div class="file-grid">
+      <a class="file-card" href="figures/fig3-1_correlation_heatmap.png" download><span class="icon">🔥</span><div class="file-info"><div class="file-name">图3-1 Pearson相关性热力图</div><div class="file-desc">第3章 指标体系</div><div class="file-size">347 KB</div></div></a>
+      <a class="file-card" href="figures/fig3-2_vif.png" download><span class="icon">📊</span><div class="file-info"><div class="file-name">图3-2 VIF多重共线性检验</div><div class="file-desc">第3章 指标体系</div><div class="file-size">184 KB</div></div></a>
+      <a class="file-card" href="figures/fig4-1_distribution.png" download><span class="icon">📉</span><div class="file-info"><div class="file-name">图4-1 造价分布（log变换前后）</div><div class="file-desc">第4章 数据处理 | K-S检验</div><div class="file-size">152 KB</div></div></a>
+      <a class="file-card" href="figures/fig4-2_unit_cost_by_province.png" download><span class="icon">🗺️</span><div class="file-info"><div class="file-name">图4-2 各省份造价箱线图</div><div class="file-desc">第4章 区域差异分析</div><div class="file-size">167 KB</div></div></a>
+      <a class="file-card" href="figures/fig4-3_cost_analysis.png" download><span class="icon">📅</span><div class="file-info"><div class="file-name">图4-3 造价影响因素分析</div><div class="file-desc">第4章 结构类型+年份趋势</div><div class="file-size">208 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-1_model_comparison.png" download><span class="icon">🏅</span><div class="file-info"><div class="file-name">图5-1 模型性能对比</div><div class="file-desc">第5章 MAPE+R²对比</div><div class="file-size">207 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-2_pred_vs_actual.png" download><span class="icon">🎯</span><div class="file-info"><div class="file-name">图5-2 预测值vs实际值散点图</div><div class="file-desc">第5章 最优模型(Ridge R²=0.863)</div><div class="file-size">202 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-3_residuals.png" download><span class="icon">🔬</span><div class="file-info"><div class="file-name">图5-3 残差诊断图</div><div class="file-desc">第5章 残差分布+方差齐性</div><div class="file-size">183 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-4_shap_bar.png" download><span class="icon">📊</span><div class="file-info"><div class="file-name">图5-4 SHAP特征重要性</div><div class="file-desc">第5章 全局重要性Bar图</div><div class="file-size">216 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-5_shap_beeswarm.png" download><span class="icon">🐝</span><div class="file-info"><div class="file-name">图5-5 SHAP蜂群图</div><div class="file-desc">第5章 特征影响方向</div><div class="file-size">263 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-6_shap_dependence.png" download><span class="icon">📐</span><div class="file-info"><div class="file-name">图5-6 SHAP依赖图</div><div class="file-desc">第5章 钢材价格指数边际效应</div><div class="file-size">112 KB</div></div></a>
+      <a class="file-card" href="figures/fig5-7_learning_curve.png" download><span class="icon">📚</span><div class="file-info"><div class="file-name">图5-7 XGBoost学习曲线</div><div class="file-desc">第5章 过拟合诊断</div><div class="file-size">170 KB</div></div></a>
+    </div>
+  </div>
+
+  <div class="warn">
+    ⚠️ 数据说明：造价数值以国家统计局NBS省级均价为基准（±15%），工程技术特征按住建部统计规律生成。
+    在本地网络运行 <code>python run_all.py</code> 可自动爬取NBS真实数据。详见「图表数据来源说明.xlsx → 数据说明与局限性」。
+  </div>
+</div>
+</body>
+</html>
