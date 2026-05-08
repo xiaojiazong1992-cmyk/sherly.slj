@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>90 天蜕变计划 · 数据科学 × 金融量化 × 健康减脂</title>
+<style>
+  :root{
+    --bg:#0b1224; --bg2:#0f1a36; --card:#142046; --line:#1f2d5c;
+    --ink:#e8efff; --dim:#94a3c4; --accent:#4ea1ff; --good:#18d27a;
+    --warn:#ffb547; --bad:#ff5c7a; --gold:#ffd166;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:linear-gradient(180deg,#070b1a,#0b1224);color:var(--ink);font:14px/1.55 -apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:rgba(20,32,70,.6);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
+  header h1{margin:0;font-size:18px;letter-spacing:.5px}
+  header .sub{color:var(--dim);font-size:12px;margin-top:4px}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px 20px 80px}
+  .grid{display:grid;gap:16px}
+  .row{display:grid;gap:16px;grid-template-columns:1.1fr .9fr}
+  @media (max-width:900px){.row{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .card h2{margin:0 0 10px;font-size:15px;color:#cfe0ff;letter-spacing:.3px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#1a2b5e;color:#9ec1ff;font-size:11px;margin-right:6px}
+  .pill.good{background:#0f3a26;color:#7ff0b6}
+  .pill.warn{background:#3a2c0e;color:#ffd28a}
+  .pill.bad{background:#3a0f1d;color:#ff9bb1}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .nav button{background:var(--bg2);color:var(--ink);border:1px solid var(--line);padding:8px 12px;border-radius:10px;cursor:pointer}
+  .nav button.active{background:var(--accent);border-color:var(--accent);color:#031124;font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .stat{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .stat .v{font-size:22px;font-weight:700;color:#fff}
+  .stat .k{font-size:11px;color:var(--dim);margin-top:2px}
+  .task{display:flex;align-items:flex-start;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0f1a36;margin-bottom:8px}
+  .task input[type=checkbox]{margin-top:3px;transform:scale(1.2);accent-color:var(--good)}
+  .task .label{flex:1}
+  .task .cat{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+  .task .title{font-weight:600}
+  .task .tip{color:var(--dim);font-size:12px;margin-top:3px}
+  .heat{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:8px}
+  .cell{aspect-ratio:1;border-radius:3px;background:#1a2750;border:1px solid #1f2d5c;cursor:pointer;font-size:9px;color:#7d8db5;display:flex;align-items:center;justify-content:center}
+  .cell.today{outline:2px solid var(--gold)}
+  .cell.s1{background:#0f3a26}.cell.s2{background:#138a4f}.cell.s3{background:#18d27a;color:#03301a}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:#9ec1ff;font-weight:600;background:#0f1a36;position:sticky;top:60px}
+  input[type=number],input[type=date],input[type=text]{background:#0a1430;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  button.primary{background:var(--accent);color:#031124;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);padding:7px 12px;border-radius:10px;cursor:pointer}
+  .wbar{height:8px;background:#0a1430;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .wbar > span{display:block;height:100%;background:linear-gradient(90deg,#18d27a,#4ea1ff)}
+  .muted{color:var(--dim)}
+  details{background:#0f1a36;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+  details summary{cursor:pointer;font-weight:600}
+  .kbd{background:#0a1430;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  .week-banner{background:linear-gradient(90deg,#1b3a78,#0f1a36);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+  .week-banner h3{margin:0 0 4px;color:#fff}
+  .week-banner p{margin:0;color:var(--dim);font-size:12.5px}
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .danger{color:var(--bad)}
+  ul.compact{margin:6px 0 0 18px;padding:0}
+  ul.compact li{margin-bottom:3px}
+</style>
+</head>
+<body>
+<header>
+  <h1>90 天蜕变计划 <span class="muted">· 小白 → 大师</span></h1>
+  <div class="sub">数据科学 × 金融量化 · 减重 10kg · 脾胃调养 · 启动日 <span id="startDate"></span></div>
+</header>
+
+<div class="wrap">
+  <div class="nav">
+    <button data-tab="today" class="active">今日打卡</button>
+    <button data-tab="plan">90 天总览</button>
+    <button data-tab="metrics">体重 & 体型</button>
+    <button data-tab="brief">原则与底层逻辑</button>
+    <button data-tab="data">数据导入导出</button>
+  </div>
+
+  <!-- TODAY -->
+  <section id="tab-today">
+    <div class="row">
+      <div class="card">
+        <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
+          <div>
+            <h2 style="margin:0">第 <span id="dayNum">1</span> 天 · <span id="dayDate"></span></h2>
+            <div class="muted" id="weekTheme" style="font-size:12px;margin-top:3px"></div>
+          </div>
+          <div class="toolbar">
+            <button class="ghost" onclick="shiftDay(-1)">← 昨日</button>
+            <button class="ghost" onclick="shiftDay(1)">明日 →</button>
+            <button class="primary" onclick="goToday()">回到今天</button>
+          </div>
+        </div>
+        <div id="todayTasks"></div>
+        <div class="muted" style="font-size:12px;margin-top:8px">
+          提示：每完成一项立即勾选；当日完成 ≥ 80% 计入连胜。所有数据保存在你本地浏览器。
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>状态总览</h2>
+          <div class="stats">
+            <div class="stat"><div class="v" id="sStreak">0</div><div class="k">连续达成（天）</div></div>
+            <div class="stat"><div class="v" id="sDone">0</div><div class="k">累计达成天数</div></div>
+            <div class="stat"><div class="v" id="sRate">0%</div><div class="k">总体完成率</div></div>
+            <div class="stat"><div class="v" id="sLeft">90</div><div class="k">剩余天数</div></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="muted" style="font-size:12px;margin-bottom:4px">体重进度（目标 -10kg）</div>
+            <div class="wbar"><span id="wBar"></span></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-top:4px">
+              <span>起 56.3kg</span><span id="wNow">--</span><span>目标 46.3kg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>90 天热力图</h2>
+          <div id="heat" class="heat"></div>
+          <div class="muted" style="font-size:11px;margin-top:6px">点击格子快速跳转该天</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>每日通用守则（脾胃友好版）</h2>
+      <ul class="compact">
+        <li>晨起 200ml 温水 + 5min 腹式呼吸；空腹不冰饮、不浓茶。</li>
+        <li>三餐七分饱，<b>每口咀嚼 25–30 次</b>；餐后慢走 15min 再坐下学习。</li>
+        <li>避免：生冷/沙拉/冰奶茶/糯米/油炸/碳酸/豆浆+鸡蛋同食。</li>
+        <li>友好食材：小米、山药、南瓜、红枣、生姜、陈皮、鲈鱼、蒸蛋、小米粥配蔬菜。</li>
+        <li>嗳气频繁时按压 <b>内关</b>（腕横纹上 2 寸）+ <b>中脘</b>（脐上 4 寸）各 1 分钟。</li>
+        <li>23:00 前入睡；睡前 90min 不再进食、不刷盘中商品。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="tab-plan" hidden>
+    <div id="planView"></div>
+  </section>
+
+  <!-- METRICS -->
+  <section id="tab-metrics" hidden>
+    <div class="row">
+      <div class="card">
+        <h2>每日体重 / 腰围记录</h2>
+        <div class="toolbar" style="margin-bottom:10px">
+          <input type="date" id="mDate" />
+          <input type="number" step="0.1" id="mW" placeholder="体重 kg" style="width:110px"/>
+          <input type="number" step="0.1" id="mWa" placeholder="腰围 cm" style="width:110px"/>
+          <input type="number" step="0.1" id="mFat" placeholder="体脂 %" style="width:110px"/>
+          <button class="primary" onclick="saveMetric()">记录</button>
+        </div>
+        <table id="mTable">
+          <thead><tr><th>日期</th><th>体重</th><th>腰围</th><th>体脂%</th><th>对比起点</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h2>初始数据 / 目标</h2>
+        <ul class="compact">
+          <li>性别：女 · 年龄：22 · 身高：153cm</li>
+          <li>起点体重：56.3kg · 体脂量：17.7kg（约 <b>31.4%</b>，偏高）</li>
+          <li>去脂体重：38.6kg · 肌肉量：35.9kg · 骨质：2.7kg</li>
+          <li>BMR ≈ <b>1248 kcal</b>；轻度活动 TDEE ≈ <b>1500–1700 kcal</b></li>
+          <li>能量缺口：约 <b>500–650 kcal/天</b>，每周减 0.6–0.8kg（健康可持续）</li>
+          <li>蛋白质摄入：<b>≥ 65g/天</b>（保护肌肉、防止反弹）</li>
+          <li>3 个月目标：体重 <b>46–47kg</b>、体脂率 <b>≤ 22%</b>、腰围 -8cm</li>
+        </ul>
+        <p class="muted" style="font-size:12px;margin-top:8px">注：减重并非线性。第 1–10 天多为水分回落（−1.5kg 内属正常），真正脂肪下降发生在第 3 周后。脾胃虚者优先<b>稳定消化</b>，再逐步加大缺口。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIEF -->
+  <section id="tab-brief" hidden>
+    <div class="card">
+      <h2>底层方法论（来自神经科学 / 金融学 / 语言学 / 运动学）</h2>
+
+      <details open><summary>1. 神经科学：把习惯放在已存在的钩子上</summary>
+        <ul class="compact">
+          <li><b>提示 → 行为 → 奖励</b>（Habit Loop）。每个新任务都绑定一个旧动作：例如"刷完牙 → 立刻打开 VSCode 写 5 行 Python"。</li>
+          <li><b>多巴胺峰值在期待而非完成</b>。每天用一份"小胜利清单"在傍晚回顾，强化路径。</li>
+          <li><b>间隔重复（Spaced Repetition）</b>：DS/量化新概念用 Anki，复习节奏 1d / 3d / 7d / 21d。</li>
+          <li><b>睡眠是学习的离线编译器</b>。23:00 前入睡，午间 20 分钟 NSDR/小睡可提升当日学习留存约 20%。</li>
+        </ul>
+      </details>
+
+      <details><summary>2. 学习语言学：先读、再改、最后写</summary>
+        <ul class="compact">
+          <li>学 Python/SQL/策略代码不是从空白开始。先<b>大量读优秀代码</b>（pandas 官方示例、quantopian 旧策略），再<b>修改</b>，最后<b>从零写</b>。</li>
+          <li>每天产出一段 <b>"昨日学到的，用一句话讲给奶奶听"</b>（费曼技巧），写到打卡表。</li>
+        </ul>
+      </details>
+
+      <details><summary>3. 金融学：先理解风险，再追求收益</summary>
+        <ul class="compact">
+          <li>学习顺序：金融市场结构 → 资产定价（CAPM/Fama-French）→ 因子模型 → 时间序列 → 组合优化 → 实盘风控。</li>
+          <li>原则：<b>不要在没有回测的情况下相信任何策略</b>；<b>夏普 &lt; 1 的策略不要上实盘</b>；永远先做<b>样本外测试</b>。</li>
+          <li>把"减肥"也当作量化项目：能量缺口=策略，体重=PnL，便秘/嗳气=回撤，每周复盘=回测。</li>
+        </ul>
+      </details>
+
+      <details><summary>4. 运动 & 中医（脾胃虚弱定制）</summary>
+        <ul class="compact">
+          <li>避免空腹高强度有氧；优先 <b>抗阻训练</b>（保留肌肉=保留代谢）+ <b>餐后快走</b>（降餐后血糖、助消化）。</li>
+          <li>每周 3 次力量（自重+小哑铃 30min）+ 4 次快走（每次 6000–8000 步）+ 1 次低强度瑜伽（脾经/胃经拉伸）。</li>
+          <li><b>嗳气/胀气</b>：八段锦"调理脾胃须单举"每日 1 组；按压<b>足三里</b>（外膝眼下 3 寸）3 分钟。</li>
+          <li>不在饱腹后立刻坐着学习。形成"吃 → 走 → 学"节律。</li>
+        </ul>
+      </details>
+
+      <details><summary>5. 节奏：番茄 + 深工作 + 双轨学习</summary>
+        <ul class="compact">
+          <li>每天 <b>2 个 90 分钟深度块</b>（早上 DS、晚上 量化）+ <b>3 个番茄复习/编码块</b>。</li>
+          <li>"双轨"学习：当周同时推进一个 DS 主题 + 一个金融主题，<b>互相成为彼此的应用场景</b>（用 pandas 做因子分析、用 sklearn 做选股）。</li>
+        </ul>
+      </details>
+
+      <details><summary>6. 风险与红线</summary>
+        <ul class="compact">
+          <li>体重单周下降 &gt; 1.5kg 或心率/睡眠明显下滑 → 把日热量上调 150–200 kcal。</li>
+          <li>嗳气连续 3 天加重、出现胃痛/反酸 → 暂停高强度训练，回到温粥+蒸食 3 天，必要时就医。</li>
+          <li>学习卡顿连续 2 天 → 把当日任务砍半，<b>保住打卡链条比完成度更重要</b>。</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section id="tab-data" hidden>
+    <div class="card">
+      <h2>导入 / 导出 / 重置</h2>
+      <div class="toolbar">
+        <button class="primary" onclick="exportData()">导出 JSON 备份</button>
+        <button class="ghost" onclick="document.getElementById('imp').click()">导入 JSON</button>
+        <input type="file" id="imp" accept="application/json" hidden onchange="importData(event)" />
+        <button class="ghost danger" onclick="resetAll()">清空全部数据</button>
+      </div>
+      <p class="muted" style="font-size:12px">所有数据仅保存在当前浏览器 localStorage（key 前缀 <span class="kbd">plan90</span>）。换设备请用导出 JSON。</p>
+      <h2 style="margin-top:18px">设置启动日</h2>
+      <div class="toolbar">
+        <input type="date" id="setStart" />
+        <button class="primary" onclick="changeStart()">应用</button>
+        <span class="muted" style="font-size:12px">若想从今天开始，留空再点应用即可。</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------------- 90-day curriculum ---------------- */
+const WEEKS = [
+  // M1
+  {w:1,  theme:"M1 W1 · 起点 · 习惯钩子 + Python 立足",
+        ds:["环境装好：Anaconda+VSCode+Jupyter 跑通","Python 变量/类型/分支/循环","列表/字典/字符串切片","函数与作用域，写 5 个小工具函数","NumPy 入门：array、broadcast、轴","pandas Series/DataFrame 基础","小项目：清洗一份 CSV 并出基础统计"],
+        quant:["注册 Tushare/akshare，拉一只股票日线","K 线 / OHLC / 复权理解","均线 MA5/MA20 计算与画图","收益率：算术 vs 对数","市场术语 50 词卡片（Anki）","风险 / 收益 / 波动直觉","一句话讲清『什么是 Alpha、Beta』"]},
+  {w:2,  theme:"M1 W2 · 数据驯服 + 金融常识",
+        ds:["pandas 索引、loc/iloc 精通","groupby + agg + transform","时间索引、resample 周/月","缺失值与异常值的 4 种处理","matplotlib & seaborn 基础图","Kaggle Titanic 数据探索","小项目：A 股每日涨跌分布可视化"],
+        quant:["指数：上证 / 沪深 300 / 中证 500 区别","行业 vs 风格：成长 / 价值 / 红利","Fama 三因子直觉","股息率、PE、PB 含义与陷阱","换手率与流动性","用 pandas 实现 PE 分位数选股雏形","回测的『幸存者偏差』是什么"]},
+  {w:3,  theme:"M1 W3 · 统计基础 + 收益率分布",
+        ds:["描述统计：均值/中位数/方差/分位","概率分布：正态、对数正态、t","假设检验：t 检验 / 卡方","相关与回归（OLS）手推一遍","statsmodels 跑一次线性回归","可视化残差，判断异方差","Anki：50 张统计概念卡"],
+        quant:["收益率为何近似对数正态","年化收益与年化波动公式","夏普比率手算 + Python 实现","最大回撤的 3 种实现","用 1 年日线算一只股票的 Sharpe / MDD","'肥尾' 与极端事件","写一段 README 总结本周"]},
+  {w:4,  theme:"M1 W4 · SQL + 项目化",
+        ds:["SQL：SELECT/JOIN/GROUP/窗口函数","SQLite 在 Python 里读写","把 1 年股票数据塞进 SQLite","写 SQL 取月度涨幅 Top10","数据透视：pivot_table","小项目：本月行业涨幅热力图","Git/GitHub 第一个仓库 push"],
+        quant:["资产定价直觉：折现现金流","债券价格 / 收益率反向关系","期权 4 种基本形态（不深入）","做空 / 融券 / 杠杆风险","'胜率 vs 赔率' 的取舍","写一份 1 页 PDF：M1 我学到了什么","M1 复盘 + M2 目标对齐"]},
+  // M2
+  {w:5,  theme:"M2 W5 · 机器学习落地",
+        ds:["sklearn 流水线：train/test split","逻辑回归原理 + 实战","决策树与可视化","随机森林 + 特征重要性","交叉验证 5 折","过拟合的识别与正则","项目：用基本面数据预测下月涨跌（baseline）"],
+        quant:["因子的定义与构造模板","价值 / 动量 / 质量 / 低波 / 规模 五大因子","IC / IR / 分层回测","行业中性化与市值中性化","因子衰减曲线","用 1 个动量因子完成全市场分层回测","结果可视化 + 写复盘"]},
+  {w:6,  theme:"M2 W6 · 时间序列入门",
+        ds:["ADF 检验、平稳性","自相关 ACF / PACF","ARIMA 直觉与拟合","GARCH（理解即可）","用 statsmodels 拟合上证收益率","Prophet 跑一次 baseline","对比：模型并不一定比 MA 强"],
+        quant:["双均线策略 v1（含手续费/滑点）","止盈止损模块","参数搜索的危险（曲线拟合）","样本外（Walk-Forward）测试","回测引擎选型：backtrader / vnpy 二选一","用 backtrader 跑一次双均线","写一份策略说明书"]},
+  {w:7,  theme:"M2 W7 · 深度学习地基",
+        ds:["PyTorch 张量、autograd","MLP 手写一遍","训练循环 / 优化器 / 学习率","CNN 直觉（图像入门）","RNN / LSTM 直觉（序列）","在 Colab 跑 MNIST","记录调参日志"],
+        quant:["LSTM 预测股票涨跌的常见坑","'数据泄漏' 全部出现形式","特征工程：滚动窗口 / lag","组合优化基础（mean-variance）","风险平价直觉","Black-Litterman 听过即可","看 1 篇 SSRN 的 short paper"]},
+  {w:8,  theme:"M2 W8 · 中期项目周",
+        ds:["把 W5 的因子模型重构为可复用包","写测试（pytest）","加日志（logging）","写 README + 例子","部署到 GitHub","写一份 jupyter 报告","录 5 分钟讲解视频（自看）"],
+        quant:["综合策略 v2：3 因子复合 + 风控","完整 walk-forward 回测","统计显著性检验","与基准（沪深 300）对比","归因分析","写 1 页策略报告","M2 复盘 & M3 目标"]},
+  // M3
+  {w:9,  theme:"M3 W9 · 高阶机器学习",
+        ds:["XGBoost / LightGBM 实战","SHAP 可解释性","类别不平衡 / 采样","贝叶斯调参（optuna）","特征选择的 3 类方法","模型监控与漂移","项目：选股模型 v3 上 LGB"],
+        quant:["事件驱动策略思路","可转债 / ETF 套利常识","期货基础（保证金/到期）","高频与低频的边界","真实交易成本拆解","写一段：'我为什么不上高频'","研究日志结构化"]},
+  {w:10, theme:"M3 W10 · 工程化与部署",
+        ds:["Docker 入门","FastAPI 提供模型服务","调度：airflow / cron 选一个","简易看板 streamlit","数据库选型（PostgreSQL）","云端部署一次（任意）","写部署 runbook"],
+        quant:["实盘 vs 回测的 7 个差","券商 API 概览（不入金）","纸面交易（paper trading）","风控：最大回撤、单票上限、行业上限","组合再平衡频率","压力测试（极端行情）","策略归档模板"]},
+  {w:11, theme:"M3 W11 · 综合作品集冲刺",
+        ds:["把策略 + 模型 + 看板串成一个作品集","写一篇 Medium / 知乎技术博客","在 GitHub README 放结果图","简历草稿 v1","面试 50 题（统计/ML）刷题","面试 30 题（量化）刷题","模拟自我介绍 90 秒"],
+        quant:["阅读 1 份知名私募研究报告","总结 3 种你看懂的 alpha 来源","写'我的研究方法论'","建一个长期可维护的研究模板仓库","策略路线图 v1","风险管理 checklist","M3 中期复盘"]},
+  {w:12, theme:"M3 W12 · 收尾 · 大师启航",
+        ds:["作品集打磨与提交","在 1 个真实数据集上端到端跑通","写'90 天我学到了什么'长文","录 10 分钟项目讲解","收集 3 位朋友反馈","建立持续学习节奏（每周 6h）","M3 数据科学闭环复盘"],
+        quant:["完整模拟盘运行 1 周","出最终回测+实盘对比报告","建立每周市场扫描例行","制定下一阶段 6 个月计划","订阅 3 个高质量信息源","和 1 位行业人请教 30min","正式给自己颁发'结业证'"]}
+];
+
+const BODY_BY_WEEK = [
+  // 12 weeks; each entry: {focus, days[7]} where days[i] is one-line workout for that day-of-week (mon..sun)
+  {focus:"启动 · 走+核心激活", d:["快走 30min（餐后）","自重核心：平板 3×30s + 鸟狗 3×10","快走 35min","休息+八段锦 1 套","自重下肢：深蹲 3×12 + 臀桥 3×15","快走 40min（晨间空腹温水后）","瑜伽脾胃经拉伸 30min"]},
+  {focus:"建立基线 · 力量 + 走",  d:["哑铃上肢 30min（推/划）","快走 40min","休息+腹式呼吸 10min","哑铃下肢 30min（深蹲/硬拉)","快走 40min","HIIT 12min（低冲击）","瑜伽 30min"]},
+  {focus:"加量 · 步数 8000+",     d:["全身力量 35min","快走 45min","八段锦 + 拉伸","全身力量 35min","快走 45min","HIIT 15min","低强度骑行/瑜伽 40min"]},
+  {focus:"M1 收尾 · 适应评估",    d:["上肢力量 35min","快走 45min","休息（睡眠优先）","下肢+核心 35min","快走 50min","HIIT 15min","瑜伽 40min + 体测"]},
+  {focus:"提速 · 加入 HIIT",      d:["全身力量 40min","快走 45min + HIIT 8min","休息","推/拉日 40min","快走 50min","HIIT 18min（爬坡走替代）","核心 + 瑜伽 40min"]},
+  {focus:"力量进阶",              d:["腿臀日 45min","快走 50min","八段锦 + 拉伸","背肩日 40min","快走 50min","HIIT 18min","瑜伽 40min"]},
+  {focus:"代谢 + 心肺",           d:["全身力量 45min","快走 60min","休息","下肢 45min","快走 60min + 慢跑 5min","HIIT 20min","瑜伽 + 拉筋 50min"]},
+  {focus:"M2 收尾 · 体型微调",    d:["上肢+核心 40min","快走 60min","休息","下肢 45min","快走 60min","HIIT 20min","骑行/泳 45min"]},
+  {focus:"塑形 · 上下肢分化",      d:["推日（胸肩三头）45min","快走 60min","休息","拉日（背二头）45min","快走 60min","HIIT 22min","瑜伽 50min"]},
+  {focus:"耐力 + 抗阻",            d:["腿臀 50min","快走 65min","休息","背肩 45min","慢跑 25min（餐后 1h）","HIIT 22min","核心 + 瑜伽 50min"]},
+  {focus:"冲刺 · 高密度",          d:["全身力量 50min","快走 65min + HIIT 10min","休息","腿臀 50min","慢跑 30min","HIIT 25min","骑行/泳 50min"]},
+  {focus:"收官 · 习惯固化",        d:["上肢 45min","快走 65min","休息","下肢 45min","快走 65min","HIIT 20min","瑜伽 + 体测 + 庆祝"]}
+];
+
+const DIET_BY_WEEK = [
+  "重启脾胃：早小米山药粥+蒸蛋；午鸡胸+杂粮饭+西兰花；晚南瓜小米粥+清蒸鱼；零食：温红枣 3 颗。",
+  "稳定饱腹：早燕麦+水煮蛋+苹果；午糙米+鸡胸+蔬菜；晚清蒸鱼+南瓜+菠菜；下午加 1 杯无糖豆奶（如不胀气）或乳清。",
+  "进入缺口：每餐先吃一手蔬菜，再蛋白，最后碳水；保持 ≥65g 蛋白；晚餐 18:30 前完成。",
+  "M1 收尾：选 1 天复食日（多吃 200kcal 的优质碳水如紫薯）以避免代谢适应。",
+  "升级蛋白：每餐 1 拳掌肉/鱼/蛋；引入希腊酸奶（无糖、室温置 5min 再吃，避免冷刺激）。",
+  "杂粮轮换：紫薯 / 玉米 / 燕麦 / 糙米 / 山药 / 藜麦，避免天天同一种。",
+  "餐后必走：每餐结束 10min 内开始慢走 15min；夜里口馋则按压内关 + 喝 200ml 温陈皮水。",
+  "M2 收尾 · 复盘饮食：找出本月 3 个反复出错的场景（聚餐/外卖/姨妈期），各写 1 个对策。",
+  "塑形期：把碳水部分挪到训练前后；非训练日略减主食 1/4 拳。",
+  "保肌：早餐蛋白 ≥ 25g（2 蛋 + 1 杯无糖豆奶 + 燕麦）。",
+  "冲刺：晚餐改为'蛋白+蔬菜'，主食只在午餐；周末仍保留 1 顿正常社交餐。",
+  "固化：本周不再节食，转入'维持 + 体型'食谱，建立长期可执行版本。"
+];
+
+const MIND_BY_WEEK = [
+  "建立晨间 5min 腹式呼吸 + 晚间 3 件感恩",
+  "番茄钟 25/5：每天至少 6 个番茄",
+  "费曼输出：每天 100 字讲清当日所学",
+  "M1 自我访谈 30min：写下'我为什么要做这件事'",
+  "Anki 复习 ≥ 50 张/天",
+  "每周 1 次同伴对话/直播，强化外部反馈",
+  "睡眠：22:30 关屏；查看 7 日均睡时长",
+  "M2 自我对话：列出 3 个进步与 3 个仍恐惧",
+  "每天 10min 冥想（呼吸+身体扫描）",
+  "记录 3 个'易触发暴食/拖延'的情绪场景与应对",
+  "为下一阶段写一份'未来 6 个月公开承诺'",
+  "完成结业仪式：拍照、写信、奖励自己"
+];
+
+/* ---------------- Build daily tasks ---------------- */
+function dayTasks(dayIdx /* 0..89 */){
+  const w = Math.floor(dayIdx/7);
+  const dow = dayIdx % 7; // 0=Day1 of week, treat as Mon..Sun pattern by w*7 offset
+  const ds = WEEKS[w].ds[dow];
+  const quant = WEEKS[w].quant[dow];
+  const body = BODY_BY_WEEK[w].d[dow];
+  const diet = DIET_BY_WEEK[w];
+  const mind = MIND_BY_WEEK[w];
+  return [
+    {id:"morning", cat:"晨间 · 神经科学钩子", title:"温水 200ml + 5min 腹式呼吸 + 写下今日 1 个最重要任务",
+      tip:"把新习惯绑在已有动作上：起床→喝水→深呼吸→打开打卡页。"},
+    {id:"ds", cat:"数据科学（90min 深度块 · 上午）", title:ds,
+      tip:"先读优秀代码 → 仿写 → 改写。今晚必须用 Anki 写 5 张卡。"},
+    {id:"quant", cat:"金融量化（90min 深度块 · 晚上）", title:quant,
+      tip:"任何策略：先理解风险，再追求收益；不做无回测的交易。"},
+    {id:"body", cat:"运动（脾胃友好）", title:body,
+      tip:"避免空腹大强度；力量优先，餐后必走 15min。"},
+    {id:"diet", cat:"饮食（本周方案）", title:diet,
+      tip:"细嚼慢咽 25–30 次；不冰饮；晚餐 18:30 前；蛋白 ≥ 65g。"},
+    {id:"mind", cat:"心智 / 复盘", title:mind,
+      tip:"睡前用一句话总结今天的胜利（再小都行）。"},
+    {id:"sleep", cat:"睡眠 · 离线编译器", title:"23:00 前关屏入睡，目标 7.5h",
+      tip:"睡前 90min 不进食、不刷信息流。"},
+    {id:"weight", cat:"晨称（空腹排便后）", title:"记录体重 / 腰围 / 体脂",
+      tip:"体重每日波动 ±1kg 正常，看 7 日均线。"}
+  ];
+}
+
+/* ---------------- Storage ---------------- */
+const KEY = "plan90.v1";
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; }
+}
+function save(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
+let state = load();
+if(!state.start){
+  const t = new Date(); t.setHours(0,0,0,0);
+  state.start = t.toISOString().slice(0,10);
+  state.checks = {};      // {dayIdx: {taskId:true}}
+  state.metrics = [];     // [{date, w, waist, fat}]
+  save(state);
+}
+
+/* ---------------- Date helpers ---------------- */
+function startDate(){ return new Date(state.start+"T00:00:00"); }
+function dayIdxOfDate(d){
+  const ms = (new Date(d.getFullYear(),d.getMonth(),d.getDate()) - startDate())/86400000;
+  return Math.floor(ms);
+}
+function dateOfDayIdx(i){
+  const d = new Date(startDate()); d.setDate(d.getDate()+i); return d;
+}
+function fmt(d){ return d.toISOString().slice(0,10); }
+
+let viewIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date())));
+
+/* ---------------- Render ---------------- */
+function render(){
+  document.getElementById("startDate").textContent = state.start;
+  document.getElementById("dayNum").textContent = viewIdx+1;
+  document.getElementById("dayDate").textContent = fmt(dateOfDayIdx(viewIdx));
+  const w = Math.floor(viewIdx/7);
+  document.getElementById("weekTheme").textContent = WEEKS[w].theme + " · 训练焦点：" + BODY_BY_WEEK[w].focus;
+
+  // tasks
+  const host = document.getElementById("todayTasks");
+  const checks = state.checks[viewIdx] || {};
+  host.innerHTML = "";
+  dayTasks(viewIdx).forEach(t=>{
+    const wrap = document.createElement("div"); wrap.className="task";
+    const cb = document.createElement("input"); cb.type="checkbox"; cb.checked = !!checks[t.id];
+    cb.addEventListener("change", ()=>{
+      state.checks[viewIdx] = state.checks[viewIdx] || {};
+      state.checks[viewIdx][t.id] = cb.checked; save(state); updateStats(); renderHeat();
+    });
+    const lab = document.createElement("div"); lab.className="label";
+    lab.innerHTML = `<div class="cat">${t.cat}</div><div class="title">${t.title}</div><div class="tip">${t.tip}</div>`;
+    wrap.appendChild(cb); wrap.appendChild(lab);
+    host.appendChild(wrap);
+  });
+
+  updateStats(); renderHeat(); renderPlan(); renderMetrics();
+}
+function shiftDay(n){ viewIdx = Math.max(0,Math.min(89,viewIdx+n)); render(); }
+function goToday(){ viewIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date()))); render(); }
+
+function dayCompletion(i){
+  const c = state.checks[i] || {}; const total = 8;
+  let n=0; for(const k in c) if(c[k]) n++;
+  return n/total;
+}
+function updateStats(){
+  let done=0, sum=0, streak=0;
+  const todayIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date())));
+  for(let i=0;i<=todayIdx;i++){
+    const r = dayCompletion(i); sum += r;
+    if(r>=0.8) done++;
+  }
+  // current streak (look back from today)
+  for(let i=todayIdx;i>=0;i--){ if(dayCompletion(i)>=0.8) streak++; else break; }
+  document.getElementById("sStreak").textContent = streak;
+  document.getElementById("sDone").textContent = done;
+  document.getElementById("sRate").textContent = Math.round( (sum/(todayIdx+1))*100 ) + "%";
+  document.getElementById("sLeft").textContent = Math.max(0, 90 - (todayIdx+1));
+
+  const last = state.metrics[state.metrics.length-1];
+  const startW = 56.3, target = 46.3;
+  if(last){
+    const pct = Math.max(0, Math.min(100, (startW-last.w)/(startW-target)*100 ));
+    document.getElementById("wBar").style.width = pct+"%";
+    document.getElementById("wNow").textContent = "当前 "+last.w.toFixed(1)+"kg";
+  }else{
+    document.getElementById("wBar").style.width = "0%";
+    document.getElementById("wNow").textContent = "未记录";
+  }
+}
+function renderHeat(){
+  const host = document.getElementById("heat"); host.innerHTML="";
+  const today = Math.max(0,Math.min(89, dayIdxOfDate(new Date())));
+  for(let i=0;i<90;i++){
+    const r = dayCompletion(i);
+    let cls="cell";
+    if(r>=0.8) cls+=" s3"; else if(r>=0.5) cls+=" s2"; else if(r>0) cls+=" s1";
+    if(i===today) cls+=" today";
+    const c = document.createElement("div"); c.className=cls; c.textContent=i+1;
+    c.title = `第 ${i+1} 天 · ${fmt(dateOfDayIdx(i))} · 完成度 ${Math.round(r*100)}%`;
+    c.onclick = ()=>{ viewIdx=i; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    host.appendChild(c);
+  }
+}
+
+function renderPlan(){
+  const host = document.getElementById("planView"); if(!host) return;
+  let html="";
+  WEEKS.forEach((w,i)=>{
+    html += `<div class="week-banner"><h3>第 ${w.w} 周 · ${w.theme}</h3><p>训练：${BODY_BY_WEEK[i].focus} · 饮食：${DIET_BY_WEEK[i]} · 心智：${MIND_BY_WEEK[i]}</p></div>`;
+    html += `<table><thead><tr><th>日</th><th>数据科学</th><th>金融量化</th><th>运动</th></tr></thead><tbody>`;
+    for(let d=0;d<7;d++){
+      const idx = i*7+d;
+      html += `<tr><td>D${idx+1}<br><span class="muted" style="font-size:11px">${fmt(dateOfDayIdx(idx))}</span></td><td>${w.ds[d]}</td><td>${w.quant[d]}</td><td>${BODY_BY_WEEK[i].d[d]}</td></tr>`;
+    }
+    html += `</tbody></table><div style="height:14px"></div>`;
+  });
+  host.innerHTML = html;
+}
+
+/* ---------------- Metrics ---------------- */
+function saveMetric(){
+  const date = document.getElementById("mDate").value || fmt(new Date());
+  const w = parseFloat(document.getElementById("mW").value);
+  const wa = parseFloat(document.getElementById("mWa").value);
+  const fat = parseFloat(document.getElementById("mFat").value);
+  if(isNaN(w)){ alert("请填写体重"); return; }
+  state.metrics = state.metrics.filter(m=>m.date!==date);
+  state.metrics.push({date,w,waist:isNaN(wa)?null:wa,fat:isNaN(fat)?null:fat});
+  state.metrics.sort((a,b)=>a.date.localeCompare(b.date));
+  save(state); renderMetrics(); updateStats();
+}
+function renderMetrics(){
+  const tb = document.querySelector("#mTable tbody"); if(!tb) return;
+  tb.innerHTML="";
+  state.metrics.forEach((m,i)=>{
+    const tr=document.createElement("tr");
+    const diff = (m.w-56.3).toFixed(1);
+    tr.innerHTML = `<td>${m.date}</td><td>${m.w.toFixed(1)} kg</td><td>${m.waist??'-'}</td><td>${m.fat??'-'}</td>
+      <td style="color:${diff<0?'var(--good)':'var(--warn)'}">${diff>0?'+':''}${diff} kg</td>
+      <td><button class="ghost" onclick="delMetric(${i})">删除</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function delMetric(i){ state.metrics.splice(i,1); save(state); renderMetrics(); updateStats(); }
+
+/* ---------------- Tabs ---------------- */
+document.querySelectorAll(".nav button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    const tab=b.dataset.tab;
+    ["today","plan","metrics","brief","data"].forEach(t=>{
+      document.getElementById("tab-"+t).hidden = (t!==tab);
+    });
+  });
+});
+
+/* ---------------- Data IO ---------------- */
+function exportData(){
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "plan90-backup-"+fmt(new Date())+".json"; a.click();
+}
+function importData(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{ try{ state = JSON.parse(r.result); save(state); render(); alert("已导入"); }catch(err){ alert("文件格式不正确"); } };
+  r.readAsText(f);
+}
+function resetAll(){
+  if(!confirm("将清空全部打卡与体重数据，无法恢复。确定？")) return;
+  localStorage.removeItem(KEY);
+  state = {}; location.reload();
+}
+function changeStart(){
+  const v = document.getElementById("setStart").value;
+  state.start = v || fmt(new Date());
+  save(state); render(); alert("已更新启动日为 "+state.start);
+}
+
+document.getElementById("mDate").value = fmt(new Date());
+render();
+</script>
+</body>
+</html>
