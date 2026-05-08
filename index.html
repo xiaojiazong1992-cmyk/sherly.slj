@@ -52,7 +52,8 @@
   .cell.period{box-shadow:inset 0 0 0 2px var(--pink)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-  th{color:#9ec1ff;font-weight:600;background:#0f1a36;position:sticky;top:60px}
+  th{color:#9ec1ff;font-weight:600;background:#0f1a36}
+  #mTable th{position:sticky;top:60px;z-index:1}
   .scroll-x{overflow-x:auto}
   input,select,textarea{background:#0a1430;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:13px}
   input:focus,select:focus,textarea:focus{outline:2px solid var(--accent)}
@@ -132,6 +133,26 @@
   <section id="tab-today" role="tabpanel">
     <div id="phaseAlert"></div>
     <div id="warningAlert"></div>
+    <div id="moodAlert"></div>
+
+    <div class="card" style="margin-bottom:14px;border-color:#3a2c5e">
+      <div class="toolbar" style="justify-content:space-between;flex-wrap:wrap">
+        <div>
+          <h2 style="margin:0;display:inline-block">⚡ 拖延药 · 5 分钟启动</h2>
+          <span class="muted" style="font-size:12px;margin-left:8px">开始永远比完成难。先 5 分钟 — 想停随时停。</span>
+        </div>
+        <div class="toolbar">
+          <button class="primary" onclick="startTimer(5,'5 分钟启动')">⏱ 5 分钟</button>
+          <button class="primary" onclick="startTimer(25,'番茄')" style="background:#ff8fb5;color:#3a0f1d">🍅 25 番茄</button>
+          <button class="ghost" onclick="stopTimer()" id="btnStop" hidden>停止</button>
+          <button class="ghost" onclick="toggleMVD()" id="btnMVD">🪶 极简模式</button>
+          <button class="ghost" onclick="copyReport()">📋 复制今日战报</button>
+        </div>
+      </div>
+      <div id="timerBox" style="margin-top:10px;font-size:36px;font-weight:700;text-align:center;color:#ffd166;display:none;font-family:ui-monospace,Menlo,monospace"></div>
+      <div id="whyBox" style="margin-top:10px"></div>
+    </div>
+
     <div class="row">
       <div class="card">
         <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
@@ -1060,11 +1081,121 @@ function dayTasks(idx){
 }
 
 /* ============================================================
+   ENFP / 拖延症 工具包
+   ============================================================ */
+const WHY_PROMPTS = [
+  "你为什么 90 天前选择开始？把那一刻写下来 ↓",
+  "如果今天放弃，3 个月后的你会感谢现在的你吗？",
+  "完成 1% 比完美 0% 强 100 倍。今天的 1% 是什么？",
+  "ENFP 的超能力：用故事感染自己。今天故事的开头是 —",
+  "你不是在『减肥/学习』，你在练『兑现自己的承诺』。",
+  "拖延不是懒，是恐惧。具体在怕什么？说给自己听。",
+  "5 分钟之后随时可以停。但你大概率不会停。",
+  "现在的 1 分钟，比明天的 1 小时值钱。",
+  "完美主义是拖延的伪装。先丑后美。",
+  "你在为未来的自己投资。她会在第 90 天给你回信。",
+  "不是『要做完』，是『想做』。换一种说法，再读一遍。",
+  "把今天的最小一步说出来 — 用 5 个字以内。",
+  "你不需要意志力。你需要把第一个动作变得离你 30 厘米近。",
+  "进度条比完美重要。链条没断，就是赢。"
+];
+const BADGES = [
+  {n:7,  emoji:"🌱", name:"萌芽",  note:"7 天连胜：神经回路开始建立"},
+  {n:14, emoji:"🌿", name:"抽枝",  note:"14 天连胜：习惯进入自动化"},
+  {n:30, emoji:"🌲", name:"成树",  note:"30 天连胜：身份认同改写中"},
+  {n:60, emoji:"🌳", name:"成林",  note:"60 天连胜：你已经是另一个人"},
+  {n:90, emoji:"🏆", name:"大师",  note:"90 天结业：你做到了"}
+];
+const KEYSTONE_IDS = ["morning","ds","quant","sleep"]; // 极简模式只保留这 4 项
+
+let timerInterval = null;
+function startTimer(minutes, label){
+  if(timerInterval) clearInterval(timerInterval);
+  let left = minutes*60;
+  const box = document.getElementById("timerBox"); box.style.display="block";
+  document.getElementById("btnStop").hidden = false;
+  const tick = ()=>{
+    if(left<=0){
+      clearInterval(timerInterval); timerInterval=null;
+      box.textContent = "✅ "+label+" 完成！再续一轮？";
+      try{ new AudioContext(); }catch(e){}
+      return;
+    }
+    const m = Math.floor(left/60), s = String(left%60).padStart(2,"0");
+    box.textContent = `${label} · ${m}:${s}`;
+    left--;
+  };
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+function stopTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
+  document.getElementById("timerBox").style.display="none";
+  document.getElementById("btnStop").hidden = true;
+}
+function toggleMVD(){
+  state.mvd = !state.mvd; save();
+  const btn = document.getElementById("btnMVD");
+  if(btn) btn.textContent = state.mvd ? "🪶 极简模式 · 已开" : "🪶 极简模式";
+  render();
+}
+function currentBadge(streak){
+  let cur = null;
+  for(const b of BADGES){ if(streak >= b.n) cur = b; }
+  return cur;
+}
+function nextBadge(streak){
+  for(const b of BADGES){ if(streak < b.n) return b; }
+  return null;
+}
+function getDailyWhy(){
+  return WHY_PROMPTS[(viewIdx + Math.floor(Date.now()/86400000)) % WHY_PROMPTS.length];
+}
+function copyReport(){
+  const idx = viewIdx;
+  const dateISO = isoLocal(dateOfDayIdx(idx));
+  const tasks = dayTasks(idx);
+  const checks = state.checks[idx] || {};
+  const done = tasks.filter(t=>checks[t.id]).length;
+  const last = state.metrics[state.metrics.length-1];
+  const ph = periodPhase(dateISO);
+  const macro = MACROS_BY_WEEK[Math.min(11,Math.floor(idx/7))];
+  let lines = [];
+  lines.push(`📔 90 天蜕变 · 第 ${idx+1} 天 · ${dateISO}`);
+  if(ph) lines.push(`相位：${ph.phase} D${ph.dayInCycle}`);
+  lines.push(`完成：${done}/${tasks.length}（${Math.round(done/tasks.length*100)}%）`);
+  if(last) lines.push(`体重：${last.w}kg（起点 56.3，距目标 ${(last.w-46.3).toFixed(1)}）`);
+  lines.push(`本日热量目标：${macro.kcal} kcal · P${macro.P}/C${macro.C}/F${macro.F}g`);
+  lines.push("");
+  lines.push("✅ 已完成：");
+  tasks.filter(t=>checks[t.id]).forEach(t=>lines.push(`  · ${t.title.slice(0,40)}`));
+  const undone = tasks.filter(t=>!checks[t.id]);
+  if(undone.length){
+    lines.push("");
+    lines.push("⏳ 还差：");
+    undone.slice(0,5).forEach(t=>lines.push(`  · ${t.title.slice(0,40)}`));
+  }
+  lines.push("");
+  lines.push("#90天蜕变 #链条不断");
+  const text = lines.join("\n");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>alert("已复制到剪贴板，去你的伙伴群发它 👯"));
+  }else{
+    prompt("手动复制下面的内容：", text);
+  }
+}
+
+/* ============================================================
    Render: Today
    ============================================================ */
 function dayCompletion(i){
   const c = state.checks[i] || {}; const total = dayTasks(i).length;
   let n=0; for(const k in c) if(c[k]) n++; return total ? n/total : 0;
+}
+// Procrastinator-friendly: a day "counts" if all 4 keystones are done.
+function dayKeystoneDone(i){
+  const c = state.checks[i] || {};
+  return KEYSTONE_IDS.every(id => c[id]);
 }
 function render(){
   document.getElementById("startDate").textContent = state.start;
@@ -1096,11 +1227,33 @@ function render(){
   if(wkLoss > 1.5) warns.push("⚠️ 近 7 日体重下降 "+wkLoss.toFixed(1)+"kg，过快。请加 200 kcal/天，重点保肌。");
   wAlert.innerHTML = warns.map(t=>`<div class="alert warn">${t}</div>`).join("");
 
-  // tasks
+  // mood-aware soft alert
+  const moodToday = (state.mood[dateISO]||{}).score;
+  const ma = document.getElementById("moodAlert");
+  if(moodToday && moodToday<=2){
+    ma.innerHTML = `<div class="alert info">💚 今天心情评分 ${moodToday}/5。开启 <b>极简模式</b>，只完成『晨间钩子 + 任意 1 项学习 + 23:00 睡眠』即可保住链条。链条没断就是赢。</div>`;
+  } else { ma.innerHTML = ""; }
+
+  // why box (ENFP fuel)
+  const why = document.getElementById("whyBox");
+  if(why) why.innerHTML = `<div class="alert info" style="margin:0">💡 <b>今日心法：</b>${getDailyWhy()}</div>`;
+  // MVD button label sync
+  const btnMVD = document.getElementById("btnMVD");
+  if(btnMVD) btnMVD.textContent = state.mvd ? "🪶 极简模式 · 已开" : "🪶 极简模式";
+
+  // tasks (MVD filter optional)
   const host = document.getElementById("todayTasks");
   const checks = state.checks[viewIdx] || {};
   host.innerHTML = "";
-  dayTasks(viewIdx).forEach(t=>{
+  let tasks = dayTasks(viewIdx);
+  if(state.mvd) tasks = tasks.filter(t => KEYSTONE_IDS.includes(t.id));
+  if(state.mvd){
+    const banner = document.createElement("div");
+    banner.className="alert good";
+    banner.innerHTML = `🪶 <b>极简模式</b>：今天只看 4 件 keystone 大事。完成它们 = 链条不断。其他 9 项都是 bonus，做了更好，不做也不算输。`;
+    host.appendChild(banner);
+  }
+  tasks.forEach(t=>{
     const wrap = document.createElement("div"); wrap.className="task";
     const cb = document.createElement("input"); cb.type="checkbox"; cb.checked = !!checks[t.id]; cb.id="cb_"+t.id;
     cb.addEventListener("change", ()=>{
@@ -1140,9 +1293,14 @@ function recentWeeklyLoss(){
 function updateStats(){
   let done=0, sum=0, streak=0;
   const t = todayIdx();
-  for(let i=0;i<=t;i++){ const r=dayCompletion(i); sum+=r; if(r>=0.8) done++; }
-  for(let i=t;i>=0;i--){ if(dayCompletion(i)>=0.8) streak++; else break; }
-  document.getElementById("sStreak").textContent = streak;
+  for(let i=0;i<=t;i++){ const r=dayCompletion(i); sum+=r; if(dayKeystoneDone(i)) done++; }
+  for(let i=t;i>=0;i--){ if(dayKeystoneDone(i)) streak++; else break; }
+  const badge = currentBadge(streak);
+  const next = nextBadge(streak);
+  const sStreakEl = document.getElementById("sStreak");
+  sStreakEl.innerHTML = streak + (badge ? ` <span title="${badge.note}">${badge.emoji}</span>` : "");
+  sStreakEl.parentElement.querySelector(".k").textContent =
+    next ? `连胜 · 还差 ${next.n - streak} 天到 ${next.emoji}${next.name}` : "连胜 · 已是 🏆 大师";
   document.getElementById("sDone").textContent = done;
   document.getElementById("sRate").textContent = Math.round((sum/(t+1))*100)+"%";
   document.getElementById("sLeft").textContent = Math.max(0, 90-(t+1));
@@ -1162,7 +1320,9 @@ function renderHeat(){
   for(let i=0;i<90;i++){
     const r = dayCompletion(i);
     let cls="cell";
-    if(r>=0.8) cls+=" s3"; else if(r>=0.5) cls+=" s2"; else if(r>0) cls+=" s1";
+    if(dayKeystoneDone(i)) cls+=" s3";       // 4 keystones done = full green
+    else if(r>=0.5) cls+=" s2";
+    else if(r>0) cls+=" s1";
     if(i===t) cls+=" today";
     const dateISO = isoLocal(dateOfDayIdx(i));
     const ph = periodPhase(dateISO);
