@@ -120,6 +120,8 @@
     <button data-tab="metrics" role="tab">体测 & 趋势</button>
     <button data-tab="skin" role="tab">护肤</button>
     <button data-tab="anki" role="tab">Anki 卡片</button>
+    <button data-tab="english" role="tab">英语 / IELTS</button>
+    <button data-tab="resources" role="tab">资源库</button>
     <button data-tab="plan" role="tab">90 天总览</button>
     <button data-tab="review" role="tab">复盘</button>
     <button data-tab="brief" role="tab">原则</button>
@@ -461,6 +463,77 @@
     </div>
   </section>
 
+  <!-- ENGLISH / IELTS -->
+  <section id="tab-english" role="tabpanel" hidden>
+    <div class="row">
+      <div class="card">
+        <h2>今日英语任务 · <span id="enDate"></span></h2>
+        <div id="enTasks"></div>
+        <div class="muted" style="font-size:12px;margin-top:6px">勾选项与「今日」面板的「英语」打卡同步。</div>
+      </div>
+      <div class="card">
+        <h2>本周聚焦 (<span id="enWeekLabel"></span>)</h2>
+        <div id="enWeekFocus" style="font-size:13.5px;line-height:1.7"></div>
+        <h3>提分目标</h3>
+        <ul class="compact">
+          <li>当前：L 6.5 / S 6.0 / R 7.0 / W 7.0 · 总分 6.5</li>
+          <li>3 个月目标：<b>L 7.5 / S 7.0 / R 7.5 / W 7.5 · 总分 7.5</b></li>
+          <li>核心策略：<b>口语主攻 + 听力精听 + 写作每周 2 篇</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>90 天 IELTS 计划（按周）</h2>
+      <div id="ieltsView"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>每日英语模板（建议 45–60min）</h2>
+      <ul class="compact">
+        <li><b>06:50–07:10 听力精听</b>：BBC 6 Minute English / 剑桥真题 1 节 → 影子跟读 3 遍 + 听写关键句 5 句。</li>
+        <li><b>13:00–13:20 口语录音</b>：1 个 Part 1 题 + 1 个 Part 2 卡片，手机录音回放 2 次，标 3 个连读/弱读。</li>
+        <li><b>20:30–21:00 阅读/写作（隔日）</b>：奇数日精读 1 篇 Cambridge / Economist；偶数日写 1 篇 Task 1 或 Task 2 段落。</li>
+        <li><b>睡前 10min</b>：Anki 雅思核心 30 词；写下今日 1 个新搭配（collocation）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="tab-resources" role="tabpanel" hidden>
+    <div class="row3">
+      <div class="card">
+        <h2>📘 数据科学</h2>
+        <h3>必读书</h3><div id="resDsBooks"></div>
+        <h3>课程 / 视频</h3><div id="resDsCourses"></div>
+        <h3>网站 / 社区</h3><div id="resDsSites"></div>
+      </div>
+      <div class="card">
+        <h2>📈 金融量化</h2>
+        <h3>必读书</h3><div id="resQuantBooks"></div>
+        <h3>课程 / 视频</h3><div id="resQuantCourses"></div>
+        <h3>数据 / 平台 / 社区</h3><div id="resQuantSites"></div>
+      </div>
+      <div class="card">
+        <h2>🌍 英语 / IELTS</h2>
+        <h3>真题与教辅</h3><div id="resEnBooks"></div>
+        <h3>视频频道</h3><div id="resEnCourses"></div>
+        <h3>App / 网站</h3><div id="resEnSites"></div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <div class="card">
+        <h2>🏃 运动指导视频（可在 B 站 / YouTube 搜索关键词）</h2>
+        <div id="resWorkout"></div>
+      </div>
+      <div class="card">
+        <h2>🧴 护肤产品（油皮 + 敏感肌 + 外油内干）</h2>
+        <div class="muted" style="font-size:12px;margin-bottom:8px">分阶段推荐；价格仅参考；任何刺痛/泛红立即停用并回到修复期。</div>
+        <h3>修复期 W1–4 · 屏障 + 防晒</h3><div id="resSkin1"></div>
+        <h3>建设期 W5–8 · VC + 视黄醇 + 控油</h3><div id="resSkin2"></div>
+        <h3>巩固期 W9–12 · 焕肤 + 提亮</h3><div id="resSkin3"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- DATA -->
   <section id="tab-data" role="tabpanel" hidden>
     <div class="card">
@@ -586,6 +659,213 @@ const SKIN_BY_WEEK = [
   "收官：把所有有效项整理成『终身护肤清单』；庆祝并合影对比"
 ];
 
+/* Macro targets per phase: kcal / protein g / carb g / fat g
+   计算：56.3kg total, 38.6kg LBM。蛋白 1.8–2.2g/kg LBM。
+   M1(W1–2 适应) 1500 kcal · M1(W3–4) 1300 · M2 1300 · M3 1200。 */
+const MACROS_BY_WEEK = [
+  {kcal:1500,P:75,C:180,F:55,note:"适应期：缺口小，建立习惯；先吃够蛋白再谈减量"},
+  {kcal:1500,P:75,C:180,F:55,note:"巩固吃法：蔬菜→蛋白→主食的进餐顺序"},
+  {kcal:1300,P:80,C:140,F:50,note:"进入缺口期：晚餐去主食一半，加 1 拳蔬菜"},
+  {kcal:1300,P:80,C:140,F:50,note:"M1 收尾：1 个复食日 1500 kcal，避免代谢适应"},
+  {kcal:1300,P:80,C:140,F:50,note:"M2：开始 HIIT，训练日多吃 1/2 拳碳水（训练前后）"},
+  {kcal:1300,P:80,C:140,F:50,note:"杂粮轮换：紫薯/玉米/燕麦/糙米/山药/藜麦"},
+  {kcal:1200,P:85,C:120,F:48,note:"提速：保持高蛋白；非训练日略减碳水"},
+  {kcal:1300,P:80,C:140,F:50,note:"M2 收尾：复食日 1500 kcal；不要连续 3 天 < 1100 kcal"},
+  {kcal:1200,P:85,C:110,F:48,note:"塑形：碳水集中训练前后；晚餐蛋白+蔬菜"},
+  {kcal:1200,P:85,C:110,F:48,note:"保肌：早餐蛋白 ≥ 25g；睡前 100g 希腊酸奶可选"},
+  {kcal:1200,P:85,C:100,F:48,note:"冲刺：1 顿社交餐；其他严格"},
+  {kcal:1300,P:80,C:130,F:50,note:"固化：转入维持食谱，不再节食"}
+];
+
+/* Concrete daily portion examples — used in 餐前 tip & today macro panel */
+const PORTION_EXAMPLES = {
+  P75: "鸡蛋 2(16g) + 鲈鱼 150g(28g) + 鸡胸 100g(29g) ≈ 73g 蛋白",
+  P80: "鸡蛋 2(16g) + 鲈鱼 200g(37g) + 希腊酸奶 100g(10g) + 鳕鱼 80g(16g) ≈ 79g",
+  P85: "鸡蛋 2(16g) + 鸡胸 150g(43g) + 鲈鱼 150g(28g) ≈ 87g 蛋白",
+  C180: "燕麦干 40g + 杂粮饭 1 碗(150g熟) + 紫薯 150g + 苹果 1 个 ≈ 170-185g 碳水",
+  C140: "燕麦干 30g + 杂粮饭 3/4 碗(110g熟) + 紫薯 100g ≈ 130-145g",
+  C110: "燕麦干 25g + 杂粮饭 1/2 碗(75g熟) + 紫薯 80g ≈ 100-115g",
+  F50:  "橄榄油 15ml + 杏仁 15g + 全蛋 2 个的脂肪 ≈ 48-52g"
+};
+
+/* Skincare products curated for 油皮 + 敏感肌 + 外油内干。
+   字段：[阶段, 类型, 产品名, 价格档位, 适配, 用法/why] */
+const PRODUCTS = [
+  // === 修复期 W1-4 (屏障 + 防晒) ===
+  ["1","洁面","芙丽芳丝氨基酸洁面 100g","¥120","敏感+油皮通用","氨基酸表活；不假滑；新手首选；早晚各 1"],
+  ["1","洁面","理肤泉 Toleriane 温和洁面 200ml","¥130","屏障受损 / 极敏感","泛红/起皮期专用；可以不用清水冲"],
+  ["1","洁面","CeraVe 氨基酸洁面 236ml","¥130","油皮+干燥","含神经酰胺；不破屏障"],
+  ["1","水/喷雾","雅漾大喷 300ml","¥185","敏感+泛红","急救镇定；可日常拍湿；不含酒精"],
+  ["1","水/喷雾","理肤泉 B5 修复喷雾 300ml","¥220","刺痛/术后","含泛醇；屏障期王者"],
+  ["1","精华","修丽可 B5 凝胶 30ml","¥460","干燥+敏感+缺水","透明质酸+B5；夜用厚敷可代睡眠面膜"],
+  ["1","精华","The Ordinary 透明质酸 HA 2% B5","¥80","学生党补水","平价大碗；建议湿敷脸"],
+  ["1","乳液","珂润润浸保湿乳液 120ml","¥150","干+敏感+冬季","含神经酰胺；油皮觉得腻可只用 T 区外"],
+  ["1","乳液","CeraVe PM 夜间乳液 89ml","¥130","油皮+痘+干","清爽不致痘；含烟酰胺 5%"],
+  ["1","乳液","理肤泉 Toleriane 双修乳 40ml","¥220","脆弱+混合","可用作隔离；屏障期能撑全天"],
+  ["1","T 区单点","痘痘贴（任意水胶体）","¥30","明显痘痘","睡前贴 8h；不要全脸刷酸"],
+  ["1","防晒","ANESSA 安热沙敏感肌粉瓶 60ml","¥230","敏感+油皮","物化结合；2h 补涂；硬核日防"],
+  ["1","防晒","理肤泉 ANTHELIOS UVMUNE400 50ml","¥200","敏感+干油都能用","UVA 防护强；轻薄；适合通勤"],
+  ["1","防晒","Avene 城市防御 50ml","¥160","入门敏感","成分极简；学生党友好"],
+  ["1","身体","凡士林经典润肤露 600ml","¥60","全身缺水","便宜大碗；浴后 3min 内涂全身"],
+  ["1","身体","CeraVe 保湿乳 473ml","¥130","干燥+轻度敏感","含神经酰胺；性价比之王"],
+
+  // === 建设期 W5-8 (VC + 视黄醇 + 控油) ===
+  ["2","VC 早","OLAY 光感小白瓶 40ml（烟酰胺+VC）","¥260","油皮+暗沉","VC 衍生物 + 烟酰胺；提亮控油"],
+  ["2","VC 早","Naturium VC 衍生物 12% 30ml","¥150","敏感肌起步","3-O-乙基抗坏血酸；温和不刺痛"],
+  ["2","VC 早","修丽可 CE Ferulic 30ml","¥1500","进阶+预算够","L-AA 15%；金标准抗氧化；先小区试用"],
+  ["2","烟酰胺","SkinCeuticals 修丽可 烟酰胺紧致提亮 30ml","¥780","油皮+毛孔粗","2.5% 起步；新手敏感肌别上 10%"],
+  ["2","烟酰胺","The Ordinary 烟酰胺 10% + 锌 30ml","¥80","油皮+痘印","平价首选；敏感肌从 2-5% 起步"],
+  ["2","视黄醇 晚","理肤泉 Retinol B3 30ml","¥320","抗老入门","0.3% 视黄醇 + B3 + B5；耐受度高"],
+  ["2","视黄醇 晚","The Ordinary Granactive Retinoid 2% Emulsion 30ml","¥110","敏感肌起步","羟基频哪酮视黄酸酯；温和不刺激"],
+  ["2","视黄醇 晚","Naturium 1% Retinol 30ml","¥160","进阶","乳化型；敏感肌每周 2 次起"],
+  ["2","T 区 BHA","宝拉珍选 2% 水杨酸精华 30ml","¥220","油皮+毛孔","每日单点 T 区；不全脸"],
+  ["2","T 区 BHA","CosRx BHA 黑头液 100ml","¥110","闭口+黑头","BHA 4%；新手隔日"],
+  ["2","面膜","美迪惠尔 N.M.F 针剂面膜 27ml×10","¥140","补水","薄敷 ≤ 15 分钟；油皮也能用"],
+  ["2","面膜","Innisfree 火山泥清洁面膜 100ml","¥110","T 区粗糙","仅 T 区；每周 1 次；5 分钟"],
+  ["2","身体","Aveeno 燕麦保湿乳 532ml","¥130","干+敏感","沐浴后 3min 内厚涂"],
+  ["2","身体","凡士林尿素 5% 修足霜（也可全身）","¥40","脚后跟+小腿干裂","对鸡皮（毛囊角化）友好"],
+
+  // === 巩固期 W9-12 (焕肤 + 提亮) ===
+  ["3","焕肤","Wishtrend 杏仁酸 5% PHA 化妆水 145ml","¥120","巩固期周 1","晚间，次日严格防晒"],
+  ["3","焕肤","痘研 PIBUYEON 杏仁酸 10%","¥160","进阶巩固","每周 1 次；湿敷棉片 5min"],
+  ["3","抗氧","修丽可 CE Ferulic 30ml","¥1500","顶配","金标准；早 VC 一支搞定"],
+  ["3","防晒升级","ANESSA 安热沙金瓶 60ml","¥250","油皮户外","SPF50+ PA++++；持久；每日"],
+  ["3","防晒升级","CeraVe 防晒乳 SPF50 75ml","¥150","通勤","物化结合；不假白；敏感肌可用"],
+  ["3","身体焕肤","First Aid Beauty KP 身体磨砂 226g","¥260","鸡皮","含 AHA+BHA；每周 2 次"],
+  ["3","身体提亮","CeraVe SA 身体乳 296ml","¥150","鸡皮+全身","水杨酸+尿素；改善毛囊粗糙"],
+  ["3","身体补水","Curel 珂润浴乳 420ml","¥140","干+敏感","低刺激；不破屏障"]
+];
+
+/* DS resources */
+const DS_BOOKS = [
+  ["《Python 数据科学手册》Jake VanderPlas","入门必读；NumPy/Pandas/可视化/Sklearn 一站式"],
+  ["《利用 Python 进行数据分析》Wes McKinney","pandas 作者亲笔；做数据清洗的圣经"],
+  ["《统计学习方法》李航 第 2 版","ML 数学骨架；先看一半，遇到再回查"],
+  ["《机器学习实战》Peter Harrington","算法配代码，手敲一遍提升巨大"],
+  ["《动手学深度学习》李沐 d2l.ai","中文 PyTorch 版免费在线；配套 B 站视频"],
+  ["《概率论与数理统计》陈希孺","数学基础；只看必备章节"],
+  ["《赤裸裸的统计学》Charles Wheelan","直觉打底，通勤路上听完"],
+  ["《Hands-On Machine Learning》Aurélien Géron","进阶英文；sklearn+TF/PyTorch 双轨"]
+];
+const DS_COURSES = [
+  ["吴恩达《机器学习》Coursera/B站","入门首选；中文字幕版 B 站搜索量第一"],
+  ["李沐《动手学深度学习》B 站","https://space.bilibili.com/1567748478；配 d2l.ai"],
+  ["林轩田《机器学习基石/技法》B 站","数学基础扎实；推导讲得清"],
+  ["StatQuest with Josh Starmer YouTube","BAM! 把统计/ML 直观化；夜间放松看"],
+  ["3Blue1Brown 神经网络系列 B站/YouTube","可视化反向传播；看完不再害怕梯度"],
+  ["fast.ai Practical Deep Learning","项目驱动；不绕弯子；适合实战派"],
+  ["CS229（Stanford）斯坦福 ML","理论深度；配吴恩达讲义"]
+];
+const DS_SITES = [
+  ["Kaggle","https://kaggle.com — 比赛 + Notebooks + 数据集，Titanic→House Prices→Tabular Playground 路径"],
+  ["Real Python","https://realpython.com — 高质量教程；订阅 newsletter"],
+  ["Towards Data Science","https://towardsdatascience.com — Medium 数据科学专栏；每天读 1 篇"],
+  ["Papers With Code","https://paperswithcode.com — 论文+代码并列；找 SOTA"],
+  ["d2l.ai","《动手学深度学习》在线书"],
+  ["Distill.pub","可视化 ML 论文；少而精"],
+  ["scikit-learn 官方文档","User Guide 部分质量极高，直接当教程"]
+];
+
+const QUANT_BOOKS = [
+  ["《主动投资组合管理》Grinold & Kahn","量化教父；IC/IR/信息系数源头"],
+  ["《量化投资以 Python 为工具》蔡立耑","中文入门；A 股语境"],
+  ["《因子投资：方法与实践》石川","中国市场因子综述；公式+代码"],
+  ["《打开量化投资的黑箱》Rishi Narang","策略全景；适合非技术理解"],
+  ["《Algorithmic Trading》Ernie Chan","Mean reversion / Momentum 实战书"],
+  ["《Advances in Financial ML》López de Prado","进阶；金融 ML 反过拟合方法论"],
+  ["《Active Portfolio Management》原版（Grinold-Kahn）","进阶；中文版基础上读英文术语"],
+  ["《股市稳赚》Joel Greenblatt","Magic Formula；价值因子直觉"]
+];
+const QUANT_COURSES = [
+  ["B 站「微软量化班」/「Kris 金融」","中文量化系统课程；从 Python 到回测"],
+  ["JoinQuant 聚宽 学院","https://www.joinquant.com — 入门到策略全套教程"],
+  ["BigQuant 教程","https://bigquant.com — AI 量化平台 + 教程"],
+  ["WorldQuant University 免费 MFE","英文进阶；统计套利模块强"],
+  ["Coursera《Investment Management with Python and ML》EDHEC","组合优化、风险平价、Black-Litterman"],
+  ["YouTube QuantPy / Yves Hilpisch","期权定价 + Python 实战"]
+];
+const QUANT_SITES = [
+  ["akshare / Tushare","Python 拿 A 股 / 港股 / 美股数据；akshare 免费"],
+  ["JoinQuant 聚宽 / BigQuant / 米筐","云端策略平台；可纸面交易"],
+  ["知乎专栏「川总写量化」「因子动物园」「石川」","中文一线研究；每周扫一遍"],
+  ["arXiv q-fin","英文论文；筛 cs.LG + q-fin"],
+  ["SSRN","金融论文预印；Lopez de Prado 系列"],
+  ["QuantConnect / Quantpedia","策略灵感库；Quantpedia 有 700+ 已发表策略"],
+  ["Portfolio Visualizer","https://portfoliovisualizer.com — 在线回测 + 因子归因"]
+];
+
+/* English / IELTS resources */
+const EN_BOOKS = [
+  ["剑桥雅思真题 14–19","刷题首选；按套保留 3 套留作模考"],
+  ["《雅思核心词汇 21 天速听速记》","通勤听；3 个月过 2 遍"],
+  ["顾家北《手把手教你雅思写作》第 8 版","写作 6→7 必看；先抄范文再仿写"],
+  ["《剑桥语法在用》中级 + 高级","语法补漏；写作错点直接对应"],
+  ["Pat《雅思口语真经》","Part 2 卡片话术；不背但要内化结构"],
+  ["《九分达人阅读》系列","阅读机经；7→7.5 用"],
+  ["《英语在用》词汇 中级 + 高级","collocation 训练；写作出彩靠搭配"]
+];
+const EN_COURSES = [
+  ["IELTS Liz YouTube","写作/口语评分逻辑最清晰；免费"],
+  ["English Speaking Success Keith YouTube","口语 6→7 跨越；Pronunciation 模块"],
+  ["E2 IELTS YouTube","写作老师 Jay；高分范文拆解"],
+  ["IELTS Advantage YouTube","Reading/Writing 9 分得主 Chris；技巧实战"],
+  ["顾家北 B 站官方账号","中文写作课；写作 6→7 直接看"],
+  ["BBC 6 Minute English Podcast","每日精听 6min；6.5→7.5 听力主食"],
+  ["TED-Ed YouTube","跟读+口语素材；每个 5min 的视频精看 3 遍"]
+];
+const EN_SITES = [
+  ["雅思哥（App）","https://ieltsbro.com — 口语题库季度更新；考前 2 周必扫"],
+  ["Cambridge IELTS Practice","https://www.cambridgeenglish.org — 官方真题/样卷"],
+  ["Anki IELTS Decks","共享牌组；雅思 4500/8000；每天 30 张"],
+  ["italki / Cambly","付费外教 1v1；口语主攻必备"],
+  ["Grammarly","写作即时改语法；免费版够用"],
+  ["The Economist","进阶阅读；每周精读 2 篇"],
+  ["雅思官方 IDP/BC 报名","记得提前 8 周报名抢考位"]
+];
+
+/* Workout videos: searchable on B站 / YouTube. */
+const WORKOUT_VIDEOS = [
+  ["快走 + 走路减肥","B 站：周六野 Zoey 走路操 / Pamela Reif Walking Workout","低冲击；脾胃虚友好；餐后 30min"],
+  ["低冲击 HIIT","Pamela Reif Low Impact HIIT 15min（B 站搬运）","无跳跃版；月经期可做"],
+  ["全身力量（哑铃 5kg）","Caroline Girvan IRON Series（YouTube）","12 周渐进；每周 3 次"],
+  ["新手力量 30min","Heather Robertson Beginner Full Body","可在家；只需哑铃"],
+  ["腿臀塑形","Sydney Cummings Lower Body","一周 1 次；强化臀中肌"],
+  ["核心 + 平板","Pamela Reif 10min Abs / 美丽芭蕾 Mary Helen Bowers","每天 5–10min"],
+  ["瑜伽（脾经胃经）","Yoga With Adriene Yoga for Digestion 25min","餐后 1h 做；助消化、缓嗳气"],
+  ["八段锦","B 站搜「八段锦完整版 国家体育总局」","调理脾胃须单举为主；每天 1 套 12min"],
+  ["普拉提","Move with Nicole（YouTube）/ Move Daily（小红书）","每周 1 次替代力量；保护腰椎"],
+  ["经期友好","B 站：Pamela 经期专属 / Yoga With Adriene Yoga for When You're On Your Period","纯拉伸；不练腹"],
+  ["燃脂操（音乐版）","B 站：韩小四 燃脂操 30min / 帕梅拉 14min","进阶；脾胃虚版可减半"]
+];
+
+/* English 90-day curriculum: 12 weeks, each {focus, daily[7]} */
+const ENGLISH_BY_WEEK = [
+  {focus:"M1 W1 · 基础诊断 + 雅思核心词汇启动",
+   daily:["做剑 14 Test 1 听力 + 听力分类","做剑 14 Test 1 阅读 + 错题分析","写作 Task 1 范文精读 1 篇","口语 Part 1 自我介绍 5 题录音","BBC 6min English 1 期 × 影子跟读","词汇 Anki 30 张（首次过）","总结本周易错点 + 周日休息"]},
+  {focus:"M1 W2 · 听力技巧 + 写作框架",
+   daily:["听力 Section 1 填空精听 + 听写","阅读 Heading Match 题型攻克","Task 2 写作 - 教育类范文 1 篇","口语 P1 家乡 / 工作 题","BBC 6min + TED 5min 各 1","词汇 30 张","写作开头段固定模板（自创 1 套）"]},
+  {focus:"M1 W3 · 阅读速度训练 + 口语流利度",
+   daily:["听力 Section 2 地图题 + 选择","阅读 限时 1 篇 20min","Task 1 - 柱状图范文 1 篇 + 仿写","口语 Part 2 - 描述一个人 卡片","Pod: Luke's English Podcast 1 期","词汇 30 张","本周易错点重做"]},
+  {focus:"M1 W4 · M1 模考 + 复盘",
+   daily:["剑 15 Test 1 听力 模考","剑 15 Test 1 阅读 模考","Task 2 - 科技类 1 篇","口语 P2 - 描述一段经历 卡片","6min English 复盘 W1-3","Anki 复习全部到期","M1 复盘：分项分数 + 弱项确认"]},
+  {focus:"M2 W5 · 口语主攻 (S6→7 关键) + 听力提速",
+   daily:["听力 Section 3 学术对话精听","阅读 T/F/NG 题型","Task 1 - 流程图 1 篇","【主攻】口语 P3 抽 5 题，全部录音 + 回放","BBC 6min + Speaking Success Keith 1 期","词汇 30 张 + 高频搭配 10 个","与外教 1v1 30min（italki）"]},
+  {focus:"M2 W6 · 写作高分句型 + 听力 S4 学术讲座",
+   daily:["听力 Section 4 学术讲座 精听","阅读 Matching Information 题型","Task 2 - 政府类范文精读 + 仿写","口语 P2 - 描述一个地方 卡片","TED-Ed 1 个视频精看 3 遍","词汇 30 张","写作老师批改 1 篇（淘宝 / 老师）"]},
+  {focus:"M2 W7 · 真题强化 + 口语录音对比",
+   daily:["剑 16 Test 1 听力 模考","剑 16 Test 1 阅读 模考","Task 1 - 地图题 1 篇","口语 P1+P2+P3 全套录音","Pod: All Ears English 1 期","词汇 30 张","与外教 1v1 30min"]},
+  {focus:"M2 W8 · M2 模考 + 弱项专攻",
+   daily:["剑 16 Test 2 听力 模考","剑 16 Test 2 阅读 模考","Task 2 - 健康类 1 篇","口语全题模考（找朋友/外教）","6min + TED 各 1","词汇 30 张","M2 复盘：当前分项预测分"]},
+  {focus:"M3 W9 · 高分句型 + 学术词替换",
+   daily:["听力难题专项（数字/拼写）","阅读 高难度文章（剑 17）","Task 2 - 环境类 1 篇 + 高分替换词 20 个","口语 P3 抽象题专攻（人生/社会）","Speaking Success Keith Pronunciation","词汇 30 张","本周写作老师批改"]},
+  {focus:"M3 W10 · 写作冲 7.5 + 阅读 9 分技巧",
+   daily:["听力 Section 4 + 错题精听","阅读 Heading + Matching 综合","Task 1 双图比较 1 篇","口语 P2 - 描述事件 卡片","TED 1 个 + 影子跟读","词汇 30 张","写作 Task 1 + Task 2 各 1 篇"]},
+  {focus:"M3 W11 · 全真模考 + 时间管理",
+   daily:["剑 17 Test 1 听力 全真","剑 17 Test 1 阅读 全真","剑 17 Test 1 写作 全真（60min）","剑 17 Test 1 口语 模考（找老师）","错题分析（4 项）","词汇冲刺 30 张","休整 + 心理建设"]},
+  {focus:"M3 W12 · 考前冲刺 + 题库扫描",
+   daily:["剑 18 Test 1 听力","剑 18 Test 1 阅读","剑 18 Test 1 写作","口语题库（雅思哥）刷季度新题","常见错点最后扫一遍","词汇高频补漏","考试当天：早起 + 早餐温暖 + 提前到场"]}
+];
+
 /* Workout details: ~25 exercises mapped from BODY descriptions */
 const WORKOUT_DETAIL = {
   "深蹲":      {sets:"4×12", rest:"60s", key:"膝盖与脚尖同向；下蹲到大腿平行；重心后坐", alt:"靠墙静蹲 45s"},
@@ -671,7 +951,13 @@ const ANKI_SEED = [
   ["中医","中脘穴位置？","脐上 4 寸（胸骨剑突与肚脐连线中点）。"],
   ["中医","足三里位置？","外膝眼下 3 寸，胫骨外缘约 1 横指。"],
   ["中医","脾虚饮食宜？","温热 / 易消化 / 小米山药南瓜陈皮茯苓；忌生冷油腻。"],
-  ["中医","八段锦哪一式调脾胃？","调理脾胃须单举：一手上举一手下按。"]
+  ["中医","八段锦哪一式调脾胃？","调理脾胃须单举：一手上举一手下按。"],
+  ["雅思","Task 2 写作高分四要素？","清晰立场 / 紧扣题目 / 段内逻辑（topic→explain→example）/ 准确多样的语法和词汇。"],
+  ["雅思","口语 P2 卡片结构？","谁/什么 + 何时何地 + 经过 + 感受/影响。话不停顿优于完美。"],
+  ["雅思","听力 Section 4 难点？","学术单词 + 长讲座；解决：BBC 听写 + 剑桥真题精听 3 遍。"],
+  ["雅思","阅读 Heading 题套路？","先读段首段尾 → 抓主旨词 → 排除选项中含细节词的项。"],
+  ["雅思","写作连接词高级替换？","however→nonetheless / for example→to illustrate / because→given that / so→thereby."],
+  ["雅思","collocation 例子？","make a contribution / pose a threat / play a vital role / a wide range of."]
 ];
 
 /* ============================================================
@@ -754,17 +1040,20 @@ function dayTasks(idx){
     else if(ph.phase==="黄体期" && /HIIT/.test(bodyTask)){ bodyTask = bodyTask.replace("HIIT","快走（黄体期降量）") ; bodyTip="黄体期：训练强度系数 0.85；情绪暴食加 1 餐 50kcal。"; }
   }
   const diet = DIET_BY_WEEK[w];
+  const macro = MACROS_BY_WEEK[w];
+  const en = ENGLISH_BY_WEEK[w];
   return [
     {id:"morning", cat:"晨间 · 神经科学钩子", title:"温水 200ml + 5min 腹式呼吸 + 写下今日 1 件最重要的事", tip:"把新习惯绑在已有动作上：起床→喝水→深呼吸→打开打卡页。"},
     {id:"premeal", cat:"餐前 · 脾胃唤醒", title:"三餐前 15min 喝温柠檬水/淡陈皮水 150ml", tip:"提胃酸、减嗳气；餐中不豪饮，咀嚼 25–30 次。"},
     {id:"ds", cat:"数据科学（90min · 上午）", title:WEEKS[w].ds[dow], tip:"先读优秀代码 → 仿写 → 改写。今晚必须为新概念加 5 张 Anki。"},
     {id:"quant", cat:"金融量化（90min · 晚上）", title:WEEKS[w].quant[dow], tip:"任何策略：先理解风险，再追求收益；不做无 walk-forward 回测的交易。"},
+    {id:"english", cat:"英语 / IELTS（45-60min）", title:en.daily[dow], tip:"听 → 读 → 写 → 说 四项每日 1 项；详见「英语 / IELTS」标签页。"},
     {id:"body", cat:"运动（脾胃 + 经期友好）", title:bodyTask, tip:bodyTip},
-    {id:"diet", cat:"饮食（本周方案 · 缺口 −"+diet.kcalCut+" kcal）", title:diet.txt, tip:"鱼优先 / 茯苓+炒薏米常驻 / 晚餐 18:30 前 / 蛋白 ≥ 65g。"},
+    {id:"diet", cat:"饮食（缺口 −"+diet.kcalCut+" kcal · "+macro.kcal+" kcal · P "+macro.P+"g / C "+macro.C+"g / F "+macro.F+"g）", title:diet.txt, tip:"鱼优先；蛋白 "+macro.P+"g 示例：" + (macro.P<=75?PORTION_EXAMPLES.P75:macro.P<=80?PORTION_EXAMPLES.P80:PORTION_EXAMPLES.P85)},
     {id:"water", cat:"饮水", title:"全天 ≥ 8 杯（200ml/杯）温水或汤", tip:"冰水不计入；可用陈皮水替代 1–2 杯。"},
     {id:"acu", cat:"穴位（14:00 + 21:00）", title:"按压 内关 / 中脘 / 足三里 各 1 分钟", tip:"指腹打圈、酸胀为度。嗳气重时加按 1 次。"},
-    {id:"skin", cat:"护肤", title:"早晚常规 + T 区针对 + 防晒（早）", tip:SKIN_BY_WEEK[w]},
-    {id:"anki", cat:"Anki 复习", title:"复习全部到期卡 + 新增 ≥ 5 张", tip:"间隔 1d/3d/7d/21d；数据科学 + 量化 + 中医穿插。"},
+    {id:"skin", cat:"护肤", title:"早晚常规 + T 区针对 + 防晒（早）", tip:SKIN_BY_WEEK[w]+" · 产品见「资源库」"},
+    {id:"anki", cat:"Anki 复习", title:"复习全部到期卡 + 新增 ≥ 5 张", tip:"间隔 1d/3d/7d/21d；数据科学 + 量化 + 中医 + 雅思词汇穿插。"},
     {id:"mind", cat:"心智 / 复盘", title:MIND_BY_WEEK[w], tip:"睡前用一句话总结今天的胜利（再小都行）。"},
     {id:"sleep", cat:"睡眠 · 离线编译器", title:"23:00 前关屏入睡，目标 7.5h", tip:"睡前 90min 不进食、不刷信息流。"}
   ];
@@ -784,7 +1073,8 @@ function render(){
   document.getElementById("dayDate").textContent = isoLocal(dateOfDayIdx(viewIdx));
   const w = Math.min(11, Math.floor(viewIdx/7));
   document.getElementById("weekTheme").textContent = WEEKS[w].theme + " · 训练焦点：" + BODY_BY_WEEK[w].focus;
-  document.getElementById("kcalTarget").textContent = "本周缺口约 −" + DIET_BY_WEEK[w].kcalCut + " kcal/天（约摄入 " + Math.max(1000, 1600 - DIET_BY_WEEK[w].kcalCut) + " kcal）";
+  const macro = MACROS_BY_WEEK[w];
+  document.getElementById("kcalTarget").innerHTML = `<b>${macro.kcal}</b> kcal · 蛋白 <b>${macro.P}g</b> · 碳水 <b>${macro.C}g</b> · 脂肪 <b>${macro.F}g</b>　<span class="muted" style="font-weight:400">${macro.note}</span>`;
 
   const dateISO = isoLocal(dateOfDayIdx(viewIdx));
   const ph = periodPhase(dateISO);
@@ -824,7 +1114,7 @@ function render(){
   });
   updateStats(); renderHeat();
   // also render cross-tab pieces
-  renderLogs(); renderMetricsTab(); renderSkinTab(); renderAnki(); renderPlan(); renderReview();
+  renderLogs(); renderMetricsTab(); renderSkinTab(); renderAnki(); renderPlan(); renderReview(); renderEnglish(); renderResources();
 }
 function shiftDay(n){ viewIdx = Math.max(0,Math.min(89,viewIdx+n)); render(); }
 function goToday(){ viewIdx = todayIdx(); render(); }
@@ -1050,7 +1340,88 @@ function renderSkinTab(){
   renderRating("skHyd", sk.hydration||0, 5, v=>{ sk.hydration=v; state.skin[dateISO]=sk; save(); });
   renderRating("skBri", sk.brightness||0, 5, v=>{ sk.brightness=v; state.skin[dateISO]=sk; save(); });
 }
-function saveSkin(){ /* ratings auto-save; this is for the button affordance */ alert("已保存"); }
+function saveSkin(){ alert("已保存"); }
+
+/* ============================================================
+   English / IELTS tab
+   ============================================================ */
+function renderEnglish(){
+  const w = Math.min(11, Math.floor(viewIdx/7)), dow = viewIdx%7;
+  const en = ENGLISH_BY_WEEK[w];
+  document.getElementById("enDate").textContent = isoLocal(dateOfDayIdx(viewIdx));
+  document.getElementById("enWeekLabel").textContent = "W"+(w+1);
+  document.getElementById("enWeekFocus").innerHTML =
+    `<b>${en.focus}</b><br><br>本周 7 日任务：<ul class="compact">` +
+    en.daily.map((t,i)=>`<li ${i===dow?'style="color:#ffd166;font-weight:600"':''}>D${i+1}：${t}</li>`).join("") + `</ul>`;
+  // today's english tasks panel
+  const checks = state.checks[viewIdx] || {};
+  const host = document.getElementById("enTasks"); host.innerHTML = "";
+  const todayItem = en.daily[dow];
+  const items = [
+    {id:"english", cat:"今日主任务", title: todayItem, tip:"做完后回到「今日」勾选「英语 / IELTS」即可同步。"},
+    {id:null, cat:"听力 15min", title:"BBC 6 Minute English / 剑桥真题 1 节 → 影子跟读 3 遍 + 听写关键句 5 句"},
+    {id:null, cat:"口语 15min", title:"录音 1 个 P1 + 1 个 P2；回放 2 遍标 3 个连读/弱读"},
+    {id:null, cat:"读 / 写 隔日 20min", title:"奇数日：精读 1 篇剑桥/Economist；偶数日：写 1 段 Task 1 或 Task 2"},
+    {id:null, cat:"睡前 10min", title:"Anki 雅思核心词 30 张 + 写下 1 个新搭配（collocation）"}
+  ];
+  items.forEach(t=>{
+    const wrap = document.createElement("div"); wrap.className="task";
+    if(t.id){
+      const cb = document.createElement("input"); cb.type="checkbox"; cb.checked = !!checks[t.id]; cb.id="encb_"+t.id;
+      cb.addEventListener("change", ()=>{
+        state.checks[viewIdx] = state.checks[viewIdx] || {};
+        state.checks[viewIdx][t.id] = cb.checked; save(); render();
+      });
+      wrap.appendChild(cb);
+      const lab = document.createElement("label"); lab.className="label"; lab.htmlFor=cb.id;
+      lab.innerHTML=`<div class="cat">${t.cat}</div><div class="title">${t.title}</div>${t.tip?'<div class="tip">'+t.tip+'</div>':''}`;
+      wrap.appendChild(lab);
+    }else{
+      const lab = document.createElement("div"); lab.className="label"; lab.style.marginLeft="32px";
+      lab.innerHTML=`<div class="cat">${t.cat}</div><div class="title">${t.title}</div>${t.tip?'<div class="tip">'+t.tip+'</div>':''}`;
+      wrap.appendChild(lab);
+    }
+    host.appendChild(wrap);
+  });
+
+  // 90 day plan view
+  const view = document.getElementById("ieltsView");
+  let html = "";
+  ENGLISH_BY_WEEK.forEach((wk,wi)=>{
+    html += `<div class="week-banner"><h3>${wk.focus}</h3></div>`;
+    html += `<div class="scroll-x"><table><thead><tr><th>日</th><th>任务</th></tr></thead><tbody>`;
+    wk.daily.forEach((d,di)=>{ html += `<tr><td>D${wi*7+di+1}</td><td>${d}</td></tr>`; });
+    html += `</tbody></table></div><div style="height:10px"></div>`;
+  });
+  view.innerHTML = html;
+}
+
+/* ============================================================
+   Resources tab
+   ============================================================ */
+function renderResources(){
+  const fill = (id, items, fmt) => {
+    const host = document.getElementById(id); if(!host) return;
+    host.innerHTML = items.map(fmt).join("");
+  };
+  const bookFmt = a => `<div class="ex-card"><div class="name">${a[0]}</div><div class="key muted">${a[1]}</div></div>`;
+  fill("resDsBooks", DS_BOOKS, bookFmt);
+  fill("resDsCourses", DS_COURSES, bookFmt);
+  fill("resDsSites", DS_SITES, bookFmt);
+  fill("resQuantBooks", QUANT_BOOKS, bookFmt);
+  fill("resQuantCourses", QUANT_COURSES, bookFmt);
+  fill("resQuantSites", QUANT_SITES, bookFmt);
+  fill("resEnBooks", EN_BOOKS, bookFmt);
+  fill("resEnCourses", EN_COURSES, bookFmt);
+  fill("resEnSites", EN_SITES, bookFmt);
+  fill("resWorkout", WORKOUT_VIDEOS, a =>
+    `<div class="ex-card"><div class="name">${a[0]}</div><div class="meta">关键词：${a[1]}</div><div class="key muted">${a[2]}</div></div>`);
+  // skincare grouped by phase
+  const prodFmt = p => `<div class="ex-card"><div class="name">${p[2]} <span class="pill">${p[1]}</span><span class="pill warn" style="margin-left:4px">${p[3]}</span></div><div class="meta">适配：${p[4]}</div><div class="key">${p[5]}</div></div>`;
+  fill("resSkin1", PRODUCTS.filter(p=>p[0]==="1"), prodFmt);
+  fill("resSkin2", PRODUCTS.filter(p=>p[0]==="2"), prodFmt);
+  fill("resSkin3", PRODUCTS.filter(p=>p[0]==="3"), prodFmt);
+}
 
 /* ============================================================
    Metrics & Trend SVG
@@ -1283,11 +1654,13 @@ document.querySelectorAll(".nav button").forEach(b=>{
     document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");
     const tab=b.dataset.tab;
-    ["today","logs","metrics","skin","anki","plan","review","brief","data"].forEach(t=>{
+    ["today","logs","metrics","skin","anki","english","resources","plan","review","brief","data"].forEach(t=>{
       document.getElementById("tab-"+t).hidden = (t!==tab);
     });
     if(tab==="metrics") renderMetricsTab();
     if(tab==="anki") renderAnki();
+    if(tab==="english") renderEnglish();
+    if(tab==="resources") renderResources();
   });
 });
 
