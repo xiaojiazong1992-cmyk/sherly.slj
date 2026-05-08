@@ -53,7 +53,6 @@
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
   th{color:#9ec1ff;font-weight:600;background:#0f1a36}
-  #mTable th{position:sticky;top:60px;z-index:1}
   .scroll-x{overflow-x:auto}
   input,select,textarea{background:#0a1430;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:13px}
   input:focus,select:focus,textarea:focus{outline:2px solid var(--accent)}
@@ -122,6 +121,7 @@
     <button data-tab="skin" role="tab">护肤</button>
     <button data-tab="anki" role="tab">Anki 卡片</button>
     <button data-tab="english" role="tab">英语 / IELTS</button>
+    <button data-tab="ai" role="tab">🤖 AI 加速</button>
     <button data-tab="resources" role="tab">资源库</button>
     <button data-tab="plan" role="tab">90 天总览</button>
     <button data-tab="review" role="tab">复盘</button>
@@ -131,6 +131,7 @@
 
   <!-- TODAY -->
   <section id="tab-today" role="tabpanel">
+    <div id="onboardAlert"></div>
     <div id="phaseAlert"></div>
     <div id="warningAlert"></div>
     <div id="moodAlert"></div>
@@ -469,6 +470,41 @@
         </ul>
       </details>
 
+      <details open><summary>★ 0. 客户量身：脂肪分布 + AI 加速 + 零基础友好</summary>
+        <ul class="compact">
+          <li><b>客户脂肪分布</b>：臀腿（gluteofemoral，下半身皮下）+ 腰腹（abdominal，皮下 + 少量内脏）</li>
+          <li><b>科学事实</b>：
+            <ul>
+              <li>腰腹脂肪 <b>先掉</b>，对赤字、HIIT、睡眠最响应（Després 2012 NEJM；Vissers 2013 PLoS One meta；Wewege 2017 Obes Rev）</li>
+              <li>臀腿脂肪 <b>最难掉</b>，受雌激素 + α2 肾上腺受体保护（Manolopoulos 2010 Int J Obes；Wajchenberg 2000 Endocr Rev）</li>
+            </ul>
+          </li>
+          <li><b>战略</b>：
+            <ul>
+              <li><b>第 1 个月</b>：腰腹优先 — 睡眠 ≥7h、HIIT 18-25min/次、压力管理（Spiegel 2004 Lancet；Epel 2000）；预期 3-4 周看腰围 -3-5cm</li>
+              <li><b>第 2 个月</b>：下肢力量塑形（深蹲 / 臀桥 / 硬拉 / 弓步）— 不是为了点状减脂（不可能），而是建肌改善线条（Schoenfeld 2018 J Strength Cond Res）</li>
+              <li><b>第 3 个月</b>：维持赤字 + 高蛋白保肌；最后掉的是臀腿，需耐心（Helms 2014 J ISSN）</li>
+            </ul>
+          </li>
+          <li><b>不要做</b>（迷思清单）：
+            <ul>
+              <li>仰卧起坐 100 个减肚子（点状减脂不存在 — Vispute 2011 J Strength Cond Res）</li>
+              <li>绑保鲜膜 / 震动腰带 / 暴汗服（出的是水分不是脂肪）</li>
+              <li>不吃晚饭（破坏代谢与睡眠；ACSM 2009）</li>
+              <li>跑步 1 小时但完全不力量（保肌靠抗阻；Stiegler 2006）</li>
+            </ul>
+          </li>
+          <li><b>AI 加速学习方法论</b>（Mollick 2024 Co-Intelligence；Wharton 2023）：
+            <ul>
+              <li>初学者 + AI 助教 = 学习速度 ↑25-50%（OpenAI 2024 教育报告 / Khan Academy Khanmigo 试点）</li>
+              <li>金融 / DS 零基础但学习能力强 → 善用 AI = 12 周可掌握以往 6 个月内容</li>
+              <li>红线：AI 用来 <b>解释、检查、生成 Anki 卡</b>，不要让它 <b>替你写整段作业</b>。要做船长不做副驾驶</li>
+              <li>每天读完 AI 解释后，用<b>费曼技巧</b>讲一遍给自己听（or 录音 → 让 AI 检查理解漏洞）</li>
+            </ul>
+          </li>
+        </ul>
+      </details>
+
       <details><summary>7. 护肤底层</summary>
         <ul class="compact">
           <li>顺序：屏障修复 &gt; 防晒 &gt; 抗氧（VC）&gt; 抗老（视黄醇）&gt; 焕肤（水杨酸/果酸）。</li>
@@ -604,6 +640,45 @@
         <li><b>13:00–13:20 口语录音</b>：1 个 Part 1 题 + 1 个 Part 2 卡片，手机录音回放 2 次，标 3 个连读/弱读。</li>
         <li><b>20:30–21:00 阅读/写作（隔日）</b>：奇数日精读 1 篇 Cambridge / Economist；偶数日写 1 篇 Task 1 或 Task 2 段落。</li>
         <li><b>睡前 10min</b>：Anki 雅思核心 30 词；写下今日 1 个新搭配（collocation）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section id="tab-ai" role="tabpanel" hidden>
+    <div class="alert good" style="margin-bottom:12px">
+      🚀 <b>AI 是你的 24h 家教 + 加速器</b>。零基础但学习能力强 = AI 辅助下 4-12 周掌握以往 6 个月的内容
+      （证据：Mollick 2024 Co-Intelligence；Wharton 2023 AI in Education；Khan Academy Khanmigo 试点）。下面是为你选好的工具 + 场景化 prompt 模板。
+    </div>
+    <div class="row">
+      <div class="card">
+        <h2>🛠 工具箱（已为你按用途选好）</h2>
+        <div id="aiTools"></div>
+      </div>
+      <div class="card">
+        <h2>📝 Prompt 模板 · 直接套用</h2>
+        <div class="muted" style="font-size:12px;margin-bottom:6px">点击复制；把 <span class="kbd">{大括号}</span> 内容换成你的实际问题。</div>
+        <div id="aiPrompts"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>📅 每日 AI 学习节奏（建议）</h2>
+      <ul class="compact">
+        <li><b>晨 30min · 输入</b>：Kimi/NotebookLM 上传当天的书章/论文 → 提问『最难的 3 个概念是什么？给我 3 个生活类比』</li>
+        <li><b>白天 90min · 实操</b>：在 Cursor/VS Code+Copilot 里写代码，卡住时用 Claude/DeepSeek 解释错误（贴代码 + 报错）</li>
+        <li><b>傍晚 30min · 巩固</b>：让 AI 基于今天笔记自动生成 10 张 Anki 卡（CSV 格式）→ 导入到本网页 Anki tab</li>
+        <li><b>周末 60min · 扩展</b>：Perplexity 学术调研模式查 1 个本周关键概念的最新进展（带引用）</li>
+        <li><b>📌 红线</b>：AI 用来<b>解释/检查</b>，不要让它直接<b>替你写</b>整段作业（你会变成 AI 的副驾驶而不是船长）。每段 AI 输出都要自己<b>讲一遍</b>给奶奶听（费曼 + AI 双保险）</li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>🎯 客户量身：AI 帮你解决学习难点</h2>
+      <ul class="compact">
+        <li><b>金融 / 量化零基础</b>：每个新概念先问 Claude『我是 22 岁纯小白，请用奶茶店 / 网约车类比解释【夏普比率 / Beta / 因子】』 → 听懂再读教材，效率 ×3</li>
+        <li><b>读不懂的论文</b>：Markowitz 1952 / Fama-French 1993 / Lopez de Prado AFML → 喂给 NotebookLM/Kimi → 让它生成中文播客 + 5 张卡</li>
+        <li><b>英文阅读速度慢</b>：装『沉浸式翻译』Chrome 扩展 → 双语对照看 Investopedia / Towards Data Science；雅思阅读真题不要双语，那是考试</li>
+        <li><b>口语 6.0 想到 7.0</b>：每天用 ChatGPT 语音模式（或豆包语音）做 10min 英文对话；让它扮演雅思考官并 BC 标准打分</li>
+        <li><b>拖延启动慢</b>：每天先用 5min 让 AI 把今日大任务拆成 3 个 ≤ 5 分钟的子任务；先做最小那个</li>
       </ul>
     </div>
   </section>
@@ -1466,8 +1541,9 @@ function dayTasks(idx){
   const dsR = DS_REF_BY_WEEK[w][dow] || {};
   const qR = QUANT_REF_BY_WEEK[w][dow] || {};
   const meal = getDailyDiet(idx);
-  const dsTip = `📖 ${dsR.b||"—"}　💻 ${dsR.c||"—"}　🎬 ${dsR.v||""}　${dsR.p?"📄 "+dsR.p:""}`;
-  const qTip  = `📖 ${qR.b ||"—"}　💻 ${qR.c ||"—"}　🎬 ${qR.v ||""}　${qR.p ?"📄 "+qR.p :""}`;
+  const aiHint = "🤖 AI 加速：把 📖 章节拍照/复制 → 喂给 Kimi 或 NotebookLM → 问『最难的 3 个概念是什么？给我生活类比 + 5 张 Anki 卡』。卡住时贴代码到 Claude/DeepSeek 让它解释。";
+  const dsTip = `📖 ${dsR.b||"—"}　💻 ${dsR.c||"—"}　🎬 ${dsR.v||""}　${dsR.p?"📄 "+dsR.p:""}　·　${aiHint}`;
+  const qTip  = `📖 ${qR.b ||"—"}　💻 ${qR.c ||"—"}　🎬 ${qR.v ||""}　${qR.p ?"📄 "+qR.p :""}　·　${aiHint}`;
   const dietTitle = `🍳 早 ${meal.b} ｜ 🍱 午 ${meal.l} ｜ 🥄 加 ${meal.s} ｜ 🌙 晚 ${meal.d}`;
   const dietTip = `${meal.note}${meal.scale}　·　目标 ${macro.kcal} kcal / P${macro.P}g / C${macro.C}g / F${macro.F}g`;
   return [
@@ -1634,6 +1710,18 @@ function render(){
   if(wkLoss > 1.5) warns.push("⚠️ 近 7 日体重下降 "+wkLoss.toFixed(1)+"kg，过快。请加 200 kcal/天，重点保肌。");
   wAlert.innerHTML = warns.map(t=>`<div class="alert warn">${t}</div>`).join("");
 
+  // first-week onboarding banner (D1-D7)
+  const oa = document.getElementById("onboardAlert");
+  if(oa){
+    if(viewIdx<=6){
+      oa.innerHTML = `<div class="alert good">
+        🌟 <b>第一周（D1-D7）特别提示</b> · 你是金融/DS 零基础但学习能力强。打开『🤖 AI 加速』tab，里面有 13 个工具 + 10 套场景化 prompt。
+        <b>原则</b>：每个新概念先让 AI 用奶茶店类比解释 → 再读教材 → 再写代码 → 再用 AI 检查。零基础 + AI = 6 个月内容压缩到 12 周（Mollick 2024）。
+        <br>📍 <b>客户量身重点</b>：你的脂肪主要在臀腿 + 腰腹。腰腹会 <b>先掉</b>（前 3-4 周看腰围最敏感），臀腿被雌激素保护、<b>最后掉</b>（Manolopoulos 2010）。请耐心，不要被秤上单日波动带走情绪。
+      </div>`;
+    } else { oa.innerHTML = ""; }
+  }
+
   // mood-aware soft alert
   const moodToday = (state.mood[dateISO]||{}).score;
   const ma = document.getElementById("moodAlert");
@@ -1674,7 +1762,7 @@ function render(){
   });
   updateStats(); renderHeat();
   // also render cross-tab pieces
-  renderLogs(); renderMetricsTab(); renderSkinTab(); renderAnki(); renderPlan(); renderReview(); renderEnglish(); renderResources();
+  renderLogs(); renderMetricsTab(); renderSkinTab(); renderAnki(); renderPlan(); renderReview(); renderEnglish(); renderResources(); renderAI();
 }
 function shiftDay(n){ viewIdx = Math.max(0,Math.min(89,viewIdx+n)); render(); }
 function goToday(){ viewIdx = todayIdx(); render(); }
@@ -2062,6 +2150,74 @@ function renderEnglish(){
 /* ============================================================
    Resources tab
    ============================================================ */
+/* ============================================================
+   AI 加速学习模块（Mollick 2024 / Wharton 2023 教育研究）
+   ============================================================ */
+const AI_TOOLS = [
+  ["Kimi (月之暗面)",      "kimi.moonshot.cn",      "完全免费", "长文档（200K 上下文）/ 中文论文翻译", "国内可直接用；中文表现最佳"],
+  ["DeepSeek",             "chat.deepseek.com",     "免费",     "代码 / 数学推理",                   "国产；代码能力领先；reasoning 模型免费"],
+  ["Claude (Anthropic)",   "claude.ai",             "免费版有限次数 / Pro $20", "长文档阅读 / 代码理解 / 论文精读", "中英俱佳；支持 PDF；需科学上网"],
+  ["ChatGPT (OpenAI)",     "chat.openai.com",       "GPT-4o 免费版限次", "通用问答 / 代码 / 语音模式练口语", "需科学上网；语音模式可练 IELTS 口语"],
+  ["通义千问 (阿里)",      "tongyi.aliyun.com",     "免费",     "代码 / 中文 NLP",                   "国内首选无门槛"],
+  ["豆包 (字节)",          "www.doubao.com",        "免费",     "语音对话 / 日常问答",               "对话最自然；适合通勤口语练习"],
+  ["GitHub Copilot",       "github.com/copilot",    "学生免费 / Pro $10",       "VS Code 内 AI 补全",           "申请 GitHub Education 学生包获取免费"],
+  ["Cursor",               "cursor.sh",             "免费 + Pro $20",            "AI-first IDE，整文件改写",     "代替 VS Code；学习编程的最强环境"],
+  ["NotebookLM (Google)",  "notebooklm.google.com", "完全免费",                  "喂多 PDF / 网页 → 问答 + 自动播客",  "论文学习神器；需科学上网"],
+  ["Perplexity",           "perplexity.ai",         "免费",                      "带引用的搜索 / 学术调研",       "代替 Google 学术；找最新进展"],
+  ["沉浸式翻译 (Chrome)",   "immersivetranslate.com","免费",                     "双语对照看英文网页/PDF",        "可调用各家 LLM API"],
+  ["Bing Chat / Copilot",  "bing.com/chat",         "免费",                      "搜索+AI 摘要",                  "国内可直接用"],
+  ["DeepL",                "deepl.com",             "免费版有限制",              "专业级翻译",                    "比 Google Translate 准确"]
+];
+
+const AI_PROMPTS = [
+  ["完全不懂的金融/DS 概念",
+   "我是 22 岁纯小白，金融 / 数据科学完全没学过。请用最简单的话给我解释【{概念}】，要包括：\n1) 一个生活中的类比（最好是奶茶店、网约车、外卖）\n2) 它解决了什么问题、为什么存在\n3) 一个最简单的代码或数字示例\n4) 我下次见到它时该如何识别它\n5) 1 张 Anki 卡（问/答格式）"],
+  ["读不懂的英文论文",
+   "我会用中文向你提问。请阅读这篇论文（已上传 PDF），并按以下结构回答：\n1. 核心问题（一句话）\n2. 核心方法（≤3 句）\n3. 主要结果（≤3 句）\n4. 我作为初学者最需要带走的 3 个洞察\n5. 我能不能用 5 行 Python 复现一个简化版？给我代码\n6. 5 张 Anki 卡（CSV 格式可直接导入）"],
+  ["代码报错调试",
+   "我跑下面这段代码报错：\n```python\n{你的代码}\n```\n报错信息：\n```\n{完整 traceback}\n```\n我尝试过：{已尝试}。\n请：\n1) 用一句话指出根本原因\n2) 给修改后的完整代码（不要片段）\n3) 解释为什么这样改\n4) 防止下次出错的 1 个最佳实践或代码习惯"],
+  ["读优秀代码（一段一段拆）",
+   "我正在学 {主题}。下面这段代码来自 {repo 名} 的 {文件名}，请：\n1) 把它分成 3-5 个逻辑块，每块用 1 句中文说作用\n2) 标出 3 个最值得我学习的写法（含原因）\n3) 让我做一个改造练习（保留原代码、给我具体改造目标和验证方式）\n```\n{代码}\n```"],
+  ["雅思 Writing Task 2 批改",
+   "我正在备考雅思 Writing Task 2，目标 7.0。请按 BC 官方四大评分维度给我打分（每项 0-9）并说明扣分点：\n- Task Response\n- Coherence and Cohesion\n- Lexical Resource\n- Grammatical Range and Accuracy\n再给我：\n1) 3 句最值得学习的高分替换（带原因）\n2) 一篇 7.5 分版本作对比（用我自己的论点结构改写）\n\n题目：{题目}\n我的作文：\n{作文}"],
+  ["雅思 Speaking Part 2 反馈",
+   "我正在备考雅思口语 Part 2，目标 7.0。下面是我录音的转写文本。请：\n1) 按四个维度（Fluency / Lexical Resource / Grammar / Pronunciation）给分并指出 3 个最影响分数的问题\n2) 给我一段 7.0 分级别的 sample，用我自己经历的关键词改写\n3) 列出 5 个我应该练的连读 / 弱读\n\n题目：{题目}\n我的版本：\n{转写}"],
+  ["自动生成 Anki 牌组",
+   "基于下面的学习内容，给我生成 10 张 Anki 卡。要求：\n1) 一张卡只考一个原子知识点\n2) 答案 ≤ 30 字\n3) 包含 1-2 张『容易混淆点』对比题\n4) 输出 CSV 格式（题目;答案;牌组），可直接导入 Anki\n\n内容：\n{内容}"],
+  ["减脂遇到平台期",
+   "我在 90 天减脂计划第 {第几周}，前 {N 周} 减了 {kg} kg，最近 7 天体重未降。\n目前：摄入 {kcal} kcal/天，蛋白 {g}g/天，训练 {计划}。\n请：\n1) 列出最可能的 3 个原因（按概率）\n2) 给出本周可立即调整的 1 项（不超过 2 个变量）\n3) 提示我什么情况下需要 diet break（参考 Helms 2014）"],
+  ["拖延启动 · 任务拆解",
+   "我今天必须做这件事：{大任务}。但我现在不想动。请：\n1) 把它拆成 5 个步骤，每个 ≤ 5 分钟\n2) 标出第一步是什么，让我现在 30 秒内能开始\n3) 告诉我第 1-3 步做完后我应该有什么具体产出（让我有掌控感）\n4) 如果我做完第 1 步就想停，可以吗？给我一个『允许停』的版本"],
+  ["中医脾胃症状自检（不替代医生）",
+   "我有 {症状描述}（持续 {天数}）。**请不要做诊断**，只做参考。请：\n1) 列出对应的中医证型可能 2-3 个\n2) 给出常见的食疗思路（食材 + 忌口）\n3) 提示什么情况下应该看医生（红旗症状清单）\n4) 我可以按摩哪些穴位（位置 + 时长）"]
+];
+
+function renderAI(){
+  const tools = document.getElementById("aiTools"); if(!tools) return;
+  tools.innerHTML = AI_TOOLS.map(t =>
+    `<div class="ex-card">
+       <div class="name">${t[0]} <span class="pill">${t[2]}</span></div>
+       <div class="meta"><a href="https://${t[1]}" target="_blank" rel="noopener">${t[1]}</a></div>
+       <div class="key">用于：${t[3]}</div>
+       <div class="key muted">${t[4]}</div>
+     </div>`
+  ).join("");
+  const prompts = document.getElementById("aiPrompts"); if(!prompts) return;
+  prompts.innerHTML = AI_PROMPTS.map((p,i) =>
+    `<details>
+       <summary><b>${i+1}. ${p[0]}</b> <span class="muted" style="font-weight:400;font-size:11px;float:right">点击展开</span></summary>
+       <pre style="white-space:pre-wrap;background:#0a1430;border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0;font-size:12.5px;color:#cfe0ff;font-family:ui-monospace,Menlo,monospace">${p[1].replace(/</g,'&lt;')}</pre>
+       <button class="ghost" onclick="copyPrompt(${i})">📋 复制此模板</button>
+     </details>`
+  ).join("");
+}
+function copyPrompt(i){
+  const text = AI_PROMPTS[i][1];
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>alert("已复制：「"+AI_PROMPTS[i][0]+"」"));
+  }else{ prompt("手动复制：", text); }
+}
+
 function renderResources(){
   const fill = (id, items, fmt) => {
     const host = document.getElementById(id); if(!host) return;
@@ -2317,12 +2473,13 @@ document.querySelectorAll(".nav button").forEach(b=>{
     document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");
     const tab=b.dataset.tab;
-    ["today","logs","metrics","skin","anki","english","resources","plan","review","brief","data"].forEach(t=>{
+    ["today","logs","metrics","skin","anki","english","ai","resources","plan","review","brief","data"].forEach(t=>{
       document.getElementById("tab-"+t).hidden = (t!==tab);
     });
     if(tab==="metrics") renderMetricsTab();
     if(tab==="anki") renderAnki();
     if(tab==="english") renderEnglish();
+    if(tab==="ai") renderAI();
     if(tab==="resources") renderResources();
   });
 });
