@@ -744,7 +744,7 @@ function periodPhase(dateISO){
    Daily tasks (12 categories)
    ============================================================ */
 function dayTasks(idx){
-  const w = Math.floor(idx/7), dow = idx%7;
+  const w = Math.min(11, Math.floor(idx/7)), dow = idx%7;
   const dateISO = isoLocal(dateOfDayIdx(idx));
   const ph = periodPhase(dateISO);
   let bodyTask = BODY_BY_WEEK[w].d[dow];
@@ -782,7 +782,7 @@ function render(){
   document.getElementById("todayN").textContent = todayIdx()+1;
   document.getElementById("dayNum").textContent = viewIdx+1;
   document.getElementById("dayDate").textContent = isoLocal(dateOfDayIdx(viewIdx));
-  const w = Math.floor(viewIdx/7);
+  const w = Math.min(11, Math.floor(viewIdx/7));
   document.getElementById("weekTheme").textContent = WEEKS[w].theme + " · 训练焦点：" + BODY_BY_WEEK[w].focus;
   document.getElementById("kcalTarget").textContent = "本周缺口约 −" + DIET_BY_WEEK[w].kcalCut + " kcal/天（约摄入 " + Math.max(1000, 1600 - DIET_BY_WEEK[w].kcalCut) + " kcal）";
 
@@ -912,7 +912,7 @@ function renderLogs(){
       <td><button class="ghost" onclick="delFood('${dateISO}',${i})">×</button></td>`;
     tb.appendChild(tr);
   });
-  const w = Math.floor(viewIdx/7);
+  const w = Math.min(11, Math.floor(viewIdx/7));
   const target = Math.max(1000, 1600 - DIET_BY_WEEK[w].kcalCut);
   let totals = `今日：<b>${kcal.toFixed(0)} kcal</b> · 蛋白 <b>${prot.toFixed(0)}g</b> · 寒凉 ${coldCount} 项 · 目标摄入 ~${target} kcal`;
   if(kcal > target+200) totals += ` <span class="pill bad">超额</span>`;
@@ -1017,7 +1017,7 @@ function savePeriod(){
    ============================================================ */
 function renderSkinTab(){
   const dateISO = isoLocal(dateOfDayIdx(viewIdx));
-  const w = Math.floor(viewIdx/7);
+  const w = Math.min(11, Math.floor(viewIdx/7));
   const phase = w<4?"修复期":w<8?"建设期":"巩固期";
   document.getElementById("skinWeek").innerHTML = `<b>本周（W${w+1} · ${phase}）：</b><br>${SKIN_BY_WEEK[w]}`;
 
