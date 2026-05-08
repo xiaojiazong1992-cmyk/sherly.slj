@@ -3,54 +3,65 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>90 天蜕变计划 · 数据科学 × 金融量化 × 健康减脂</title>
+<title>90 天蜕变计划 v2 · 数据科学 × 金融量化 × 减脂 × 护肤</title>
 <style>
   :root{
     --bg:#0b1224; --bg2:#0f1a36; --card:#142046; --line:#1f2d5c;
-    --ink:#e8efff; --dim:#94a3c4; --accent:#4ea1ff; --good:#18d27a;
-    --warn:#ffb547; --bad:#ff5c7a; --gold:#ffd166;
+    --ink:#e8efff; --dim:#94a3c4; --accent:#4ea1ff; --good:#1fd27a;
+    --warn:#ffb547; --bad:#ff5c7a; --gold:#ffd166; --pink:#ff8fb5;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:linear-gradient(180deg,#070b1a,#0b1224);color:var(--ink);font:14px/1.55 -apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif}
   a{color:var(--accent);text-decoration:none}
-  header{padding:18px 20px;border-bottom:1px solid var(--line);background:rgba(20,32,70,.6);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:rgba(20,32,70,.75);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
   header h1{margin:0;font-size:18px;letter-spacing:.5px}
   header .sub{color:var(--dim);font-size:12px;margin-top:4px}
   .wrap{max-width:1200px;margin:0 auto;padding:18px 20px 80px}
   .grid{display:grid;gap:16px}
   .row{display:grid;gap:16px;grid-template-columns:1.1fr .9fr}
-  @media (max-width:900px){.row{grid-template-columns:1fr}}
+  .row3{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+  @media (max-width:900px){.row,.row3{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
   .card h2{margin:0 0 10px;font-size:15px;color:#cfe0ff;letter-spacing:.3px}
+  .card h3{margin:14px 0 6px;font-size:13.5px;color:#bcd1ff}
   .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#1a2b5e;color:#9ec1ff;font-size:11px;margin-right:6px}
   .pill.good{background:#0f3a26;color:#7ff0b6}
   .pill.warn{background:#3a2c0e;color:#ffd28a}
   .pill.bad{background:#3a0f1d;color:#ff9bb1}
+  .pill.cool{background:#0e2c4a;color:#9ad7ff}
+  .pill.warmf{background:#3a210e;color:#ffc890}
   .nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-  .nav button{background:var(--bg2);color:var(--ink);border:1px solid var(--line);padding:8px 12px;border-radius:10px;cursor:pointer}
+  .nav button{background:var(--bg2);color:var(--ink);border:1px solid var(--line);padding:8px 12px;border-radius:10px;cursor:pointer;font-size:13px}
   .nav button.active{background:var(--accent);border-color:var(--accent);color:#031124;font-weight:600}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:480px){.stats{grid-template-columns:repeat(2,1fr)}}
   .stat{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px}
   .stat .v{font-size:22px;font-weight:700;color:#fff}
   .stat .k{font-size:11px;color:var(--dim);margin-top:2px}
   .task{display:flex;align-items:flex-start;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0f1a36;margin-bottom:8px}
-  .task input[type=checkbox]{margin-top:3px;transform:scale(1.2);accent-color:var(--good)}
+  .task input[type=checkbox]{margin-top:3px;transform:scale(1.2);accent-color:var(--good);cursor:pointer}
   .task .label{flex:1}
   .task .cat{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
   .task .title{font-weight:600}
   .task .tip{color:var(--dim);font-size:12px;margin-top:3px}
   .heat{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:8px}
-  .cell{aspect-ratio:1;border-radius:3px;background:#1a2750;border:1px solid #1f2d5c;cursor:pointer;font-size:9px;color:#7d8db5;display:flex;align-items:center;justify-content:center}
+  .cell{aspect-ratio:1;border-radius:3px;background:#1a2750;border:1px solid #1f2d5c;cursor:pointer;font-size:9px;color:#9bb1da;display:flex;align-items:center;justify-content:center}
+  .cell:focus{outline:2px solid var(--accent)}
   .cell.today{outline:2px solid var(--gold)}
-  .cell.s1{background:#0f3a26}.cell.s2{background:#138a4f}.cell.s3{background:#18d27a;color:#03301a}
+  .cell.s1{background:#1f5a3c;color:#cdf2dd}.cell.s2{background:#2a9c66;color:#0a3a22}.cell.s3{background:#4ee29a;color:#03301a;font-weight:700}
+  .cell.period{box-shadow:inset 0 0 0 2px var(--pink)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
   th{color:#9ec1ff;font-weight:600;background:#0f1a36;position:sticky;top:60px}
-  input[type=number],input[type=date],input[type=text]{background:#0a1430;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .scroll-x{overflow-x:auto}
+  input,select,textarea{background:#0a1430;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:13px}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent)}
+  label{font-size:12px;color:var(--dim);display:block;margin-bottom:3px}
   button.primary{background:var(--accent);color:#031124;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600}
   button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);padding:7px 12px;border-radius:10px;cursor:pointer}
+  button.danger{background:#3a0f1d;color:#ffb1c4;border:1px solid #5a1f31;padding:7px 12px;border-radius:10px;cursor:pointer}
   .wbar{height:8px;background:#0a1430;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
-  .wbar > span{display:block;height:100%;background:linear-gradient(90deg,#18d27a,#4ea1ff)}
+  .wbar > span{display:block;height:100%;background:linear-gradient(90deg,#1fd27a,#4ea1ff);transition:width .4s}
   .muted{color:var(--dim)}
   details{background:#0f1a36;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}
   details summary{cursor:pointer;font-weight:600}
@@ -59,44 +70,82 @@
   .week-banner h3{margin:0 0 4px;color:#fff}
   .week-banner p{margin:0;color:var(--dim);font-size:12.5px}
   .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .danger{color:var(--bad)}
+  .danger-text{color:var(--bad)}
   ul.compact{margin:6px 0 0 18px;padding:0}
   ul.compact li{margin-bottom:3px}
+  .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .meal-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:11px;margin-right:4px}
+  .meal-tag.早{background:#1a3358;color:#9bd0ff}
+  .meal-tag.午{background:#1a4f3a;color:#9bf0c2}
+  .meal-tag.晚{background:#3a2a14;color:#ffd1a0}
+  .meal-tag.加{background:#3a1a4a;color:#dab0ff}
+  .alert{padding:10px 12px;border-radius:10px;margin-bottom:10px;font-size:13px}
+  .alert.warn{background:#3a2c0e;color:#ffd28a;border:1px solid #6b531e}
+  .alert.bad{background:#3a0f1d;color:#ff9bb1;border:1px solid #6b1e35}
+  .alert.good{background:#0f3a26;color:#7ff0b6;border:1px solid #1f5a3c}
+  .alert.info{background:#0e2a52;color:#9bd0ff;border:1px solid #1f4080}
+  svg.trend{width:100%;height:200px;background:#0a1430;border:1px solid var(--line);border-radius:10px}
+  .anki-card{background:#0a1430;border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
+  .anki-card .q{font-size:18px;font-weight:600}
+  .anki-card .a{color:var(--good);font-size:15px}
+  .phase-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;margin-left:6px}
+  .phase-月经期{background:#3a0f1d;color:#ff9bb1}
+  .phase-卵泡期{background:#0f3a26;color:#7ff0b6}
+  .phase-排卵期{background:#3a2c0e;color:#ffd28a}
+  .phase-黄体期{background:#2a1a4a;color:#dab0ff}
+  .skin-step{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .skin-step:last-child{border:none}
+  .rating{display:inline-flex;gap:4px}
+  .rating button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#0a1430;color:#fff;cursor:pointer;font-size:13px}
+  .rating button.on{background:var(--accent);color:#031124;border-color:var(--accent);font-weight:700}
+  .milestone{background:linear-gradient(135deg,#2a1a4a,#1b3a78);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+  .milestone h3{margin:0 0 6px;color:#fff}
+  .ex-card{background:#0a1430;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+  .ex-card .name{font-weight:600;color:#cfe0ff}
+  .ex-card .meta{font-size:11px;color:var(--dim);margin-top:2px}
+  .ex-card .key{font-size:12px;margin-top:4px}
+  .progress-mini{font-size:11px;color:var(--dim)}
 </style>
 </head>
 <body>
 <header>
-  <h1>90 天蜕变计划 <span class="muted">· 小白 → 大师</span></h1>
-  <div class="sub">数据科学 × 金融量化 · 减重 10kg · 脾胃调养 · 启动日 <span id="startDate"></span></div>
+  <h1>90 天蜕变计划 v2 <span class="muted">· 小白 → 大师 · 减脂 + 护肤 + 调脾胃</span></h1>
+  <div class="sub">数据科学 × 金融量化 · 减重目标 10kg · 护肤三阶段 · 启动日 <span id="startDate"></span> · 今天是第 <span id="todayN">1</span> 天</div>
 </header>
 
 <div class="wrap">
-  <div class="nav">
-    <button data-tab="today" class="active">今日打卡</button>
-    <button data-tab="plan">90 天总览</button>
-    <button data-tab="metrics">体重 & 体型</button>
-    <button data-tab="brief">原则与底层逻辑</button>
-    <button data-tab="data">数据导入导出</button>
+  <div class="nav" role="tablist">
+    <button data-tab="today" class="active" role="tab">今日</button>
+    <button data-tab="logs" role="tab">日志</button>
+    <button data-tab="metrics" role="tab">体测 & 趋势</button>
+    <button data-tab="skin" role="tab">护肤</button>
+    <button data-tab="anki" role="tab">Anki 卡片</button>
+    <button data-tab="plan" role="tab">90 天总览</button>
+    <button data-tab="review" role="tab">复盘</button>
+    <button data-tab="brief" role="tab">原则</button>
+    <button data-tab="data" role="tab">数据</button>
   </div>
 
   <!-- TODAY -->
-  <section id="tab-today">
+  <section id="tab-today" role="tabpanel">
+    <div id="phaseAlert"></div>
+    <div id="warningAlert"></div>
     <div class="row">
       <div class="card">
         <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
           <div>
-            <h2 style="margin:0">第 <span id="dayNum">1</span> 天 · <span id="dayDate"></span></h2>
+            <h2 style="margin:0">第 <span id="dayNum">1</span> 天 · <span id="dayDate"></span><span id="phaseBadge"></span></h2>
             <div class="muted" id="weekTheme" style="font-size:12px;margin-top:3px"></div>
           </div>
           <div class="toolbar">
-            <button class="ghost" onclick="shiftDay(-1)">← 昨日</button>
-            <button class="ghost" onclick="shiftDay(1)">明日 →</button>
-            <button class="primary" onclick="goToday()">回到今天</button>
+            <button class="ghost" onclick="shiftDay(-1)" aria-label="昨日">← 昨日</button>
+            <button class="ghost" onclick="shiftDay(1)" aria-label="明日">明日 →</button>
+            <button class="primary" onclick="goToday()">今天</button>
           </div>
         </div>
         <div id="todayTasks"></div>
         <div class="muted" style="font-size:12px;margin-top:8px">
-          提示：每完成一项立即勾选；当日完成 ≥ 80% 计入连胜。所有数据保存在你本地浏览器。
+          每完成一项立即勾选；当日完成 ≥ 80% 计入连胜。所有数据保存在你本地浏览器（key <span class="kbd">plan90.v1</span>）。
         </div>
       </div>
 
@@ -104,8 +153,8 @@
         <div class="card">
           <h2>状态总览</h2>
           <div class="stats">
-            <div class="stat"><div class="v" id="sStreak">0</div><div class="k">连续达成（天）</div></div>
-            <div class="stat"><div class="v" id="sDone">0</div><div class="k">累计达成天数</div></div>
+            <div class="stat"><div class="v" id="sStreak">0</div><div class="k">连续达成</div></div>
+            <div class="stat"><div class="v" id="sDone">0</div><div class="k">累计达成</div></div>
             <div class="stat"><div class="v" id="sRate">0%</div><div class="k">总体完成率</div></div>
             <div class="stat"><div class="v" id="sLeft">90</div><div class="k">剩余天数</div></div>
           </div>
@@ -116,297 +165,646 @@
               <span>起 56.3kg</span><span id="wNow">--</span><span>目标 46.3kg</span>
             </div>
           </div>
+          <div style="margin-top:12px">
+            <div class="muted" style="font-size:12px;margin-bottom:4px">本周热量缺口目标</div>
+            <div id="kcalTarget" style="font-size:14px;font-weight:600;color:#cfe0ff">-</div>
+          </div>
         </div>
 
         <div class="card">
           <h2>90 天热力图</h2>
-          <div id="heat" class="heat"></div>
-          <div class="muted" style="font-size:11px;margin-top:6px">点击格子快速跳转该天</div>
+          <div id="heat" class="heat" role="grid"></div>
+          <div class="muted" style="font-size:11px;margin-top:6px">点击格子可跳转该天 · 粉边为经期</div>
         </div>
       </div>
     </div>
 
     <div class="card" style="margin-top:16px">
-      <h2>每日通用守则（脾胃友好版）</h2>
+      <h2>每日通用守则（脾胃友好 v2）</h2>
       <ul class="compact">
-        <li>晨起 200ml 温水 + 5min 腹式呼吸；空腹不冰饮、不浓茶。</li>
-        <li>三餐七分饱，<b>每口咀嚼 25–30 次</b>；餐后慢走 15min 再坐下学习。</li>
-        <li>避免：生冷/沙拉/冰奶茶/糯米/油炸/碳酸/豆浆+鸡蛋同食。</li>
-        <li>友好食材：小米、山药、南瓜、红枣、生姜、陈皮、鲈鱼、蒸蛋、小米粥配蔬菜。</li>
-        <li>嗳气频繁时按压 <b>内关</b>（腕横纹上 2 寸）+ <b>中脘</b>（脐上 4 寸）各 1 分钟。</li>
-        <li>23:00 前入睡；睡前 90min 不再进食、不刷盘中商品。</li>
+        <li>晨起 200ml 温水 + 5min 腹式呼吸；空腹不冰饮、不浓茶；<b>餐前 15min 喝 150ml 温柠檬水或淡陈皮水</b>。</li>
+        <li>三餐七分饱，<b>每口咀嚼 25–30 次</b>；餐后慢走 15min 再坐下学习；蛋白每日 ≥ 65g（鱼优先）。</li>
+        <li>避免：生冷 / 沙拉 / 冰奶茶 / 糯米 / 油炸 / 碳酸 / 豆浆+鸡蛋同食。</li>
+        <li>友好食材：小米、山药、南瓜、红枣、生姜、陈皮、<b>茯苓、炒薏米</b>、鲈鱼/龙利鱼/鳕鱼、蒸蛋。</li>
+        <li>嗳气频繁：按压 <b>内关</b>（腕横纹上 2 寸）+ <b>中脘</b>（脐上 4 寸）+ <b>足三里</b>（外膝眼下 3 寸）各 1 分钟；每日 14:00 与 21:00 主动按一次。</li>
+        <li>23:00 前入睡；睡前 90min 不再进食、不刷购物 / 信息流。</li>
       </ul>
     </div>
   </section>
 
-  <!-- PLAN -->
-  <section id="tab-plan" hidden>
-    <div id="planView"></div>
+  <!-- LOGS -->
+  <section id="tab-logs" role="tabpanel" hidden>
+    <div class="row">
+      <div class="card">
+        <h2>饮食记录 · <span id="logDateLabel"></span></h2>
+        <div class="form-grid">
+          <div><label for="fName">食物</label><input id="fName" list="foodList" placeholder="鲈鱼 / 小米粥 ..." /></div>
+          <div><label for="fAmt">分量(g)</label><input id="fAmt" type="number" value="100" /></div>
+          <div><label for="fMeal">餐次</label><select id="fMeal"><option>早</option><option>午</option><option>晚</option><option>加</option></select></div>
+          <div style="display:flex;align-items:flex-end"><button class="primary" onclick="addFood()">添加</button></div>
+        </div>
+        <datalist id="foodList"></datalist>
+        <div id="foodTotals" style="margin:10px 0;font-size:13px"></div>
+        <div class="scroll-x"><table id="foodTable">
+          <thead><tr><th>餐</th><th>食物</th><th>g</th><th>kcal</th><th>蛋白</th><th>性</th><th></th></tr></thead><tbody></tbody>
+        </table></div>
+        <div class="muted" style="font-size:11px;margin-top:6px">食物库 ~80 项；性=寒/凉/温/热/平。脾虚者优先温/平，寒凉每日不超过 1 项。</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>饮水 (杯 = 200ml)</h2>
+          <div id="waterCups" style="font-size:24px"></div>
+          <div class="muted" style="font-size:12px">目标 8 杯/天，含温水/汤/陈皮水。冰水不计入。</div>
+        </div>
+        <div class="card">
+          <h2>睡眠</h2>
+          <div class="form-grid">
+            <div><label for="sBed">入睡</label><input id="sBed" type="time" /></div>
+            <div><label for="sWake">起床</label><input id="sWake" type="time" /></div>
+            <div><label>质量</label><div id="sQual" class="rating"></div></div>
+          </div>
+          <div id="sleepInfo" class="muted" style="font-size:12px;margin-top:6px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:16px">
+      <div class="card">
+        <h2>嗳气 / 胀气强度（餐后）</h2>
+        <div class="form-grid">
+          <div><label>早午段 0-3</label><div id="bAm" class="rating"></div></div>
+          <div><label>下午晚段 0-3</label><div id="bPm" class="rating"></div></div>
+        </div>
+        <div><label for="bNote">触发因素</label><textarea id="bNote" rows="2" style="width:100%" placeholder="豆浆+鸡蛋 / 吃太快 / 受凉..."></textarea></div>
+        <button class="primary" onclick="saveBurp()" style="margin-top:6px">保存</button>
+      </div>
+      <div class="card">
+        <h2>情绪 / 心情</h2>
+        <div><label>评分 1-5</label><div id="mScore" class="rating"></div></div>
+        <div><label for="mNote">想说的话</label><textarea id="mNote" rows="3" style="width:100%" placeholder="今日小胜利 / 卡点 / 给自己的话"></textarea></div>
+        <button class="primary" onclick="saveMood()" style="margin-top:6px">保存</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>经期模块</h2>
+      <div class="form-grid">
+        <div><label for="pStart">最近一次月经首日</label><input id="pStart" type="date" /></div>
+        <div><label for="pCycle">周期(天)</label><input id="pCycle" type="number" value="28" min="20" max="40"/></div>
+        <div style="display:flex;align-items:flex-end"><button class="primary" onclick="savePeriod()">保存</button></div>
+      </div>
+      <div id="periodInfo" style="margin-top:10px;font-size:13px"></div>
+      <div class="muted" style="font-size:12px;margin-top:6px">中医提示：经前喝玫瑰陈皮茶；经期忌生冷 + 剧烈运动；经后 3 天可红枣枸杞水补血。</div>
+    </div>
   </section>
 
   <!-- METRICS -->
-  <section id="tab-metrics" hidden>
+  <section id="tab-metrics" role="tabpanel" hidden>
     <div class="row">
       <div class="card">
-        <h2>每日体重 / 腰围记录</h2>
-        <div class="toolbar" style="margin-bottom:10px">
-          <input type="date" id="mDate" />
-          <input type="number" step="0.1" id="mW" placeholder="体重 kg" style="width:110px"/>
-          <input type="number" step="0.1" id="mWa" placeholder="腰围 cm" style="width:110px"/>
-          <input type="number" step="0.1" id="mFat" placeholder="体脂 %" style="width:110px"/>
-          <button class="primary" onclick="saveMetric()">记录</button>
+        <h2>体测记录</h2>
+        <div class="form-grid">
+          <div><label for="mDate">日期</label><input type="date" id="mDate" /></div>
+          <div><label for="mW">体重 kg</label><input type="number" step="0.1" id="mW" /></div>
+          <div><label for="mWa">腰围 cm</label><input type="number" step="0.1" id="mWa" /></div>
+          <div><label for="mFat">体脂 %</label><input type="number" step="0.1" id="mFat" /></div>
+          <div style="display:flex;align-items:flex-end"><button class="primary" onclick="saveMetric()">记录</button></div>
         </div>
-        <table id="mTable">
-          <thead><tr><th>日期</th><th>体重</th><th>腰围</th><th>体脂%</th><th>对比起点</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
+        <div class="scroll-x" style="margin-top:10px"><table id="mTable">
+          <thead><tr><th>日期</th><th>体重</th><th>腰围</th><th>体脂%</th><th>对比起点</th><th></th></tr></thead><tbody></tbody>
+        </table></div>
       </div>
       <div class="card">
         <h2>初始数据 / 目标</h2>
         <ul class="compact">
-          <li>性别：女 · 年龄：22 · 身高：153cm</li>
-          <li>起点体重：56.3kg · 体脂量：17.7kg（约 <b>31.4%</b>，偏高）</li>
-          <li>去脂体重：38.6kg · 肌肉量：35.9kg · 骨质：2.7kg</li>
-          <li>BMR ≈ <b>1248 kcal</b>；轻度活动 TDEE ≈ <b>1500–1700 kcal</b></li>
-          <li>能量缺口：约 <b>500–650 kcal/天</b>，每周减 0.6–0.8kg（健康可持续）</li>
-          <li>蛋白质摄入：<b>≥ 65g/天</b>（保护肌肉、防止反弹）</li>
-          <li>3 个月目标：体重 <b>46–47kg</b>、体脂率 <b>≤ 22%</b>、腰围 -8cm</li>
+          <li>女 · 22 岁 · 153cm</li>
+          <li>起点：56.3kg · 体脂量 17.7kg（<b>≈31.4%</b>）· 去脂 38.6kg</li>
+          <li>BMR ≈ <b>1248 kcal</b>；TDEE ≈ <b>1500–1700 kcal</b></li>
+          <li>渐进缺口：W1–2 −300 / W3–6 −500 / W7–12 −600 kcal</li>
+          <li>蛋白：≥ <b>65g/天</b>（鱼 50% / 鸡蛋 20% / 鸡胸 30%）</li>
+          <li>3 个月目标：<b>46–47kg / 体脂 ≤ 22% / 腰围 -8cm</b></li>
         </ul>
-        <p class="muted" style="font-size:12px;margin-top:8px">注：减重并非线性。第 1–10 天多为水分回落（−1.5kg 内属正常），真正脂肪下降发生在第 3 周后。脾胃虚者优先<b>稳定消化</b>，再逐步加大缺口。</p>
+        <div class="alert info" style="margin-top:10px">前 10 天多为水分回落（−1.5kg 内属正常），真正脂肪下降发生在第 3 周后。<b>稳定消化 &gt; 急速降秤</b>。</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>趋势图（含 7 日均线）</h2>
+      <div class="row3">
+        <div><div class="muted" style="font-size:12px">体重 kg</div><svg id="trendW" class="trend"></svg></div>
+        <div><div class="muted" style="font-size:12px">腰围 cm</div><svg id="trendWa" class="trend"></svg></div>
+        <div><div class="muted" style="font-size:12px">体脂 %</div><svg id="trendFat" class="trend"></svg></div>
+      </div>
+      <div class="row3" style="margin-top:12px">
+        <div><div class="muted" style="font-size:12px">T 区出油（1 干 - 5 油）</div><svg id="trendOil" class="trend"></svg></div>
+        <div><div class="muted" style="font-size:12px">嗳气强度（0-6/天）</div><svg id="trendBurp" class="trend"></svg></div>
+        <div><div class="muted" style="font-size:12px">心情评分 1-5</div><svg id="trendMood" class="trend"></svg></div>
+      </div>
+      <div class="muted" style="font-size:11px;margin-top:6px">空心点 = 经期内（不参与均线）。目标线 = 减重终点；起点线 = 56.3kg。</div>
+    </div>
+  </section>
+
+  <!-- SKIN -->
+  <section id="tab-skin" role="tabpanel" hidden>
+    <div class="row">
+      <div class="card">
+        <h2>今日护肤打卡</h2>
+        <div id="skinSteps"></div>
+        <h3>评分（贡献到趋势图）</h3>
+        <div class="form-grid">
+          <div><label>T 区出油 1-5</label><div id="skOil" class="rating"></div></div>
+          <div><label>水分 1-5</label><div id="skHyd" class="rating"></div></div>
+          <div><label>亮度 1-5</label><div id="skBri" class="rating"></div></div>
+        </div>
+        <button class="primary" onclick="saveSkin()" style="margin-top:8px">保存评分</button>
+      </div>
+      <div class="card">
+        <h2>本周护肤要点</h2>
+        <div id="skinWeek" style="font-size:13px;line-height:1.7"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>90 天护肤计划（三阶段）</h2>
+      <details open><summary>修复期 W1–4 · 屏障+温和</summary>
+        <ul class="compact">
+          <li>洁面：氨基酸洁面（早 1 / 晚 1，水温 32–34°C）</li>
+          <li>保湿：化妆水 → 烟酰胺 2% 精华 → 神经酰胺乳液</li>
+          <li>T 区控油：水杨酸 0.5% 单点（<b>隔日</b>，不全脸）</li>
+          <li>防晒：每日 SPF30 PA+++（出门前 15min）</li>
+          <li>身体补水：淋浴水温 ≤ 38°C；3 分钟内全身身体乳；饮水 1.6L/天</li>
+          <li>禁忌：刷酸 + 视黄醇 + 维 C 同周叠加</li>
+        </ul>
+      </details>
+      <details><summary>建设期 W5–8 · 加入活性成分</summary>
+        <ul class="compact">
+          <li>早：3-O-乙基抗坏血酸（VC 衍生物）5% → 烟酰胺 → SPF50</li>
+          <li>晚：0.1% 视黄醇 / 视黄酯 每周 2→3 次（避开经期前 3 天 + 经期）</li>
+          <li>T 区水杨酸：每日单点</li>
+          <li>每周 1 次黏土面膜（仅 T 区）</li>
+          <li>身体：每周 1 次身体磨砂（不在月经期）；尿素 5% 身体乳</li>
+          <li>内调：每日 1 个猕猴桃或 200ml 鲜榨橙汁</li>
+        </ul>
+      </details>
+      <details><summary>巩固期 W9–12 · 提亮 + 长期化</summary>
+        <ul class="compact">
+          <li>早：VC + 烟酰胺 + SPF50（户外加补涂）</li>
+          <li>晚：视黄醇 3–4 次/周</li>
+          <li>每周 1 次杏仁酸 8% 化学焕肤（晚间，次日严格防晒）</li>
+          <li>身体磨砂每周 2 次；尿素 10% 身体乳</li>
+          <li>内调：维生素 D 1000IU；保持每日 ≥ 1 拳深色蔬菜 + 1 拳水果</li>
+          <li>固化习惯：洗澡 ≤ 38°C / 不揉搓 / 出门必防晒</li>
+        </ul>
+      </details>
+      <p class="muted" style="font-size:12px">原则：温和 &gt; 猛料；新成分一次只加一种；任何刺痛 / 泛红 / 起皮 → 立即回到修复期 1 周。</p>
+    </div>
+  </section>
+
+  <!-- ANKI -->
+  <section id="tab-anki" role="tabpanel" hidden>
+    <div class="row">
+      <div class="card">
+        <h2>Anki 复习 <span class="muted" id="ankiStat" style="font-size:12px;font-weight:400"></span></h2>
+        <div id="ankiBox" class="anki-card"><div class="muted">点击 "开始复习" 抽取到期卡</div></div>
+        <div class="toolbar" style="margin-top:10px;justify-content:center">
+          <button class="ghost" onclick="ankiShow()">显示答案</button>
+          <button class="danger" onclick="ankiGrade(0)">忘了 (1d)</button>
+          <button class="primary" onclick="ankiGrade(1)">还行 (3d)</button>
+          <button class="primary" onclick="ankiGrade(2)" style="background:#1fd27a">熟练 (7d)</button>
+          <button class="primary" onclick="ankiGrade(3)" style="background:#ffd166;color:#3a2a14">满分 (21d)</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>新增卡片</h2>
+        <div><label for="aDeck">牌组</label><select id="aDeck"><option>DS</option><option>量化</option><option>统计</option><option>中医</option></select></div>
+        <div><label for="aQ">问题</label><input id="aQ" placeholder="什么是夏普比率？" /></div>
+        <div><label for="aA">答案</label><textarea id="aA" rows="3" placeholder="超额收益 / 波动率, 越高越好..."></textarea></div>
+        <button class="primary" onclick="ankiAdd()" style="margin-top:6px">加入</button>
+        <h3>导入预置 200 张</h3>
+        <button class="ghost" onclick="ankiSeed()">一键导入 DS+量化+统计+中医基础卡</button>
       </div>
     </div>
   </section>
 
+  <!-- PLAN -->
+  <section id="tab-plan" role="tabpanel" hidden>
+    <div id="planView"></div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="tab-review" role="tabpanel" hidden>
+    <div id="reviewView"></div>
+  </section>
+
   <!-- BRIEF -->
-  <section id="tab-brief" hidden>
+  <section id="tab-brief" role="tabpanel" hidden>
     <div class="card">
-      <h2>底层方法论（来自神经科学 / 金融学 / 语言学 / 运动学）</h2>
+      <h2>底层方法论（神经科学 / 金融学 / 学习语言学 / 运动 / 中医）</h2>
 
-      <details open><summary>1. 神经科学：把习惯放在已存在的钩子上</summary>
+      <details open><summary>1. 神经科学 · 把习惯放在已存在的钩子上</summary>
         <ul class="compact">
-          <li><b>提示 → 行为 → 奖励</b>（Habit Loop）。每个新任务都绑定一个旧动作：例如"刷完牙 → 立刻打开 VSCode 写 5 行 Python"。</li>
-          <li><b>多巴胺峰值在期待而非完成</b>。每天用一份"小胜利清单"在傍晚回顾，强化路径。</li>
-          <li><b>间隔重复（Spaced Repetition）</b>：DS/量化新概念用 Anki，复习节奏 1d / 3d / 7d / 21d。</li>
-          <li><b>睡眠是学习的离线编译器</b>。23:00 前入睡，午间 20 分钟 NSDR/小睡可提升当日学习留存约 20%。</li>
+          <li><b>提示 → 行为 → 奖励</b>。新任务都绑在旧动作上："刷牙 → 打开 VSCode 写 5 行 Python"。</li>
+          <li><b>多巴胺峰值在期待，不在完成</b>。傍晚回顾"小胜利清单"强化路径。</li>
+          <li><b>间隔重复</b>：用 Anki 牌组，节奏 1d / 3d / 7d / 21d（本网页内置）。</li>
+          <li><b>睡眠是离线编译器</b>。23:00 前入睡；午间 20min NSDR 提升当日留存约 20%。</li>
         </ul>
       </details>
 
-      <details><summary>2. 学习语言学：先读、再改、最后写</summary>
+      <details><summary>2. 学习语言学 · 先读、再改、最后写</summary>
         <ul class="compact">
-          <li>学 Python/SQL/策略代码不是从空白开始。先<b>大量读优秀代码</b>（pandas 官方示例、quantopian 旧策略），再<b>修改</b>，最后<b>从零写</b>。</li>
-          <li>每天产出一段 <b>"昨日学到的，用一句话讲给奶奶听"</b>（费曼技巧），写到打卡表。</li>
+          <li>先读优秀代码（pandas 官方 cookbook、quantopian 旧策略），再修改，最后从零写。</li>
+          <li>每天写 100 字"昨日所学讲给奶奶听"（费曼）→ 进"日志-情绪"备注。</li>
         </ul>
       </details>
 
-      <details><summary>3. 金融学：先理解风险，再追求收益</summary>
+      <details><summary>3. 金融学 · 先理解风险，再追求收益</summary>
         <ul class="compact">
-          <li>学习顺序：金融市场结构 → 资产定价（CAPM/Fama-French）→ 因子模型 → 时间序列 → 组合优化 → 实盘风控。</li>
-          <li>原则：<b>不要在没有回测的情况下相信任何策略</b>；<b>夏普 &lt; 1 的策略不要上实盘</b>；永远先做<b>样本外测试</b>。</li>
-          <li>把"减肥"也当作量化项目：能量缺口=策略，体重=PnL，便秘/嗳气=回撤，每周复盘=回测。</li>
+          <li>顺序：市场结构 → 资产定价 → 因子 → 时间序列 → 组合优化 → 风控。</li>
+          <li>原则：<b>没有 walk-forward 回测的策略不上实盘</b>；夏普 &lt; 1 不上；先样本外。</li>
+          <li>把"减肥"当量化项目：缺口=策略，体重=PnL，嗳气=回撤，每周复盘=回测。</li>
         </ul>
       </details>
 
-      <details><summary>4. 运动 & 中医（脾胃虚弱定制）</summary>
+      <details><summary>4. 运动 + 中医（脾胃虚弱 + 经期友好）</summary>
         <ul class="compact">
-          <li>避免空腹高强度有氧；优先 <b>抗阻训练</b>（保留肌肉=保留代谢）+ <b>餐后快走</b>（降餐后血糖、助消化）。</li>
-          <li>每周 3 次力量（自重+小哑铃 30min）+ 4 次快走（每次 6000–8000 步）+ 1 次低强度瑜伽（脾经/胃经拉伸）。</li>
-          <li><b>嗳气/胀气</b>：八段锦"调理脾胃须单举"每日 1 组；按压<b>足三里</b>（外膝眼下 3 寸）3 分钟。</li>
-          <li>不在饱腹后立刻坐着学习。形成"吃 → 走 → 学"节律。</li>
+          <li>避免空腹高强度；优先 <b>力量</b>（保肌=保代谢）+ <b>餐后慢走</b>（降血糖、助消化）。</li>
+          <li>每周 3 力量 + 4 快走 + 1 瑜伽（脾经/胃经拉伸）；黄体期降量 15%。</li>
+          <li>嗳气：八段锦"调理脾胃须单举"每日 1 组；按 足三里 3 分钟。</li>
+          <li>不饱腹立刻坐着学习 → 形成"吃 → 走 → 学"节律。</li>
         </ul>
       </details>
 
-      <details><summary>5. 节奏：番茄 + 深工作 + 双轨学习</summary>
+      <details><summary>5. 节奏 · 双轨深度块</summary>
         <ul class="compact">
-          <li>每天 <b>2 个 90 分钟深度块</b>（早上 DS、晚上 量化）+ <b>3 个番茄复习/编码块</b>。</li>
-          <li>"双轨"学习：当周同时推进一个 DS 主题 + 一个金融主题，<b>互相成为彼此的应用场景</b>（用 pandas 做因子分析、用 sklearn 做选股）。</li>
+          <li>每天 <b>2 个 90 分钟深度块</b>（早 DS、晚 量化）+ 3 个番茄。</li>
+          <li>双轨：本周 DS 主题 + 金融主题互为应用场景（pandas 做因子、sklearn 选股）。</li>
         </ul>
       </details>
 
-      <details><summary>6. 风险与红线</summary>
+      <details><summary>6. 风险红线</summary>
         <ul class="compact">
-          <li>体重单周下降 &gt; 1.5kg 或心率/睡眠明显下滑 → 把日热量上调 150–200 kcal。</li>
-          <li>嗳气连续 3 天加重、出现胃痛/反酸 → 暂停高强度训练，回到温粥+蒸食 3 天，必要时就医。</li>
-          <li>学习卡顿连续 2 天 → 把当日任务砍半，<b>保住打卡链条比完成度更重要</b>。</li>
+          <li>单周 -1.5kg 或 心率/睡眠下滑 → 加 200 kcal。</li>
+          <li>嗳气强度 ≥ 2 连续 3 天 / 反酸 / 胃痛 → 退回温粥蒸食 3 天，必要时就医。</li>
+          <li>学习卡顿 ≥ 2 天 → 砍半保链。<b>链条 &gt; 完成度</b>。</li>
+        </ul>
+      </details>
+
+      <details><summary>7. 护肤底层</summary>
+        <ul class="compact">
+          <li>顺序：屏障修复 &gt; 防晒 &gt; 抗氧（VC）&gt; 抗老（视黄醇）&gt; 焕肤（水杨酸/果酸）。</li>
+          <li>新成分一次加一个；任何刺痛/泛红/起皮 → 退回修复期。</li>
+          <li>身体补水：洗澡 ≤ 38°C、3min 内身体乳、每日饮水 1.6L+。</li>
+          <li>美白靠"减少黑色素生成 + 加速代谢"：VC（早）+ 视黄醇/果酸（晚）+ 严格防晒。</li>
         </ul>
       </details>
     </div>
   </section>
 
   <!-- DATA -->
-  <section id="tab-data" hidden>
+  <section id="tab-data" role="tabpanel" hidden>
     <div class="card">
       <h2>导入 / 导出 / 重置</h2>
       <div class="toolbar">
-        <button class="primary" onclick="exportData()">导出 JSON 备份</button>
+        <button class="primary" onclick="exportData()">导出 JSON</button>
+        <button class="ghost" onclick="exportCSV()">导出 CSV (体测)</button>
         <button class="ghost" onclick="document.getElementById('imp').click()">导入 JSON</button>
         <input type="file" id="imp" accept="application/json" hidden onchange="importData(event)" />
-        <button class="ghost danger" onclick="resetAll()">清空全部数据</button>
+        <button class="danger" onclick="resetAll()">清空全部数据</button>
       </div>
-      <p class="muted" style="font-size:12px">所有数据仅保存在当前浏览器 localStorage（key 前缀 <span class="kbd">plan90</span>）。换设备请用导出 JSON。</p>
+      <p class="muted" style="font-size:12px">所有数据仅保存在当前浏览器 localStorage（key <span class="kbd">plan90.v1</span>）。换设备请用导出 JSON。</p>
       <h2 style="margin-top:18px">设置启动日</h2>
       <div class="toolbar">
         <input type="date" id="setStart" />
         <button class="primary" onclick="changeStart()">应用</button>
-        <span class="muted" style="font-size:12px">若想从今天开始，留空再点应用即可。</span>
+        <span class="muted" style="font-size:12px">留空再点应用 = 从今天开始。</span>
       </div>
     </div>
   </section>
 </div>
 
 <script>
-/* ---------------- 90-day curriculum ---------------- */
+/* ============================================================
+   90-day curriculum v2
+   ============================================================ */
 const WEEKS = [
-  // M1
   {w:1,  theme:"M1 W1 · 起点 · 习惯钩子 + Python 立足",
-        ds:["环境装好：Anaconda+VSCode+Jupyter 跑通","Python 变量/类型/分支/循环","列表/字典/字符串切片","函数与作用域，写 5 个小工具函数","NumPy 入门：array、broadcast、轴","pandas Series/DataFrame 基础","小项目：清洗一份 CSV 并出基础统计"],
-        quant:["注册 Tushare/akshare，拉一只股票日线","K 线 / OHLC / 复权理解","均线 MA5/MA20 计算与画图","收益率：算术 vs 对数","市场术语 50 词卡片（Anki）","风险 / 收益 / 波动直觉","一句话讲清『什么是 Alpha、Beta』"]},
+        ds:["Anaconda+VSCode+Jupyter 跑通环境","Python 变量/类型/分支/循环","列表/字典/字符串切片","函数与作用域：写 5 个小工具函数","NumPy 入门：array、broadcast、轴","pandas Series/DataFrame 基础","小项目：清洗一份 CSV 并出基础统计"],
+        quant:["注册 akshare/Tushare，拉一只股票日线","K 线 / OHLC / 复权理解","均线 MA5/MA20 计算与画图","收益率：算术 vs 对数","市场术语 25 词加入 Anki","风险/收益/波动直觉","一句话讲清『什么是 Alpha、Beta』"]},
   {w:2,  theme:"M1 W2 · 数据驯服 + 金融常识",
         ds:["pandas 索引、loc/iloc 精通","groupby + agg + transform","时间索引、resample 周/月","缺失值与异常值的 4 种处理","matplotlib & seaborn 基础图","Kaggle Titanic 数据探索","小项目：A 股每日涨跌分布可视化"],
-        quant:["指数：上证 / 沪深 300 / 中证 500 区别","行业 vs 风格：成长 / 价值 / 红利","Fama 三因子直觉","股息率、PE、PB 含义与陷阱","换手率与流动性","用 pandas 实现 PE 分位数选股雏形","回测的『幸存者偏差』是什么"]},
+        quant:["指数：上证 / 沪深 300 / 中证 500","行业 vs 风格：成长 / 价值 / 红利","Fama 三因子直觉","股息率、PE、PB 含义与陷阱","换手率与流动性","用 pandas 实现 PE 分位数选股雏形","『幸存者偏差』是什么"]},
   {w:3,  theme:"M1 W3 · 统计基础 + 收益率分布",
-        ds:["描述统计：均值/中位数/方差/分位","概率分布：正态、对数正态、t","假设检验：t 检验 / 卡方","相关与回归（OLS）手推一遍","statsmodels 跑一次线性回归","可视化残差，判断异方差","Anki：50 张统计概念卡"],
-        quant:["收益率为何近似对数正态","年化收益与年化波动公式","夏普比率手算 + Python 实现","最大回撤的 3 种实现","用 1 年日线算一只股票的 Sharpe / MDD","'肥尾' 与极端事件","写一段 README 总结本周"]},
-  {w:4,  theme:"M1 W4 · SQL + 项目化",
+        ds:["描述统计：均值/中位数/方差/分位","概率分布：正态、对数正态、t","假设检验：t 检验 / 卡方","相关与回归（OLS）手推一遍","statsmodels 跑一次线性回归","可视化残差，判断异方差","Anki：50 张统计卡补齐"],
+        quant:["收益率为何近似对数正态","年化收益与年化波动公式","夏普比率手算 + Python 实现","最大回撤的 3 种实现","用 1 年日线算一只股票 Sharpe / MDD","『肥尾』与极端事件","写一段 README 总结本周"]},
+  {w:4,  theme:"M1 W4 · SQL + 项目化 + M1 复盘",
         ds:["SQL：SELECT/JOIN/GROUP/窗口函数","SQLite 在 Python 里读写","把 1 年股票数据塞进 SQLite","写 SQL 取月度涨幅 Top10","数据透视：pivot_table","小项目：本月行业涨幅热力图","Git/GitHub 第一个仓库 push"],
-        quant:["资产定价直觉：折现现金流","债券价格 / 收益率反向关系","期权 4 种基本形态（不深入）","做空 / 融券 / 杠杆风险","'胜率 vs 赔率' 的取舍","写一份 1 页 PDF：M1 我学到了什么","M1 复盘 + M2 目标对齐"]},
-  // M2
-  {w:5,  theme:"M2 W5 · 机器学习落地",
-        ds:["sklearn 流水线：train/test split","逻辑回归原理 + 实战","决策树与可视化","随机森林 + 特征重要性","交叉验证 5 折","过拟合的识别与正则","项目：用基本面数据预测下月涨跌（baseline）"],
-        quant:["因子的定义与构造模板","价值 / 动量 / 质量 / 低波 / 规模 五大因子","IC / IR / 分层回测","行业中性化与市值中性化","因子衰减曲线","用 1 个动量因子完成全市场分层回测","结果可视化 + 写复盘"]},
-  {w:6,  theme:"M2 W6 · 时间序列入门",
-        ds:["ADF 检验、平稳性","自相关 ACF / PACF","ARIMA 直觉与拟合","GARCH（理解即可）","用 statsmodels 拟合上证收益率","Prophet 跑一次 baseline","对比：模型并不一定比 MA 强"],
-        quant:["双均线策略 v1（含手续费/滑点）","止盈止损模块","参数搜索的危险（曲线拟合）","样本外（Walk-Forward）测试","回测引擎选型：backtrader / vnpy 二选一","用 backtrader 跑一次双均线","写一份策略说明书"]},
-  {w:7,  theme:"M2 W7 · 深度学习地基",
-        ds:["PyTorch 张量、autograd","MLP 手写一遍","训练循环 / 优化器 / 学习率","CNN 直觉（图像入门）","RNN / LSTM 直觉（序列）","在 Colab 跑 MNIST","记录调参日志"],
-        quant:["LSTM 预测股票涨跌的常见坑","'数据泄漏' 全部出现形式","特征工程：滚动窗口 / lag","组合优化基础（mean-variance）","风险平价直觉","Black-Litterman 听过即可","看 1 篇 SSRN 的 short paper"]},
-  {w:8,  theme:"M2 W8 · 中期项目周",
-        ds:["把 W5 的因子模型重构为可复用包","写测试（pytest）","加日志（logging）","写 README + 例子","部署到 GitHub","写一份 jupyter 报告","录 5 分钟讲解视频（自看）"],
-        quant:["综合策略 v2：3 因子复合 + 风控","完整 walk-forward 回测","统计显著性检验","与基准（沪深 300）对比","归因分析","写 1 页策略报告","M2 复盘 & M3 目标"]},
-  // M3
-  {w:9,  theme:"M3 W9 · 高阶机器学习",
-        ds:["XGBoost / LightGBM 实战","SHAP 可解释性","类别不平衡 / 采样","贝叶斯调参（optuna）","特征选择的 3 类方法","模型监控与漂移","项目：选股模型 v3 上 LGB"],
-        quant:["事件驱动策略思路","可转债 / ETF 套利常识","期货基础（保证金/到期）","高频与低频的边界","真实交易成本拆解","写一段：'我为什么不上高频'","研究日志结构化"]},
+        quant:["资产定价直觉：折现现金流","债券价格 / 收益率反向关系","期权 4 种基本形态（理解即可）","做空 / 融券 / 杠杆风险","『胜率 vs 赔率』取舍","写一份 1 页 PDF：M1 我学到了什么","M1 复盘 + M2 目标对齐"]},
+  {w:5,  theme:"M2 W5 · 机器学习 + 单因子 → 双因子",
+        ds:["sklearn 流水线：train/test split","逻辑回归原理 + 实战","决策树与可视化","随机森林 + 特征重要性","交叉验证 5 折","过拟合识别与正则","项目：用基本面预测下月涨跌（baseline）"],
+        quant:["因子定义与构造模板","价值/动量/质量/低波/规模 五因子","IC / IR / 分层回测","行业中性化与市值中性化","因子衰减曲线","用 1 个动量因子完成全市场分层","2 因子等权合成 + IC 对比"]},
+  {w:6,  theme:"M2 W6 · 时间序列 + 三因子骨架",
+        ds:["ADF 检验、平稳性","自相关 ACF / PACF","ARIMA 直觉与拟合","GARCH（理解即可）","用 statsmodels 拟合上证收益率","Prophet 跑一次 baseline","对比：模型不一定比 MA 强"],
+        quant:["双均线策略 v1（含手续费/滑点）","止盈止损模块","参数搜索的危险（曲线拟合）","样本外（Walk-Forward）框架","回测引擎选型：backtrader / vnpy","用 backtrader 跑双均线","加入低波因子 → 3 因子等权合成"]},
+  {w:7,  theme:"M2 W7 · 深度学习地基 + Walk-Forward 强制",
+        ds:["PyTorch 张量、autograd","MLP 手写一遍","训练循环 / 优化器 / 学习率","CNN 直觉（图像入门）","RNN / LSTM 直觉（序列）","Colab 跑 MNIST","记录调参日志"],
+        quant:["LSTM 预测股价的常见坑 + 数据泄漏","滚动窗口 / lag 特征","组合优化：mean-variance","风险平价直觉","Black-Litterman 概览","Walk-Forward：训练窗/测试窗/OOS Sharpe 三列","看 1 篇 SSRN short paper"]},
+  {w:8,  theme:"M2 W8 · 中期项目周 + Walk-Forward 实战",
+        ds:["把 W5 模型重构为可复用包","写测试（pytest）","加日志（logging）","写 README + 例子","部署到 GitHub","写 jupyter 报告","录 5 分钟自看讲解"],
+        quant:["综合策略 v2：3 因子复合 + 风控","完整 Walk-Forward 回测 + OOS 报告","统计显著性检验","与基准（沪深 300）对比","归因分析","写 1 页策略报告","M2 复盘 & M3 目标"]},
+  {w:9,  theme:"M3 W9 · 高阶 ML + 事件驱动",
+        ds:["XGBoost / LightGBM 实战","SHAP 可解释性","类别不平衡 / 采样","贝叶斯调参（optuna）","特征选择三类方法","模型监控与漂移","项目：选股模型 v3 上 LGB"],
+        quant:["事件驱动策略思路","可转债 / ETF 套利常识","期货基础（保证金/到期）","高频与低频边界","真实交易成本拆解","写：『我为什么不上高频』","研究日志结构化"]},
   {w:10, theme:"M3 W10 · 工程化与部署",
-        ds:["Docker 入门","FastAPI 提供模型服务","调度：airflow / cron 选一个","简易看板 streamlit","数据库选型（PostgreSQL）","云端部署一次（任意）","写部署 runbook"],
-        quant:["实盘 vs 回测的 7 个差","券商 API 概览（不入金）","纸面交易（paper trading）","风控：最大回撤、单票上限、行业上限","组合再平衡频率","压力测试（极端行情）","策略归档模板"]},
+        ds:["Docker 入门","FastAPI 提供模型服务","调度：airflow / cron 选一","streamlit 看板","数据库选型（PostgreSQL）","云端部署一次","写部署 runbook"],
+        quant:["实盘 vs 回测的 7 个差","券商 API 概览（不入金）","Paper trading","风控：最大回撤、单票/行业上限","组合再平衡频率","压力测试（极端行情）","策略归档模板"]},
   {w:11, theme:"M3 W11 · 综合作品集冲刺",
-        ds:["把策略 + 模型 + 看板串成一个作品集","写一篇 Medium / 知乎技术博客","在 GitHub README 放结果图","简历草稿 v1","面试 50 题（统计/ML）刷题","面试 30 题（量化）刷题","模拟自我介绍 90 秒"],
-        quant:["阅读 1 份知名私募研究报告","总结 3 种你看懂的 alpha 来源","写'我的研究方法论'","建一个长期可维护的研究模板仓库","策略路线图 v1","风险管理 checklist","M3 中期复盘"]},
+        ds:["策略+模型+看板串成作品集","写一份研究笔记 markdown（不必公开）","GitHub README 放结果图","简历草稿 v1","面试 50 题（统计/ML）","面试 30 题（量化）","模拟自我介绍 90 秒"],
+        quant:["读 1 份知名私募研究报告","总结 3 种你看懂的 alpha 来源","写『我的研究方法论』","建可维护研究模板仓库","策略路线图 v1","风险管理 checklist","M3 中期复盘"]},
   {w:12, theme:"M3 W12 · 收尾 · 大师启航",
-        ds:["作品集打磨与提交","在 1 个真实数据集上端到端跑通","写'90 天我学到了什么'长文","录 10 分钟项目讲解","收集 3 位朋友反馈","建立持续学习节奏（每周 6h）","M3 数据科学闭环复盘"],
-        quant:["完整模拟盘运行 1 周","出最终回测+实盘对比报告","建立每周市场扫描例行","制定下一阶段 6 个月计划","订阅 3 个高质量信息源","和 1 位行业人请教 30min","正式给自己颁发'结业证'"]}
+        ds:["作品集打磨 + 提交","在 1 个真实数据集上端到端跑通","写『90 天我学到了什么』长文","录 10 分钟项目讲解","收集 3 位朋友反馈","建立持续学习节奏（每周 6h）","M3 数据科学闭环复盘"],
+        quant:["完整模拟盘运行 1 周","出最终回测 + 模拟盘对比报告","建立每周市场扫描例行","制定下一阶段 6 个月计划","订阅 3 个高质量信息源","与 1 位行业人请教 30min","正式给自己『结业证』"]}
 ];
 
 const BODY_BY_WEEK = [
-  // 12 weeks; each entry: {focus, days[7]} where days[i] is one-line workout for that day-of-week (mon..sun)
-  {focus:"启动 · 走+核心激活", d:["快走 30min（餐后）","自重核心：平板 3×30s + 鸟狗 3×10","快走 35min","休息+八段锦 1 套","自重下肢：深蹲 3×12 + 臀桥 3×15","快走 40min（晨间空腹温水后）","瑜伽脾胃经拉伸 30min"]},
-  {focus:"建立基线 · 力量 + 走",  d:["哑铃上肢 30min（推/划）","快走 40min","休息+腹式呼吸 10min","哑铃下肢 30min（深蹲/硬拉)","快走 40min","HIIT 12min（低冲击）","瑜伽 30min"]},
-  {focus:"加量 · 步数 8000+",     d:["全身力量 35min","快走 45min","八段锦 + 拉伸","全身力量 35min","快走 45min","HIIT 15min","低强度骑行/瑜伽 40min"]},
-  {focus:"M1 收尾 · 适应评估",    d:["上肢力量 35min","快走 45min","休息（睡眠优先）","下肢+核心 35min","快走 50min","HIIT 15min","瑜伽 40min + 体测"]},
-  {focus:"提速 · 加入 HIIT",      d:["全身力量 40min","快走 45min + HIIT 8min","休息","推/拉日 40min","快走 50min","HIIT 18min（爬坡走替代）","核心 + 瑜伽 40min"]},
-  {focus:"力量进阶",              d:["腿臀日 45min","快走 50min","八段锦 + 拉伸","背肩日 40min","快走 50min","HIIT 18min","瑜伽 40min"]},
-  {focus:"代谢 + 心肺",           d:["全身力量 45min","快走 60min","休息","下肢 45min","快走 60min + 慢跑 5min","HIIT 20min","瑜伽 + 拉筋 50min"]},
-  {focus:"M2 收尾 · 体型微调",    d:["上肢+核心 40min","快走 60min","休息","下肢 45min","快走 60min","HIIT 20min","骑行/泳 45min"]},
-  {focus:"塑形 · 上下肢分化",      d:["推日（胸肩三头）45min","快走 60min","休息","拉日（背二头）45min","快走 60min","HIIT 22min","瑜伽 50min"]},
-  {focus:"耐力 + 抗阻",            d:["腿臀 50min","快走 65min","休息","背肩 45min","慢跑 25min（餐后 1h）","HIIT 22min","核心 + 瑜伽 50min"]},
-  {focus:"冲刺 · 高密度",          d:["全身力量 50min","快走 65min + HIIT 10min","休息","腿臀 50min","慢跑 30min","HIIT 25min","骑行/泳 50min"]},
-  {focus:"收官 · 习惯固化",        d:["上肢 45min","快走 65min","休息","下肢 45min","快走 65min","HIIT 20min","瑜伽 + 体测 + 庆祝"]}
+  {focus:"启动 · 走+核心激活", d:["快走 30min（餐后）","自重核心：平板 3×30s + 鸟狗 3×10","快走 35min","休息+八段锦","自重下肢：深蹲 3×12 + 臀桥 3×15","快走 40min","瑜伽脾胃经拉伸 30min"]},
+  {focus:"建立基线 · 力量+走", d:["哑铃上肢 30min","快走 40min","休息+腹式呼吸","哑铃下肢 30min","快走 40min","HIIT 12min（低冲击）","瑜伽 30min"]},
+  {focus:"加量 · 步数 8000+", d:["全身力量 35min","快走 45min","八段锦 + 拉伸","全身力量 35min","快走 45min","HIIT 15min","低强度骑行/瑜伽 40min"]},
+  {focus:"M1 收尾 · 适应评估", d:["上肢 35min","快走 45min","休息","下肢+核心 35min","快走 50min","HIIT 15min","瑜伽 40min + 体测"]},
+  {focus:"提速 · 加 HIIT", d:["全身力量 40min","快走 45min + HIIT 8min","休息","推/拉 40min","快走 50min","HIIT 18min","核心+瑜伽 40min"]},
+  {focus:"力量进阶", d:["腿臀 45min","快走 50min","八段锦+拉伸","背肩 40min","快走 50min","HIIT 18min","瑜伽 40min"]},
+  {focus:"代谢+心肺", d:["全身力量 45min","快走 60min","休息","下肢 45min","快走 60min + 慢跑 5min","HIIT 20min","瑜伽+拉筋 50min"]},
+  {focus:"M2 收尾 · 体型微调", d:["上肢+核心 40min","快走 60min","休息","下肢 45min","快走 60min","HIIT 20min","骑行/泳 45min"]},
+  {focus:"塑形 · 上下肢分化", d:["推日（胸肩三头）45min","快走 60min","休息","拉日（背二头）45min","快走 60min","HIIT 22min","瑜伽 50min"]},
+  {focus:"耐力+抗阻", d:["腿臀 50min","快走 65min","休息","背肩 45min","慢跑 25min","HIIT 22min","核心+瑜伽 50min"]},
+  {focus:"冲刺 · 高密度", d:["全身力量 50min","快走 65min + HIIT 10min","休息","腿臀 50min","慢跑 30min","HIIT 25min","骑行/泳 50min"]},
+  {focus:"收官 · 习惯固化", d:["上肢 45min","快走 65min","休息","下肢 45min","快走 65min","HIIT 20min","瑜伽+体测+庆祝"]}
 ];
 
 const DIET_BY_WEEK = [
-  "重启脾胃：早小米山药粥+蒸蛋；午鸡胸+杂粮饭+西兰花；晚南瓜小米粥+清蒸鱼；零食：温红枣 3 颗。",
-  "稳定饱腹：早燕麦+水煮蛋+苹果；午糙米+鸡胸+蔬菜；晚清蒸鱼+南瓜+菠菜；下午加 1 杯无糖豆奶（如不胀气）或乳清。",
-  "进入缺口：每餐先吃一手蔬菜，再蛋白，最后碳水；保持 ≥65g 蛋白；晚餐 18:30 前完成。",
-  "M1 收尾：选 1 天复食日（多吃 200kcal 的优质碳水如紫薯）以避免代谢适应。",
-  "升级蛋白：每餐 1 拳掌肉/鱼/蛋；引入希腊酸奶（无糖、室温置 5min 再吃，避免冷刺激）。",
-  "杂粮轮换：紫薯 / 玉米 / 燕麦 / 糙米 / 山药 / 藜麦，避免天天同一种。",
-  "餐后必走：每餐结束 10min 内开始慢走 15min；夜里口馋则按压内关 + 喝 200ml 温陈皮水。",
-  "M2 收尾 · 复盘饮食：找出本月 3 个反复出错的场景（聚餐/外卖/姨妈期），各写 1 个对策。",
-  "塑形期：把碳水部分挪到训练前后；非训练日略减主食 1/4 拳。",
-  "保肌：早餐蛋白 ≥ 25g（2 蛋 + 1 杯无糖豆奶 + 燕麦）。",
-  "冲刺：晚餐改为'蛋白+蔬菜'，主食只在午餐；周末仍保留 1 顿正常社交餐。",
-  "固化：本周不再节食，转入'维持 + 体型'食谱，建立长期可执行版本。"
+  {kcalCut:300, txt:"重启脾胃：早小米山药粥+蒸蛋；午鲈鱼+杂粮饭+西兰花；晚南瓜小米粥+清蒸鱼；零食：温红枣 3 颗。蛋白≥60g。"},
+  {kcalCut:300, txt:"稳定饱腹：早燕麦+水煮蛋+苹果；午糙米+龙利鱼+蔬菜；晚清蒸鱼+南瓜+菠菜；下午加 1 杯无糖豆奶（如不胀气）或乳清。"},
+  {kcalCut:500, txt:"进入缺口：每餐先吃一手蔬菜，再蛋白，最后碳水；蛋白≥65g；晚餐 18:30 前完成。"},
+  {kcalCut:500, txt:"M1 收尾：选 1 天复食日（多吃 200kcal 紫薯）以避免代谢适应。"},
+  {kcalCut:500, txt:"升级蛋白：每餐 1 拳掌肉/鱼/蛋；引入希腊酸奶（无糖、室温置 5min 再吃）。"},
+  {kcalCut:500, txt:"杂粮轮换：紫薯/玉米/燕麦/糙米/山药/藜麦，避免天天同一种。"},
+  {kcalCut:600, txt:"餐后必走：每餐结束 10min 内开始慢走 15min；夜里口馋则按内关 + 喝 200ml 温陈皮水。"},
+  {kcalCut:600, txt:"M2 复盘饮食：找出本月 3 个反复出错的场景（聚餐/外卖/姨妈期），各写 1 个对策。"},
+  {kcalCut:600, txt:"塑形期：碳水挪到训练前后；非训练日略减主食 1/4 拳。"},
+  {kcalCut:600, txt:"保肌：早餐蛋白 ≥ 25g（2 蛋 + 无糖豆奶 + 燕麦）。"},
+  {kcalCut:600, txt:"冲刺：晚餐改『蛋白+蔬菜』，主食只在午餐；周末仍保留 1 顿正常社交餐。"},
+  {kcalCut:600, txt:"固化：本周不再节食，转入『维持+体型』食谱，建立长期可执行版本。"}
 ];
 
 const MIND_BY_WEEK = [
   "建立晨间 5min 腹式呼吸 + 晚间 3 件感恩",
-  "番茄钟 25/5：每天至少 6 个番茄",
-  "费曼输出：每天 100 字讲清当日所学",
-  "M1 自我访谈 30min：写下'我为什么要做这件事'",
+  "番茄钟 25/5：每天 ≥ 6 个番茄",
+  "费曼输出：每天 100 字讲清当日所学（写到日志）",
+  "M1 自我访谈 30min：写下『我为什么要做这件事』",
   "Anki 复习 ≥ 50 张/天",
   "每周 1 次同伴对话/直播，强化外部反馈",
   "睡眠：22:30 关屏；查看 7 日均睡时长",
-  "M2 自我对话：列出 3 个进步与 3 个仍恐惧",
+  "M2 自我对话：3 个进步 + 3 个仍恐惧",
   "每天 10min 冥想（呼吸+身体扫描）",
-  "记录 3 个'易触发暴食/拖延'的情绪场景与应对",
-  "为下一阶段写一份'未来 6 个月公开承诺'",
-  "完成结业仪式：拍照、写信、奖励自己"
+  "记录 3 个『触发暴食/拖延』情绪场景与应对",
+  "为下一阶段写一份『未来 6 个月公开承诺』",
+  "结业仪式：拍照、写信、奖励自己"
 ];
 
-/* ---------------- Build daily tasks ---------------- */
-function dayTasks(dayIdx /* 0..89 */){
-  const w = Math.floor(dayIdx/7);
-  const dow = dayIdx % 7; // 0=Day1 of week, treat as Mon..Sun pattern by w*7 offset
-  const ds = WEEKS[w].ds[dow];
-  const quant = WEEKS[w].quant[dow];
-  const body = BODY_BY_WEEK[w].d[dow];
+const SKIN_BY_WEEK = [
+  "修复期：氨基酸洁面 / 烟酰胺 2% / 神经酰胺乳液 / SPF30 / T 区水杨酸隔日单点",
+  "修复期：稳定屏障；不叠加视黄醇与刷酸；身体乳每晚 1 次",
+  "修复期：补水面膜 1-2 次/周（不要纸膜过 15min）；多喝水 1.6L",
+  "修复期收尾：T 区水杨酸可加到每日单点；评估屏障是否稳定",
+  "建设期：早 VC 衍生物 5% 加入；晚视黄醇 0.1% 每周 2 次",
+  "建设期：视黄醇 → 每周 3 次；引入 1 次黏土面膜（仅 T 区）",
+  "建设期：身体磨砂 1 次/周；身体乳改尿素 5%",
+  "建设期收尾：评估暗沉 / 痘印；黑色素仍重 → 准备杏仁酸",
+  "巩固期：早 VC + 烟酰胺 + SPF50；晚视黄醇 3-4 次/周",
+  "巩固期：每周 1 次杏仁酸 8% 化学焕肤（晚间，次日严格防晒）",
+  "巩固期：身体磨砂 2 次/周；尿素 10% 身体乳；保湿至关重要",
+  "收官：把所有有效项整理成『终身护肤清单』；庆祝并合影对比"
+];
+
+/* Workout details: ~25 exercises mapped from BODY descriptions */
+const WORKOUT_DETAIL = {
+  "深蹲":      {sets:"4×12", rest:"60s", key:"膝盖与脚尖同向；下蹲到大腿平行；重心后坐", alt:"靠墙静蹲 45s"},
+  "臀桥":      {sets:"3×15", rest:"45s", key:"顶峰夹臀 1s；不要靠腰发力", alt:"单腿臀桥 3×8"},
+  "硬拉":      {sets:"4×10", rest:"75s", key:"杠铃贴小腿；屈髋为主；颈椎中立", alt:"罗马尼亚硬拉"},
+  "平板":      {sets:"3×30s", rest:"45s", key:"肩→髋→踝一条线；不塌腰不撅臀", alt:"跪姿平板 3×45s"},
+  "鸟狗":      {sets:"3×10/侧", rest:"30s", key:"对侧手脚同步；保持骨盆稳定", alt:"死虫式 3×10"},
+  "划船":      {sets:"4×12", rest:"60s", key:"肘贴身；肩胛后缩；不要耸肩", alt:"哑铃单臂划船"},
+  "推举":      {sets:"4×10", rest:"60s", key:"核心收紧；不锁死肘关节", alt:"坐姿哑铃推举"},
+  "卷腹":      {sets:"3×15", rest:"30s", key:"上背离地 30°；下巴不顶胸", alt:"反向卷腹"},
+  "弓步":      {sets:"3×10/腿", rest:"45s", key:"前膝不超脚尖；后膝接近地面", alt:"原地弓步"},
+  "快走":      {sets:"分钟数见标题", rest:"-", key:"心率 110-130；摆臂；步幅自然", alt:"踏步机/原地快踏"},
+  "HIIT":      {sets:"30s on / 30s off ×N", rest:"-", key:"开合跳→深蹲跳→高抬腿→波比 (脾胃虚去波比)；配合呼吸节奏", alt:"快走+冲刺间歇（无跳跃）"},
+  "瑜伽":      {sets:"流动 30-50min", rest:"-", key:"猫牛、下犬、婴儿式、半月式、扭转；脾经胃经拉伸", alt:"普拉提核心 30min"},
+  "八段锦":    {sets:"1 套 12min", rest:"-", key:"重点『调理脾胃须单举』+『摇头摆尾去心火』", alt:"五禽戏熊形+鹿形"},
+  "慢跑":      {sets:"分钟见标题", rest:"-", key:"前脚掌-中脚掌着地；心率 130-150", alt:"快走+短冲刺 6×30s"},
+  "骑行":      {sets:"40-50min", rest:"-", key:"低阻力高踏频；心率 120-140", alt:"椭圆机 40min"}
+};
+
+/* Food DB ~80 items: kcal & protein per 100g, TCM 性 */
+const FOOD_DB = [
+  // 主食
+  ["小米粥(熟)",46,1.4,"温"],["白米饭",116,2.6,"平"],["糙米饭",112,2.6,"平"],["燕麦(干)",367,15,"温"],
+  ["紫薯",106,1.8,"平"],["红薯",99,1.1,"平"],["山药",56,1.9,"平"],["藜麦(熟)",120,4.4,"温"],
+  ["玉米",112,4,"平"],["南瓜",26,1,"温"],["全麦面包",247,9,"平"],["杂粮饭",130,4,"平"],
+  // 蛋白
+  ["鲈鱼",105,18.6,"平"],["龙利鱼",94,17.7,"平"],["鳕鱼",88,20,"平"],["三文鱼",139,20,"温"],
+  ["鸡胸",133,29,"温"],["鸡腿(去皮)",181,20,"温"],["鸡蛋",147,13,"平"],["蛋清",48,11.4,"平"],
+  ["瘦牛肉",125,20,"温"],["瘦猪肉",143,20.3,"平"],["虾仁",95,18.6,"温"],["豆腐(嫩)",81,8,"平"],
+  ["希腊酸奶(无糖)",59,10,"平"],["无糖豆奶",43,3.6,"平"],["乳清蛋白粉",380,80,"平"],
+  // 蔬菜
+  ["西兰花",36,4.1,"平"],["菠菜",24,2.6,"凉"],["生菜",13,1.4,"凉"],["黄瓜",16,0.8,"凉"],
+  ["番茄",18,0.9,"凉"],["胡萝卜",37,1,"平"],["白萝卜",23,0.9,"凉"],["紫甘蓝",27,1.5,"平"],
+  ["茄子",23,1.1,"凉"],["豆角",33,2,"平"],["木耳(湿)",27,1.5,"平"],["香菇",26,2.2,"平"],
+  ["白菜",17,1.4,"凉"],["芹菜",20,1,"凉"],
+  // 水果
+  ["苹果",54,0.2,"凉"],["梨",51,0.4,"凉"],["猕猴桃",61,1.1,"凉"],["橙子",47,0.9,"凉"],
+  ["香蕉",93,1.4,"凉"],["蓝莓",57,0.7,"平"],["草莓",30,1,"凉"],["桂圆",71,1.2,"温"],
+  ["红枣(干)",277,3.2,"温"],["枸杞(干)",258,11,"温"],
+  // 调味/油脂
+  ["橄榄油",899,0,"平"],["亚麻籽油",899,0,"平"],["杏仁(原味)",578,21,"温"],["核桃",654,15,"温"],
+  // 饮品/调味
+  ["陈皮水(自制)",2,0,"温"],["温柠檬水",4,0,"凉"],["生姜红糖水",30,0,"热"],["玫瑰陈皮茶",1,0,"温"],
+  // 乳/奶
+  ["全脂牛奶",61,3.2,"平"],["低脂牛奶",46,3.4,"平"],
+  // 加工/常见
+  ["速冻饺子(猪肉)",230,9,"平"],["全麦三明治",250,10,"平"],["白馒头",223,7,"平"],
+  // 中医食疗
+  ["茯苓",100,0,"平"],["炒薏米",100,0,"温"],["山药粥",60,2,"平"],["陈皮",100,0,"温"],
+  // 不推荐对照
+  ["冰奶茶(中杯)",250,2,"凉"],["油炸鸡块",290,18,"热"],["糯米饭",112,2.5,"平"],["生鱼刺身",100,21,"凉"]
+];
+
+const ANKI_SEED = [
+  ["DS","什么是过拟合？","模型在训练集表现好、测试集差。表现：偏差低方差高。对策：正则、降低复杂度、更多数据、交叉验证。"],
+  ["DS","Bias-Variance 权衡？","泛化误差 = 偏差²+方差+不可约误差。简单模型偏差大，复杂模型方差大。"],
+  ["DS","随机森林为什么效果好？","Bagging 降方差 + 随机特征降相关性 → 集成均值更稳。"],
+  ["DS","梯度提升 vs 随机森林？","RF 并行降方差；GBDT 串行残差拟合，更易过拟合但精度更高。"],
+  ["DS","什么是数据泄漏？","测试集信息提前进入训练（如标准化用全样本均值）。后果：OOS 严重高估。"],
+  ["DS","ROC AUC 含义？","随机正负样本中正样本得分高于负样本的概率。0.5=随机，1=完美。"],
+  ["DS","正则 L1 vs L2？","L1 产生稀疏（特征选择），L2 缩小所有系数（防过拟合）。"],
+  ["DS","K-Fold CV 步骤？","数据切 K 份，轮流 1 份验证 K-1 份训练，平均得分。"],
+  ["DS","SHAP 是什么？","基于博弈论 Shapley 值，给每个特征对单条预测的贡献。"],
+  ["DS","什么是漂移？","训练分布 ≠ 推理分布；含特征漂移与标签漂移；需监控指标 + 重训练。"],
+  ["量化","Sharpe 比率公式？","(年化收益 - 无风险利率) / 年化波动。> 1 可接受，> 2 优秀。"],
+  ["量化","最大回撤 MDD？","历史净值从峰到谷的最大跌幅；衡量极端损失。"],
+  ["量化","IC 与 IR？","IC = 因子值与未来收益的相关；IR = 平均 IC / IC 标准差。"],
+  ["量化","Walk-Forward 是什么？","滚动训练窗与测试窗，避免使用未来数据；产出 OOS 绩效。"],
+  ["量化","幸存者偏差？","样本只含活下来的标的（如现役股票），高估真实收益。"],
+  ["量化","Fama 三因子？","市场、规模(SMB)、价值(HML)；解释横截面收益的 3 个风险因子。"],
+  ["量化","行业中性化？","在行业内做因子排名/标准化，去除行业暴露。"],
+  ["量化","Black-Litterman？","结合市场均衡（先验）与投资者观点（后验）的资产配置框架。"],
+  ["量化","风险平价？","让每个资产对组合波动贡献相等，靠杠杆调权重。"],
+  ["量化","策略不上实盘的红线？","OOS Sharpe < 1；样本内外差距 > 50%；MDD > 20%。"],
+  ["统计","正态分布参数？","均值 μ、方差 σ²；68/95/99.7% 法则。"],
+  ["统计","p 值？","原假设为真时观察到当前或更极端结果的概率；< 0.05 拒绝原假设。"],
+  ["统计","ADF 检验？","检验时间序列是否平稳（单位根）；p<0.05 平稳。"],
+  ["统计","ACF 与 PACF？","自相关 vs 偏自相关；用于识别 AR/MA 阶数。"],
+  ["统计","中心极限定理？","独立同分布样本均值近似正态（n→∞）。"],
+  ["中医","脾虚常见表现？","食欲差 / 易腹胀 / 舌淡有齿痕 / 易疲倦 / 大便溏。"],
+  ["中医","嗳气主要成因？","胃失和降，胃气上逆；常因生冷、过饱、情志、脾胃虚弱。"],
+  ["中医","内关穴位置？","腕横纹上 2 寸，掌长肌腱与桡侧腕屈肌腱之间。"],
+  ["中医","中脘穴位置？","脐上 4 寸（胸骨剑突与肚脐连线中点）。"],
+  ["中医","足三里位置？","外膝眼下 3 寸，胫骨外缘约 1 横指。"],
+  ["中医","脾虚饮食宜？","温热 / 易消化 / 小米山药南瓜陈皮茯苓；忌生冷油腻。"],
+  ["中医","八段锦哪一式调脾胃？","调理脾胃须单举：一手上举一手下按。"]
+];
+
+/* ============================================================
+   Storage & migration
+   ============================================================ */
+const KEY = "plan90.v1";
+function load(){
+  let s = {};
+  try{ s = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){}
+  if(!s.start){
+    const t = new Date(); t.setHours(0,0,0,0);
+    s.start = isoLocal(t);
+    s.checks = {};
+    s.metrics = [];
+  }
+  // v2 migration: add missing keys
+  s.diet  = s.diet  || {};
+  s.water = s.water || {};
+  s.sleep = s.sleep || {};
+  s.mood  = s.mood  || {};
+  s.burp  = s.burp  || {};
+  s.skin  = s.skin  || {};
+  s.period= s.period|| {lastStart:"", cycleLen:28, lutealDays:14};
+  s.anki  = s.anki  || {cards:[], seeded:false};
+  s.review= s.review|| {};
+  return s;
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+let state = load(); save();
+
+/* ============================================================
+   Date helpers (timezone-safe)
+   ============================================================ */
+function isoLocal(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,"0"), dd=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${dd}`;
+}
+function parseISO(s){ const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
+function startDate(){ return parseISO(state.start); }
+function dayIdxOf(d){
+  const a = Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+  const s = startDate();
+  const b = Date.UTC(s.getFullYear(),s.getMonth(),s.getDate());
+  return Math.floor((a-b)/86400000);
+}
+function dateOfDayIdx(i){ const d=new Date(startDate()); d.setDate(d.getDate()+i); return d; }
+function todayIdx(){ return Math.max(0, Math.min(89, dayIdxOf(new Date()))); }
+let viewIdx = todayIdx();
+
+/* ============================================================
+   Period phase
+   ============================================================ */
+function periodPhase(dateISO){
+  if(!state.period.lastStart) return null;
+  const start = parseISO(state.period.lastStart);
+  const target = parseISO(dateISO);
+  const days = Math.floor((target - start)/86400000);
+  if(days < 0) return null;
+  const cycle = state.period.cycleLen || 28;
+  const dayInCycle = (days % cycle) + 1;  // 1..cycle
+  let phase, intensity = 1.0;
+  if(dayInCycle <= 5) { phase="月经期"; intensity=0.7; }
+  else if(dayInCycle <= cycle - 14) { phase="卵泡期"; intensity=1.0; }
+  else if(dayInCycle <= cycle - 12) { phase="排卵期"; intensity=1.05; }
+  else { phase="黄体期"; intensity=0.85; }
+  return {phase, dayInCycle, intensity};
+}
+
+/* ============================================================
+   Daily tasks (12 categories)
+   ============================================================ */
+function dayTasks(idx){
+  const w = Math.floor(idx/7), dow = idx%7;
+  const dateISO = isoLocal(dateOfDayIdx(idx));
+  const ph = periodPhase(dateISO);
+  let bodyTask = BODY_BY_WEEK[w].d[dow];
+  let bodyTip = "避免空腹高强度；力量优先；餐后必走 15min。";
+  if(ph){
+    if(ph.phase==="月经期" && /HIIT|慢跑|力量/.test(bodyTask)){ bodyTask = "改为：瑜伽 30min + 八段锦 1 套（经期友好）"; bodyTip="经期 D"+ph.dayInCycle+"：忌剧烈与生冷；体重不计入趋势。"; }
+    else if(ph.phase==="黄体期" && /HIIT/.test(bodyTask)){ bodyTask = bodyTask.replace("HIIT","快走（黄体期降量）") ; bodyTip="黄体期：训练强度系数 0.85；情绪暴食加 1 餐 50kcal。"; }
+  }
   const diet = DIET_BY_WEEK[w];
-  const mind = MIND_BY_WEEK[w];
   return [
-    {id:"morning", cat:"晨间 · 神经科学钩子", title:"温水 200ml + 5min 腹式呼吸 + 写下今日 1 个最重要任务",
-      tip:"把新习惯绑在已有动作上：起床→喝水→深呼吸→打开打卡页。"},
-    {id:"ds", cat:"数据科学（90min 深度块 · 上午）", title:ds,
-      tip:"先读优秀代码 → 仿写 → 改写。今晚必须用 Anki 写 5 张卡。"},
-    {id:"quant", cat:"金融量化（90min 深度块 · 晚上）", title:quant,
-      tip:"任何策略：先理解风险，再追求收益；不做无回测的交易。"},
-    {id:"body", cat:"运动（脾胃友好）", title:body,
-      tip:"避免空腹大强度；力量优先，餐后必走 15min。"},
-    {id:"diet", cat:"饮食（本周方案）", title:diet,
-      tip:"细嚼慢咽 25–30 次；不冰饮；晚餐 18:30 前；蛋白 ≥ 65g。"},
-    {id:"mind", cat:"心智 / 复盘", title:mind,
-      tip:"睡前用一句话总结今天的胜利（再小都行）。"},
-    {id:"sleep", cat:"睡眠 · 离线编译器", title:"23:00 前关屏入睡，目标 7.5h",
-      tip:"睡前 90min 不进食、不刷信息流。"},
-    {id:"weight", cat:"晨称（空腹排便后）", title:"记录体重 / 腰围 / 体脂",
-      tip:"体重每日波动 ±1kg 正常，看 7 日均线。"}
+    {id:"morning", cat:"晨间 · 神经科学钩子", title:"温水 200ml + 5min 腹式呼吸 + 写下今日 1 件最重要的事", tip:"把新习惯绑在已有动作上：起床→喝水→深呼吸→打开打卡页。"},
+    {id:"premeal", cat:"餐前 · 脾胃唤醒", title:"三餐前 15min 喝温柠檬水/淡陈皮水 150ml", tip:"提胃酸、减嗳气；餐中不豪饮，咀嚼 25–30 次。"},
+    {id:"ds", cat:"数据科学（90min · 上午）", title:WEEKS[w].ds[dow], tip:"先读优秀代码 → 仿写 → 改写。今晚必须为新概念加 5 张 Anki。"},
+    {id:"quant", cat:"金融量化（90min · 晚上）", title:WEEKS[w].quant[dow], tip:"任何策略：先理解风险，再追求收益；不做无 walk-forward 回测的交易。"},
+    {id:"body", cat:"运动（脾胃 + 经期友好）", title:bodyTask, tip:bodyTip},
+    {id:"diet", cat:"饮食（本周方案 · 缺口 −"+diet.kcalCut+" kcal）", title:diet.txt, tip:"鱼优先 / 茯苓+炒薏米常驻 / 晚餐 18:30 前 / 蛋白 ≥ 65g。"},
+    {id:"water", cat:"饮水", title:"全天 ≥ 8 杯（200ml/杯）温水或汤", tip:"冰水不计入；可用陈皮水替代 1–2 杯。"},
+    {id:"acu", cat:"穴位（14:00 + 21:00）", title:"按压 内关 / 中脘 / 足三里 各 1 分钟", tip:"指腹打圈、酸胀为度。嗳气重时加按 1 次。"},
+    {id:"skin", cat:"护肤", title:"早晚常规 + T 区针对 + 防晒（早）", tip:SKIN_BY_WEEK[w]},
+    {id:"anki", cat:"Anki 复习", title:"复习全部到期卡 + 新增 ≥ 5 张", tip:"间隔 1d/3d/7d/21d；数据科学 + 量化 + 中医穿插。"},
+    {id:"mind", cat:"心智 / 复盘", title:MIND_BY_WEEK[w], tip:"睡前用一句话总结今天的胜利（再小都行）。"},
+    {id:"sleep", cat:"睡眠 · 离线编译器", title:"23:00 前关屏入睡，目标 7.5h", tip:"睡前 90min 不进食、不刷信息流。"}
   ];
 }
 
-/* ---------------- Storage ---------------- */
-const KEY = "plan90.v1";
-function load(){
-  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; }
+/* ============================================================
+   Render: Today
+   ============================================================ */
+function dayCompletion(i){
+  const c = state.checks[i] || {}; const total = dayTasks(i).length;
+  let n=0; for(const k in c) if(c[k]) n++; return total ? n/total : 0;
 }
-function save(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
-let state = load();
-if(!state.start){
-  const t = new Date(); t.setHours(0,0,0,0);
-  state.start = t.toISOString().slice(0,10);
-  state.checks = {};      // {dayIdx: {taskId:true}}
-  state.metrics = [];     // [{date, w, waist, fat}]
-  save(state);
-}
-
-/* ---------------- Date helpers ---------------- */
-function startDate(){ return new Date(state.start+"T00:00:00"); }
-function dayIdxOfDate(d){
-  const ms = (new Date(d.getFullYear(),d.getMonth(),d.getDate()) - startDate())/86400000;
-  return Math.floor(ms);
-}
-function dateOfDayIdx(i){
-  const d = new Date(startDate()); d.setDate(d.getDate()+i); return d;
-}
-function fmt(d){ return d.toISOString().slice(0,10); }
-
-let viewIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date())));
-
-/* ---------------- Render ---------------- */
 function render(){
   document.getElementById("startDate").textContent = state.start;
+  document.getElementById("todayN").textContent = todayIdx()+1;
   document.getElementById("dayNum").textContent = viewIdx+1;
-  document.getElementById("dayDate").textContent = fmt(dateOfDayIdx(viewIdx));
+  document.getElementById("dayDate").textContent = isoLocal(dateOfDayIdx(viewIdx));
   const w = Math.floor(viewIdx/7);
   document.getElementById("weekTheme").textContent = WEEKS[w].theme + " · 训练焦点：" + BODY_BY_WEEK[w].focus;
+  document.getElementById("kcalTarget").textContent = "本周缺口约 −" + DIET_BY_WEEK[w].kcalCut + " kcal/天（约摄入 " + Math.max(1000, 1600 - DIET_BY_WEEK[w].kcalCut) + " kcal）";
+
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  const ph = periodPhase(dateISO);
+  const badge = document.getElementById("phaseBadge");
+  if(ph){ badge.textContent = ph.phase + " D" + ph.dayInCycle; badge.className = "phase-badge phase-"+ph.phase; } else { badge.textContent=""; badge.className=""; }
+
+  // phase alert
+  const pa = document.getElementById("phaseAlert");
+  if(ph && ph.phase==="月经期" && ph.dayInCycle<=3) pa.innerHTML = `<div class="alert info">📍 经期 D${ph.dayInCycle}：训练改瑜伽+八段锦；忌生冷与剧烈；体重不计入趋势。可喝红枣枸杞水。</div>`;
+  else if(ph && ph.phase==="黄体期") pa.innerHTML = `<div class="alert info">📍 黄体期 D${ph.dayInCycle}：训练系数 0.85；如情绪暴食 → 加一餐 +50 kcal。</div>`;
+  else pa.innerHTML="";
+
+  // warning alert: weekly weight loss > 1.5kg or burp ≥ 2 for 3d
+  const wAlert = document.getElementById("warningAlert");
+  let warns = [];
+  const burpsBad = lastNDaysBurp(3);
+  if(burpsBad >= 6) warns.push("⚠️ 嗳气强度近 3 日累计偏高，建议本周回到温粥蒸食 3 天，并加 200 kcal 暂缓缺口。");
+  const wkLoss = recentWeeklyLoss();
+  if(wkLoss > 1.5) warns.push("⚠️ 近 7 日体重下降 "+wkLoss.toFixed(1)+"kg，过快。请加 200 kcal/天，重点保肌。");
+  wAlert.innerHTML = warns.map(t=>`<div class="alert warn">${t}</div>`).join("");
 
   // tasks
   const host = document.getElementById("todayTasks");
@@ -414,85 +812,251 @@ function render(){
   host.innerHTML = "";
   dayTasks(viewIdx).forEach(t=>{
     const wrap = document.createElement("div"); wrap.className="task";
-    const cb = document.createElement("input"); cb.type="checkbox"; cb.checked = !!checks[t.id];
+    const cb = document.createElement("input"); cb.type="checkbox"; cb.checked = !!checks[t.id]; cb.id="cb_"+t.id;
     cb.addEventListener("change", ()=>{
       state.checks[viewIdx] = state.checks[viewIdx] || {};
-      state.checks[viewIdx][t.id] = cb.checked; save(state); updateStats(); renderHeat();
+      state.checks[viewIdx][t.id] = cb.checked; save(); updateStats(); renderHeat();
     });
-    const lab = document.createElement("div"); lab.className="label";
+    const lab = document.createElement("label"); lab.className="label"; lab.htmlFor=cb.id;
     lab.innerHTML = `<div class="cat">${t.cat}</div><div class="title">${t.title}</div><div class="tip">${t.tip}</div>`;
     wrap.appendChild(cb); wrap.appendChild(lab);
     host.appendChild(wrap);
   });
-
-  updateStats(); renderHeat(); renderPlan(); renderMetrics();
+  updateStats(); renderHeat();
+  // also render cross-tab pieces
+  renderLogs(); renderMetricsTab(); renderSkinTab(); renderAnki(); renderPlan(); renderReview();
 }
 function shiftDay(n){ viewIdx = Math.max(0,Math.min(89,viewIdx+n)); render(); }
-function goToday(){ viewIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date()))); render(); }
+function goToday(){ viewIdx = todayIdx(); render(); }
 
-function dayCompletion(i){
-  const c = state.checks[i] || {}; const total = 8;
-  let n=0; for(const k in c) if(c[k]) n++;
-  return n/total;
+function lastNDaysBurp(n){
+  let total = 0;
+  for(let i=0;i<n;i++){
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const k = isoLocal(d);
+    const b = state.burp[k]; if(b) total += (b.am||0)+(b.pm||0);
+  }
+  return total;
+}
+function recentWeeklyLoss(){
+  if(state.metrics.length<2) return 0;
+  const sorted = [...state.metrics].sort((a,b)=>a.date.localeCompare(b.date));
+  const last = sorted[sorted.length-1];
+  const lastDate = parseISO(last.date);
+  const weekAgo = new Date(lastDate); weekAgo.setDate(weekAgo.getDate()-7);
+  const old = sorted.find(m => parseISO(m.date) >= weekAgo);
+  return old ? (old.w - last.w) : 0;
 }
 function updateStats(){
   let done=0, sum=0, streak=0;
-  const todayIdx = Math.max(0, Math.min(89, dayIdxOfDate(new Date())));
-  for(let i=0;i<=todayIdx;i++){
-    const r = dayCompletion(i); sum += r;
-    if(r>=0.8) done++;
-  }
-  // current streak (look back from today)
-  for(let i=todayIdx;i>=0;i--){ if(dayCompletion(i)>=0.8) streak++; else break; }
+  const t = todayIdx();
+  for(let i=0;i<=t;i++){ const r=dayCompletion(i); sum+=r; if(r>=0.8) done++; }
+  for(let i=t;i>=0;i--){ if(dayCompletion(i)>=0.8) streak++; else break; }
   document.getElementById("sStreak").textContent = streak;
   document.getElementById("sDone").textContent = done;
-  document.getElementById("sRate").textContent = Math.round( (sum/(todayIdx+1))*100 ) + "%";
-  document.getElementById("sLeft").textContent = Math.max(0, 90 - (todayIdx+1));
-
+  document.getElementById("sRate").textContent = Math.round((sum/(t+1))*100)+"%";
+  document.getElementById("sLeft").textContent = Math.max(0, 90-(t+1));
   const last = state.metrics[state.metrics.length-1];
-  const startW = 56.3, target = 46.3;
   if(last){
-    const pct = Math.max(0, Math.min(100, (startW-last.w)/(startW-target)*100 ));
+    const pct = Math.max(0, Math.min(100, (56.3 - last.w)/10*100));
     document.getElementById("wBar").style.width = pct+"%";
-    document.getElementById("wNow").textContent = "当前 "+last.w.toFixed(1)+"kg";
+    document.getElementById("wNow").textContent = "当前 "+last.w.toFixed(1)+"kg（"+(last.w-56.3>0?"+":"")+(last.w-56.3).toFixed(1)+")";
   }else{
-    document.getElementById("wBar").style.width = "0%";
-    document.getElementById("wNow").textContent = "未记录";
+    document.getElementById("wBar").style.width="0%";
+    document.getElementById("wNow").textContent="未记录";
   }
 }
 function renderHeat(){
   const host = document.getElementById("heat"); host.innerHTML="";
-  const today = Math.max(0,Math.min(89, dayIdxOfDate(new Date())));
+  const t = todayIdx();
   for(let i=0;i<90;i++){
     const r = dayCompletion(i);
     let cls="cell";
     if(r>=0.8) cls+=" s3"; else if(r>=0.5) cls+=" s2"; else if(r>0) cls+=" s1";
-    if(i===today) cls+=" today";
+    if(i===t) cls+=" today";
+    const dateISO = isoLocal(dateOfDayIdx(i));
+    const ph = periodPhase(dateISO);
+    if(ph && ph.phase==="月经期") cls+=" period";
     const c = document.createElement("div"); c.className=cls; c.textContent=i+1;
-    c.title = `第 ${i+1} 天 · ${fmt(dateOfDayIdx(i))} · 完成度 ${Math.round(r*100)}%`;
+    c.setAttribute("role","gridcell");
+    c.setAttribute("tabindex","0");
+    c.setAttribute("aria-label", `第 ${i+1} 天 ${dateISO} 完成度 ${Math.round(r*100)}%`);
+    c.title = c.getAttribute("aria-label") + (ph?(" · "+ph.phase):"");
     c.onclick = ()=>{ viewIdx=i; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    c.onkeydown = (e)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();c.click();} };
     host.appendChild(c);
   }
 }
 
-function renderPlan(){
-  const host = document.getElementById("planView"); if(!host) return;
-  let html="";
-  WEEKS.forEach((w,i)=>{
-    html += `<div class="week-banner"><h3>第 ${w.w} 周 · ${w.theme}</h3><p>训练：${BODY_BY_WEEK[i].focus} · 饮食：${DIET_BY_WEEK[i]} · 心智：${MIND_BY_WEEK[i]}</p></div>`;
-    html += `<table><thead><tr><th>日</th><th>数据科学</th><th>金融量化</th><th>运动</th></tr></thead><tbody>`;
-    for(let d=0;d<7;d++){
-      const idx = i*7+d;
-      html += `<tr><td>D${idx+1}<br><span class="muted" style="font-size:11px">${fmt(dateOfDayIdx(idx))}</span></td><td>${w.ds[d]}</td><td>${w.quant[d]}</td><td>${BODY_BY_WEEK[i].d[d]}</td></tr>`;
-    }
-    html += `</tbody></table><div style="height:14px"></div>`;
+/* ============================================================
+   Logs tab
+   ============================================================ */
+function renderLogs(){
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  document.getElementById("logDateLabel").textContent = dateISO;
+  // food list datalist
+  const dl = document.getElementById("foodList"); dl.innerHTML = FOOD_DB.map(f=>`<option value="${f[0]}">`).join("");
+  // water cups
+  renderWater(dateISO);
+  // food table
+  const tb = document.querySelector("#foodTable tbody"); tb.innerHTML="";
+  const items = state.diet[dateISO]||[];
+  let kcal=0, prot=0, coldCount=0;
+  items.forEach((it,i)=>{
+    kcal += it.kcal; prot += it.protein;
+    if(it.prop==="寒"||it.prop==="凉") coldCount++;
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><span class="meal-tag ${it.meal}">${it.meal}</span></td><td>${it.name}</td><td>${it.amt}</td>
+      <td>${it.kcal.toFixed(0)}</td><td>${it.protein.toFixed(1)}g</td>
+      <td><span class="pill ${(it.prop==="寒"||it.prop==="凉")?'cool':((it.prop==="温"||it.prop==="热")?'warmf':'')}">${it.prop}</span></td>
+      <td><button class="ghost" onclick="delFood('${dateISO}',${i})">×</button></td>`;
+    tb.appendChild(tr);
   });
-  host.innerHTML = html;
+  const w = Math.floor(viewIdx/7);
+  const target = Math.max(1000, 1600 - DIET_BY_WEEK[w].kcalCut);
+  let totals = `今日：<b>${kcal.toFixed(0)} kcal</b> · 蛋白 <b>${prot.toFixed(0)}g</b> · 寒凉 ${coldCount} 项 · 目标摄入 ~${target} kcal`;
+  if(kcal > target+200) totals += ` <span class="pill bad">超额</span>`;
+  if(prot < 65 && items.length>0) totals += ` <span class="pill warn">蛋白不足</span>`;
+  if(coldCount>=2) totals += ` <span class="pill bad">寒凉过多</span>`;
+  document.getElementById("foodTotals").innerHTML = totals;
+
+  // sleep
+  const sl = state.sleep[dateISO]||{};
+  document.getElementById("sBed").value = sl.bed||"";
+  document.getElementById("sWake").value = sl.wake||"";
+  renderRating("sQual", sl.quality||0, 5, v=>{ state.sleep[dateISO]={...sl,quality:v,bed:document.getElementById("sBed").value,wake:document.getElementById("sWake").value}; save(); renderLogs(); });
+  document.getElementById("sBed").onchange = ()=>{ state.sleep[dateISO] = {...(state.sleep[dateISO]||{}), bed:document.getElementById("sBed").value}; save(); renderSleepInfo(dateISO); };
+  document.getElementById("sWake").onchange = ()=>{ state.sleep[dateISO] = {...(state.sleep[dateISO]||{}), wake:document.getElementById("sWake").value}; save(); renderSleepInfo(dateISO); };
+  renderSleepInfo(dateISO);
+
+  // burp
+  const b = state.burp[dateISO]||{};
+  renderRating("bAm", b.am||0, 3, v=>{ state.burp[dateISO]={...b,am:v}; save(); });
+  renderRating("bPm", b.pm||0, 3, v=>{ state.burp[dateISO]={...b,pm:v}; save(); });
+  document.getElementById("bNote").value = b.note||"";
+
+  // mood
+  const m = state.mood[dateISO]||{};
+  renderRating("mScore", m.score||0, 5, v=>{ state.mood[dateISO]={...m,score:v}; save(); });
+  document.getElementById("mNote").value = m.note||"";
+
+  // period
+  document.getElementById("pStart").value = state.period.lastStart||"";
+  document.getElementById("pCycle").value = state.period.cycleLen||28;
+  const pi = document.getElementById("periodInfo");
+  const ph = periodPhase(dateISO);
+  if(ph) pi.innerHTML = `当前相位：<b class="phase-${ph.phase}" style="padding:2px 8px;border-radius:99px">${ph.phase}</b>（周期 D${ph.dayInCycle}）· 训练强度系数 ${ph.intensity.toFixed(2)}`;
+  else pi.textContent = "尚未填写月经首日。";
+}
+function renderSleepInfo(dateISO){
+  const sl = state.sleep[dateISO]||{};
+  if(!sl.bed||!sl.wake){ document.getElementById("sleepInfo").textContent=""; return; }
+  const [bh,bm]=sl.bed.split(":").map(Number);
+  const [wh,wm]=sl.wake.split(":").map(Number);
+  let mins = (wh*60+wm) - (bh*60+bm); if(mins<0) mins+=24*60;
+  const h = (mins/60).toFixed(1);
+  let tag = h>=7 ? "good" : h>=6 ? "warn" : "bad";
+  document.getElementById("sleepInfo").innerHTML = `时长 <b>${h}h</b> <span class="pill ${tag}">${tag==="good"?"达标":(tag==="warn"?"偏少":"睡眠不足")}</span>`;
+}
+function renderRating(id, val, max, onChange){
+  const host = document.getElementById(id); host.innerHTML="";
+  for(let i=1;i<=max;i++){
+    const b=document.createElement("button"); b.textContent=i; b.type="button";
+    b.setAttribute("aria-label", id+" "+i);
+    if(i<=val) b.classList.add("on");
+    b.onclick = ()=>{ onChange(i===val?0:i); renderLogs(); render(); };
+    host.appendChild(b);
+  }
+}
+function renderWater(dateISO){
+  const cur = (state.water[dateISO]||{cups:0}).cups;
+  const host = document.getElementById("waterCups"); host.innerHTML="";
+  for(let i=1;i<=10;i++){
+    const s = document.createElement("span");
+    s.textContent = i<=cur?"💧":"⚪";
+    s.style.cursor="pointer"; s.style.fontSize="22px";
+    s.setAttribute("role","button");
+    s.setAttribute("aria-label", "杯 "+i);
+    s.onclick = ()=>{ state.water[dateISO] = {cups: i===cur?i-1:i}; save(); render(); };
+    host.appendChild(s);
+  }
+}
+function addFood(){
+  const name = document.getElementById("fName").value.trim();
+  const amt  = parseFloat(document.getElementById("fAmt").value)||100;
+  const meal = document.getElementById("fMeal").value;
+  if(!name){ alert("请输入食物名"); return; }
+  const f = FOOD_DB.find(x=>x[0]===name);
+  if(!f){ alert("食物库未找到，请从下拉中选"); return; }
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  state.diet[dateISO] = state.diet[dateISO]||[];
+  state.diet[dateISO].push({name, amt, kcal:f[1]*amt/100, protein:f[2]*amt/100, prop:f[3], meal});
+  save(); document.getElementById("fName").value=""; renderLogs();
+}
+function delFood(dateISO,i){ state.diet[dateISO].splice(i,1); save(); renderLogs(); }
+function saveBurp(){
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  const b = state.burp[dateISO]||{};
+  b.note = document.getElementById("bNote").value;
+  state.burp[dateISO] = b; save(); render();
+}
+function saveMood(){
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  const m = state.mood[dateISO]||{};
+  m.note = document.getElementById("mNote").value;
+  state.mood[dateISO] = m; save(); render();
+}
+function savePeriod(){
+  state.period.lastStart = document.getElementById("pStart").value;
+  state.period.cycleLen = parseInt(document.getElementById("pCycle").value)||28;
+  save(); render();
 }
 
-/* ---------------- Metrics ---------------- */
+/* ============================================================
+   Skin
+   ============================================================ */
+function renderSkinTab(){
+  const dateISO = isoLocal(dateOfDayIdx(viewIdx));
+  const w = Math.floor(viewIdx/7);
+  const phase = w<4?"修复期":w<8?"建设期":"巩固期";
+  document.getElementById("skinWeek").innerHTML = `<b>本周（W${w+1} · ${phase}）：</b><br>${SKIN_BY_WEEK[w]}`;
+
+  const steps = (w<4) ? [
+    "早：氨基酸洁面 → 化妆水 → 烟酰胺精华 → 神经酰胺乳液 → SPF30",
+    "晚：氨基酸洁面 → T 区水杨酸单点 → 化妆水 → 神经酰胺乳液 → 封闭保湿（凡士林薄薄一层 T 区外）",
+    "身体：洗澡 ≤ 38°C，3min 内全身身体乳"
+  ] : (w<8) ? [
+    "早：洁面 → VC 衍生物 5% → 烟酰胺 → 乳液 → SPF50",
+    "晚：洁面 → T 区水杨酸 → 化妆水 → 视黄醇 0.1%（每周 2-3 次，避开经期前 3 天） → 厚乳液 → 颈部不带过",
+    "身体：每周 1 次磨砂；尿素 5% 身体乳",
+    "周 1 次：T 区黏土面膜 5–10min"
+  ] : [
+    "早：洁面 → VC → 烟酰胺 → SPF50（户外 2h 补涂）",
+    "晚：洁面 → 视黄醇 3-4 次/周；其他夜专注修护 + 厚乳",
+    "每周 1 次：杏仁酸 8% 焕肤 → 次日严格防晒 + 不刷酸",
+    "身体：磨砂 2 次/周；尿素 10%；多喝水 2L"
+  ];
+  const sk = state.skin[dateISO]||{routineDone:false};
+  const host = document.getElementById("skinSteps"); host.innerHTML="";
+  steps.forEach((s,i)=>{
+    const div = document.createElement("div"); div.className="skin-step";
+    const cb = document.createElement("input"); cb.type="checkbox";
+    cb.checked = !!(sk["s"+i]); cb.id = "skstep_"+i;
+    cb.onchange = ()=>{ sk["s"+i]=cb.checked; state.skin[dateISO]=sk; save(); };
+    const lab = document.createElement("label"); lab.htmlFor=cb.id; lab.style.color="#cfe0ff"; lab.style.fontSize="13px"; lab.textContent=s;
+    div.appendChild(cb); div.appendChild(lab); host.appendChild(div);
+  });
+  renderRating("skOil", sk.tZoneOil||0, 5, v=>{ sk.tZoneOil=v; state.skin[dateISO]=sk; save(); });
+  renderRating("skHyd", sk.hydration||0, 5, v=>{ sk.hydration=v; state.skin[dateISO]=sk; save(); });
+  renderRating("skBri", sk.brightness||0, 5, v=>{ sk.brightness=v; state.skin[dateISO]=sk; save(); });
+}
+function saveSkin(){ /* ratings auto-save; this is for the button affordance */ alert("已保存"); }
+
+/* ============================================================
+   Metrics & Trend SVG
+   ============================================================ */
 function saveMetric(){
-  const date = document.getElementById("mDate").value || fmt(new Date());
+  const date = document.getElementById("mDate").value || isoLocal(new Date());
   const w = parseFloat(document.getElementById("mW").value);
   const wa = parseFloat(document.getElementById("mWa").value);
   const fat = parseFloat(document.getElementById("mFat").value);
@@ -500,9 +1064,11 @@ function saveMetric(){
   state.metrics = state.metrics.filter(m=>m.date!==date);
   state.metrics.push({date,w,waist:isNaN(wa)?null:wa,fat:isNaN(fat)?null:fat});
   state.metrics.sort((a,b)=>a.date.localeCompare(b.date));
-  save(state); renderMetrics(); updateStats();
+  save(); renderMetricsTab(); updateStats();
+  ["mW","mWa","mFat"].forEach(id=>document.getElementById(id).value="");
 }
-function renderMetrics(){
+function delMetric(i){ state.metrics.splice(i,1); save(); renderMetricsTab(); updateStats(); }
+function renderMetricsTab(){
   const tb = document.querySelector("#mTable tbody"); if(!tb) return;
   tb.innerHTML="";
   state.metrics.forEach((m,i)=>{
@@ -513,45 +1079,257 @@ function renderMetrics(){
       <td><button class="ghost" onclick="delMetric(${i})">删除</button></td>`;
     tb.appendChild(tr);
   });
+  // trends
+  const w = state.metrics.map(m=>({date:m.date,v:m.w,period:isInPeriod(m.date)}));
+  const wa= state.metrics.filter(m=>m.waist!=null).map(m=>({date:m.date,v:m.waist,period:isInPeriod(m.date)}));
+  const fat=state.metrics.filter(m=>m.fat!=null).map(m=>({date:m.date,v:m.fat,period:isInPeriod(m.date)}));
+  drawTrend("trendW", w, {target:46.3, baseline:56.3, fmt:v=>v.toFixed(1)});
+  drawTrend("trendWa", wa, {fmt:v=>v.toFixed(1)});
+  drawTrend("trendFat", fat, {target:22, baseline:31.4, fmt:v=>v.toFixed(1)});
+  // skin oil & burp & mood from per-day records
+  const oil=[], burp=[], mood=[];
+  for(let i=0;i<=todayIdx();i++){
+    const d = isoLocal(dateOfDayIdx(i));
+    const sk = state.skin[d]; if(sk && sk.tZoneOil) oil.push({date:d,v:sk.tZoneOil,period:isInPeriod(d)});
+    const b = state.burp[d]; if(b && (b.am||b.pm)) burp.push({date:d,v:(b.am||0)+(b.pm||0),period:isInPeriod(d)});
+    const m = state.mood[d]; if(m && m.score) mood.push({date:d,v:m.score,period:isInPeriod(d)});
+  }
+  drawTrend("trendOil", oil, {fmt:v=>v.toFixed(0)});
+  drawTrend("trendBurp", burp, {fmt:v=>v.toFixed(0)});
+  drawTrend("trendMood", mood, {fmt:v=>v.toFixed(0)});
 }
-function delMetric(i){ state.metrics.splice(i,1); save(state); renderMetrics(); updateStats(); }
+function isInPeriod(dateISO){ const ph=periodPhase(dateISO); return ph && ph.phase==="月经期"; }
 
-/* ---------------- Tabs ---------------- */
+function drawTrend(svgId, series, opts){
+  const svg = document.getElementById(svgId); if(!svg) return;
+  const W=600, H=200, P=30;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("preserveAspectRatio","none");
+  if(!series.length){ svg.innerHTML = `<text x="${W/2}" y="${H/2}" fill="#94a3c4" font-size="12" text-anchor="middle">暂无数据</text>`; return; }
+  const xs = series.map((_,i)=>i);
+  const ys = series.map(p=>p.v).concat(opts.target?[opts.target]:[]).concat(opts.baseline?[opts.baseline]:[]);
+  const ymin = Math.min(...ys)-1, ymax=Math.max(...ys)+1;
+  const x = i => P + (W-P*2) * (series.length<=1?0.5:i/(series.length-1));
+  const y = v => H-P - (H-P*2) * ((v-ymin)/(ymax-ymin||1));
+  const ma = movingAvg(series.filter(p=>!p.period).map(p=>p.v), 7);
+  let html = "";
+  // axes
+  html += `<line x1="${P}" y1="${H-P}" x2="${W-P}" y2="${H-P}" stroke="#1f2d5c"/>`;
+  html += `<line x1="${P}" y1="${P}" x2="${P}" y2="${H-P}" stroke="#1f2d5c"/>`;
+  // baseline & target
+  if(opts.baseline!=null) html += `<line x1="${P}" y1="${y(opts.baseline)}" x2="${W-P}" y2="${y(opts.baseline)}" stroke="#ffb547" stroke-dasharray="4 3"/><text x="${P+4}" y="${y(opts.baseline)-3}" font-size="10" fill="#ffb547">起 ${opts.baseline}</text>`;
+  if(opts.target!=null) html += `<line x1="${P}" y1="${y(opts.target)}" x2="${W-P}" y2="${y(opts.target)}" stroke="#1fd27a" stroke-dasharray="4 3"/><text x="${W-P-50}" y="${y(opts.target)-3}" font-size="10" fill="#1fd27a">目标 ${opts.target}</text>`;
+  // line (real values)
+  let path = "";
+  series.forEach((p,i)=>{ path += (i?"L":"M") + x(i) + "," + y(p.v); });
+  html += `<path d="${path}" stroke="#4ea1ff" stroke-width="2" fill="none"/>`;
+  // ma line (skip period-flagged points)
+  let nonPeriodIdx = []; series.forEach((p,i)=>{ if(!p.period) nonPeriodIdx.push(i); });
+  let mapath = "";
+  ma.forEach((v,j)=>{ if(v==null) return; const i = nonPeriodIdx[j]; mapath += (mapath?"L":"M") + x(i) + "," + y(v); });
+  if(mapath) html += `<path d="${mapath}" stroke="#1fd27a" stroke-width="1.5" stroke-dasharray="3 2" fill="none"/>`;
+  // points
+  series.forEach((p,i)=>{
+    const cx=x(i), cy=y(p.v);
+    if(p.period) html += `<circle cx="${cx}" cy="${cy}" r="3.5" stroke="#ff8fb5" stroke-width="1.5" fill="none"/>`;
+    else html += `<circle cx="${cx}" cy="${cy}" r="3" fill="#4ea1ff"/>`;
+    if(i===series.length-1) html += `<text x="${cx}" y="${cy-8}" font-size="10" fill="#fff" text-anchor="middle">${opts.fmt(p.v)}</text>`;
+  });
+  // x labels (first/last)
+  html += `<text x="${P}" y="${H-8}" font-size="10" fill="#94a3c4">${series[0].date}</text>`;
+  html += `<text x="${W-P}" y="${H-8}" font-size="10" fill="#94a3c4" text-anchor="end">${series[series.length-1].date}</text>`;
+  svg.innerHTML = html;
+}
+function movingAvg(arr, n){ const out=[]; for(let i=0;i<arr.length;i++){ if(i<n-1){ out.push(null); continue; } let s=0; for(let j=0;j<n;j++) s+=arr[i-j]; out.push(s/n); } return out; }
+
+/* ============================================================
+   Anki spaced repetition
+   ============================================================ */
+const INTERVALS = [1,3,7,21]; // days
+let ankiCurrent = null, ankiAnswerVisible = false;
+function ankiAdd(){
+  const deck = document.getElementById("aDeck").value;
+  const q = document.getElementById("aQ").value.trim();
+  const a = document.getElementById("aA").value.trim();
+  if(!q||!a) return alert("题目与答案都要填");
+  const today = isoLocal(new Date());
+  state.anki.cards.push({deck,q,a,due:today,interval:0});
+  save(); document.getElementById("aQ").value=""; document.getElementById("aA").value=""; renderAnki();
+}
+function ankiSeed(){
+  if(state.anki.seeded){ if(!confirm("已经导入过，再次导入会重复，确定？")) return; }
+  const today = isoLocal(new Date());
+  ANKI_SEED.forEach(([deck,q,a])=>state.anki.cards.push({deck,q,a,due:today,interval:0}));
+  state.anki.seeded = true; save(); renderAnki(); alert("已导入 "+ANKI_SEED.length+" 张卡");
+}
+function ankiDue(){
+  const today = isoLocal(new Date());
+  return state.anki.cards.filter(c=>c.due<=today);
+}
+function renderAnki(){
+  const due = ankiDue();
+  document.getElementById("ankiStat").textContent = `共 ${state.anki.cards.length} 张 · 今日到期 ${due.length} 张`;
+  if(!ankiCurrent){
+    if(due.length){
+      ankiCurrent = due[Math.floor(Math.random()*due.length)];
+      ankiAnswerVisible = false;
+      document.getElementById("ankiBox").innerHTML = `<div class="muted">${ankiCurrent.deck}</div><div class="q">${ankiCurrent.q}</div>`;
+    }else{
+      document.getElementById("ankiBox").innerHTML = `<div class="muted">今日无到期卡。可继续新增或休息一下。</div>`;
+    }
+  }
+}
+function ankiShow(){
+  if(!ankiCurrent) return;
+  ankiAnswerVisible = true;
+  document.getElementById("ankiBox").innerHTML = `<div class="muted">${ankiCurrent.deck}</div><div class="q">${ankiCurrent.q}</div><div class="a">${ankiCurrent.a}</div>`;
+}
+function ankiGrade(level){
+  if(!ankiCurrent) return;
+  const idx = state.anki.cards.indexOf(ankiCurrent);
+  const interval = INTERVALS[level];
+  const d = new Date(); d.setDate(d.getDate()+interval);
+  state.anki.cards[idx].due = isoLocal(d);
+  state.anki.cards[idx].interval = interval;
+  save(); ankiCurrent = null; renderAnki();
+}
+
+/* ============================================================
+   Plan view
+   ============================================================ */
+function renderPlan(){
+  const host = document.getElementById("planView"); if(!host) return;
+  let html="";
+  WEEKS.forEach((w,i)=>{
+    const phase = i<4?"M1 基础":i<8?"M2 核心":"M3 进阶";
+    html += `<div class="week-banner"><h3>${phase} · 第 ${w.w} 周 · ${w.theme}</h3>
+      <p>训练焦点：${BODY_BY_WEEK[i].focus} · 缺口 −${DIET_BY_WEEK[i].kcalCut} kcal · 护肤：${SKIN_BY_WEEK[i]} · 心智：${MIND_BY_WEEK[i]}</p></div>`;
+    html += `<div class="scroll-x"><table><thead><tr><th>日</th><th>数据科学</th><th>金融量化</th><th>运动</th></tr></thead><tbody>`;
+    for(let d=0;d<7;d++){
+      const idx = i*7+d;
+      html += `<tr><td>D${idx+1}<br><span class="muted" style="font-size:11px">${isoLocal(dateOfDayIdx(idx))}</span></td><td>${w.ds[d]}</td><td>${w.quant[d]}</td><td>${BODY_BY_WEEK[i].d[d]}</td></tr>`;
+    }
+    html += `</tbody></table></div><div style="height:14px"></div>`;
+  });
+  // workout details
+  html += `<div class="card"><h2>常用动作详解</h2>`;
+  Object.entries(WORKOUT_DETAIL).forEach(([k,v])=>{
+    html += `<div class="ex-card"><div class="name">${k}</div>
+      <div class="meta">${v.sets} · 休息 ${v.rest}</div>
+      <div class="key">要点：${v.key}</div>
+      <div class="key muted">替代：${v.alt}</div></div>`;
+  });
+  html += `</div>`;
+  host.innerHTML = html;
+}
+
+/* ============================================================
+   Review (W4/W8/W12 retrospective)
+   ============================================================ */
+function renderReview(){
+  const host = document.getElementById("reviewView"); if(!host) return;
+  const milestones = [
+    {w:4,  label:"M1 复盘 · 基础期"},
+    {w:8,  label:"M2 复盘 · 核心期"},
+    {w:12, label:"M3 复盘 · 进阶期 / 结业"}
+  ];
+  const startW = state.metrics[0]?.w ?? 56.3;
+  const startFat = state.metrics[0]?.fat ?? 31.4;
+  let html = `<div class="card"><h2>结构化月度复盘</h2>
+    <p class="muted" style="font-size:12px">在第 4/8/12 周末填写。系统会自动填入体重 / 体脂变化。</p></div>`;
+  milestones.forEach(m=>{
+    const idx = m.w*7-1;
+    const dateISO = isoLocal(dateOfDayIdx(idx));
+    const r = state.review["W"+m.w] || {wins:["","",""],blocks:["","",""],fixes:["","",""],focus:"",mood:0};
+    // pull metric near that date
+    const near = state.metrics.find(x=>x.date>=dateISO) || state.metrics[state.metrics.length-1];
+    const wDelta = near ? (near.w - startW).toFixed(1) : "-";
+    const fDelta = near && near.fat!=null ? (near.fat - startFat).toFixed(1) : "-";
+    html += `<div class="milestone"><h3>${m.label} <span class="muted" style="font-size:12px;font-weight:400">· 截止 ${dateISO}</span></h3>
+      <div class="muted" style="font-size:13px;margin-bottom:8px">体重变化：<b>${wDelta}kg</b> · 体脂变化：<b>${fDelta}%</b></div>
+      <div class="form-grid">
+        <div><label>3 个进步</label>${[0,1,2].map(i=>`<input data-r="W${m.w}" data-k="wins" data-i="${i}" value="${(r.wins[i]||'').replace(/"/g,'&quot;')}" placeholder="进步 ${i+1}" />`).join("")}</div>
+        <div><label>3 个卡点</label>${[0,1,2].map(i=>`<input data-r="W${m.w}" data-k="blocks" data-i="${i}" value="${(r.blocks[i]||'').replace(/"/g,'&quot;')}" placeholder="卡点 ${i+1}" />`).join("")}</div>
+        <div><label>3 个改善动作</label>${[0,1,2].map(i=>`<input data-r="W${m.w}" data-k="fixes" data-i="${i}" value="${(r.fixes[i]||'').replace(/"/g,'&quot;')}" placeholder="改善 ${i+1}" />`).join("")}</div>
+        <div><label>下月最重要 1 件事</label><input data-r="W${m.w}" data-k="focus" value="${(r.focus||'').replace(/"/g,'&quot;')}" placeholder="一句话" /></div>
+        <div><label>整体心情 1-5</label><div id="rmood-${m.w}" class="rating"></div></div>
+      </div>
+    </div>`;
+  });
+  host.innerHTML = html;
+  host.querySelectorAll("input[data-r]").forEach(inp=>{
+    inp.addEventListener("change", ()=>{
+      const r = inp.dataset.r, k=inp.dataset.k, i=inp.dataset.i;
+      state.review[r] = state.review[r] || {wins:["","",""],blocks:["","",""],fixes:["","",""],focus:"",mood:0};
+      if(i!==undefined) state.review[r][k][parseInt(i)] = inp.value;
+      else state.review[r][k] = inp.value;
+      save();
+    });
+  });
+  milestones.forEach(m=>{
+    const r = state.review["W"+m.w] || {mood:0};
+    renderRating("rmood-"+m.w, r.mood||0, 5, v=>{
+      state.review["W"+m.w] = state.review["W"+m.w] || {wins:["","",""],blocks:["","",""],fixes:["","",""],focus:""};
+      state.review["W"+m.w].mood = v; save();
+    });
+  });
+}
+
+/* ============================================================
+   Tabs
+   ============================================================ */
 document.querySelectorAll(".nav button").forEach(b=>{
   b.addEventListener("click", ()=>{
     document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");
     const tab=b.dataset.tab;
-    ["today","plan","metrics","brief","data"].forEach(t=>{
+    ["today","logs","metrics","skin","anki","plan","review","brief","data"].forEach(t=>{
       document.getElementById("tab-"+t).hidden = (t!==tab);
     });
+    if(tab==="metrics") renderMetricsTab();
+    if(tab==="anki") renderAnki();
   });
 });
 
-/* ---------------- Data IO ---------------- */
+/* ============================================================
+   Data IO
+   ============================================================ */
 function exportData(){
   const blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-  a.download = "plan90-backup-"+fmt(new Date())+".json"; a.click();
+  a.download = "plan90-backup-"+isoLocal(new Date())+".json"; a.click();
+}
+function exportCSV(){
+  const rows = [["date","weight_kg","waist_cm","fat_pct"]];
+  state.metrics.forEach(m=>rows.push([m.date,m.w,m.waist??"",m.fat??""]));
+  const csv = rows.map(r=>r.join(",")).join("\n");
+  const blob = new Blob([csv],{type:"text/csv"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "metrics-"+isoLocal(new Date())+".csv"; a.click();
 }
 function importData(e){
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = ()=>{ try{ state = JSON.parse(r.result); save(state); render(); alert("已导入"); }catch(err){ alert("文件格式不正确"); } };
+  r.onload = ()=>{ try{
+    JSON.parse(r.result);                  // validate
+    localStorage.setItem(KEY, r.result);   // persist raw
+    state = load(); save(); render();      // re-run migration to ensure new keys exist
+    alert("已导入");
+  }catch(err){ alert("文件格式不正确: "+err.message); } };
   r.readAsText(f);
 }
 function resetAll(){
-  if(!confirm("将清空全部打卡与体重数据，无法恢复。确定？")) return;
+  if(!confirm("将清空全部打卡 / 体测 / 饮食 / Anki 等数据，无法恢复。确定？")) return;
   localStorage.removeItem(KEY);
-  state = {}; location.reload();
+  location.reload();
 }
 function changeStart(){
   const v = document.getElementById("setStart").value;
-  state.start = v || fmt(new Date());
-  save(state); render(); alert("已更新启动日为 "+state.start);
+  state.start = v || isoLocal(new Date());
+  save(); render(); alert("已更新启动日为 "+state.start);
 }
 
-document.getElementById("mDate").value = fmt(new Date());
+document.getElementById("mDate").value = isoLocal(new Date());
 render();
 </script>
 </body>
